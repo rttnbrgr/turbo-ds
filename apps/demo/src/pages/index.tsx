@@ -2,6 +2,11 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import { Button } from "@/components/ui/button";
 import * as Text from "@/components/ui/text";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  MockViewAutomationsHistory,
+  MockViewAutomationsReview,
+} from "@/components/views";
 
 const Tab = props => (
   <a
@@ -38,7 +43,7 @@ export default function Home() {
       {/* main */}
       <div className="flex flex-col flex-1">
         {/* Header */}
-        <div className="p-4 bg-white flex flex-row justify-between items-center">
+        <div className="px-8 py-4 bg-white flex flex-row justify-between items-center">
           {/* breadcrumb */}
           <MockBreadcrumb />
 
@@ -49,49 +54,63 @@ export default function Home() {
         </div>
         <div className="p-8 flex-1 flex flex-col bg-slate-200">
           {/* tabs */}
-          <div className="flex flex-row gap-2 bg-grey-300">
-            <Tab>Automations</Tab>
-            <Tab>History</Tab>
-            <Tab>Review</Tab>
-          </div>
-          {/* items */}
-          <div className="p-2 flex flex-row">
-            {/* toggle */}
-            <span className="p-1">{`>`}</span>
-            {/* main */}
-            <div className="flex flex-col">
-              <div className="flex flex-row p-0 5">
-                <span>Email customer when job is scheduled</span>
-                <span>👁️</span>
-                <span>🔒</span>
-              </div>
-              <div>
-                This is an automation description that can be long but will
-                eventually wrap.
-              </div>
-              {/* description */}
-              <div className="px-4 py-3 bg-slate-300">
-                This is an automation description that can be long but will
-                eventually wrap.
-                {/* blocks */}
-                <div>
-                  <span className="font-bold">IF</span>a visit is completed and
-                  the customer left a negative review (0 – 3.5 stars)...
+          <Tabs
+            defaultValue="automations-index"
+            className="border border-solid border-red-50"
+          >
+            <TabsList>
+              <TabsTrigger value="automations-index">Automations</TabsTrigger>
+              <TabsTrigger value="automations-history">History</TabsTrigger>
+              <TabsTrigger value="automations-review">Review</TabsTrigger>
+            </TabsList>
+            <TabsContent value="automations-history">
+              <MockViewAutomationsHistory />
+            </TabsContent>
+            <TabsContent value="automations-review">
+              <MockViewAutomationsReview />
+            </TabsContent>
+
+            <TabsContent value="automations-index">
+              {/* items */}
+              <div className="p-2 flex flex-row">
+                {/* toggle */}
+                <span className="p-1">{`>`}</span>
+                {/* main */}
+                <div className="flex flex-col">
+                  <div className="flex flex-row p-0 5">
+                    <span>Email customer when job is scheduled</span>
+                    <span>👁️</span>
+                    <span>🔒</span>
+                  </div>
+                  <div>
+                    This is an automation description that can be long but will
+                    eventually wrap.
+                  </div>
+                  {/* description */}
+                  <div className="px-4 py-3 bg-slate-300">
+                    This is an automation description that can be long but will
+                    eventually wrap.
+                    {/* blocks */}
+                    <div>
+                      <span className="font-bold">IF</span>a visit is completed
+                      and the customer left a negative review (0 – 3.5 stars)...
+                    </div>
+                    <div>
+                      <span className="font-bold">THEN</span>
+                      email customer the template “Response to Negative Review”
+                      after 1 day, <span className="font-bold">ADD</span>
+                      the tag “Dissatisfied” to the customer immediately.
+                    </div>
+                    <div></div>
+                  </div>
                 </div>
-                <div>
-                  <span className="font-bold">THEN</span>
-                  email customer the template “Response to Negative Review”
-                  after 1 day, <span className="font-bold">ADD</span>
-                  the tag “Dissatisfied” to the customer immediately.
-                </div>
-                <div></div>
+                {/* status */}
+                <div className="p-2">Off</div>
+                {/* button */}
+                <Button variant="outline">Edit Automation</Button>
               </div>
-            </div>
-            {/* status */}
-            <div className="p-2">Off</div>
-            {/* button */}
-            <Button variant="outline">Edit Automation</Button>
-          </div>
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
     </main>
