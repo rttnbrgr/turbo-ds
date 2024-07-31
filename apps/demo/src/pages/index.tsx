@@ -7,6 +7,13 @@ import {
   MockViewAutomationsHistory,
   MockViewAutomationsReview,
 } from "@/components/views";
+import { cn } from "@/lib/utils";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { AutomationCard } from "@/components/ui/automation-card";
 
 const Tab = props => (
   <a
@@ -64,50 +71,37 @@ export default function Home() {
               <TabsTrigger value="automations-review">Review</TabsTrigger>
             </TabsList>
             <TabsContent value="automations-history">
-              <MockViewAutomationsHistory />
+              <div className="max-w-[600px]">
+                <MockViewAutomationsHistory />
+              </div>
             </TabsContent>
             <TabsContent value="automations-review">
-              <MockViewAutomationsReview />
+              <div className="max-w-[600px]">
+                <MockViewAutomationsReview />
+              </div>
             </TabsContent>
 
             <TabsContent value="automations-index">
-              {/* items */}
-              <div className="p-2 flex flex-row">
-                {/* toggle */}
-                <span className="p-1">{`>`}</span>
-                {/* main */}
-                <div className="flex flex-col">
-                  <div className="flex flex-row p-0 5">
-                    <span>Email customer when job is scheduled</span>
-                    <span>👁️</span>
-                    <span>🔒</span>
-                  </div>
-                  <div>
-                    This is an automation description that can be long but will
-                    eventually wrap.
-                  </div>
-                  {/* description */}
-                  <div className="px-4 py-3 bg-slate-300">
-                    This is an automation description that can be long but will
-                    eventually wrap.
-                    {/* blocks */}
-                    <div>
-                      <span className="font-bold">IF</span>a visit is completed
-                      and the customer left a negative review (0 – 3.5 stars)...
-                    </div>
-                    <div>
-                      <span className="font-bold">THEN</span>
-                      email customer the template “Response to Negative Review”
-                      after 1 day, <span className="font-bold">ADD</span>
-                      the tag “Dissatisfied” to the customer immediately.
-                    </div>
-                    <div></div>
-                  </div>
-                </div>
-                {/* status */}
-                <div className="p-2">Off</div>
-                {/* button */}
-                <Button variant="outline">Edit Automation</Button>
+              <div className="flex flex-col gap-4">
+                <AutomationCard
+                  title="Email Customer when Negatively Reviewed"
+                  description="This is an automation description that can be long but will eventually wrap."
+                  visible
+                  on={false}
+                />
+                <AutomationCard
+                  title="Keanu Reaves is that dude"
+                  description="This is an automation description that can be long but will eventually wrap."
+                  on
+                  visible={false}
+                  locked
+                />
+                <AutomationCard
+                  title="Email Customer when Negatively Reviewed"
+                  description="This is an automation description that can be long but will eventually wrap."
+                  visible
+                  on={false}
+                />
               </div>
             </TabsContent>
           </Tabs>
@@ -117,10 +111,26 @@ export default function Home() {
   );
 }
 
-/* Body/fw-bold */
-// color: var(--text-default-grey-1000, var(--grey-1000, #0C0D0D));
-// font-family: var(--font-family-ff-standard, Inter);
-// font-size: var(--font-size-fs-200, 14px);
-// font-style: normal;
-// font-weight: 700;
-// line-height: var(--font-line-height-lh-200, 20px); /* 142.857% */
+// <div>
+//   This is an automation description that can be long but
+//   will eventually wrap.
+// </div>
+// {/* description */}
+// <div className="px-4 py-3 bg-slate-300">
+//   This is an automation description that can be long but
+//   will eventually wrap.
+//   {/* blocks */}
+//   <div>
+//     <span className="font-bold">IF</span>a visit is
+//     completed and the customer left a negative review (0 –
+//     3.5 stars)...
+//   </div>
+//   <div>
+//     <span className="font-bold">THEN</span>
+//     email customer the template “Response to Negative
+//     Review” after 1 day,{" "}
+//     <span className="font-bold">ADD</span>
+//     the tag “Dissatisfied” to the customer immediately.
+//   </div>
+//   <div></div>
+// </div>
