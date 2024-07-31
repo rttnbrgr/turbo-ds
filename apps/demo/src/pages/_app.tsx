@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import "@/styles/collapsible.css";
 import type { AppProps } from "next/app";
 import { Inter as FontSans } from "next/font/google";
 
