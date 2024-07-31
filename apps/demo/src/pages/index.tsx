@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import { Button } from "@/components/ui/button";
+import * as Text from "@/components/ui/text";
 
 const Tab = props => (
   <a
@@ -20,6 +21,14 @@ const AutomationItem = props => (
   </a>
 );
 
+const MockBreadcrumb = () => (
+  <div className="flex flex-row gap-1 text-gray-950">
+    <Text.Body weight="bold">Marketing</Text.Body>
+    <Text.Body>/</Text.Body>
+    <Text.Body>Automations (2)</Text.Body>
+  </div>
+);
+
 export default function Home() {
   // tab state
   return (
@@ -31,11 +40,7 @@ export default function Home() {
         {/* Header */}
         <div className="p-4 bg-white flex flex-row justify-between items-center">
           {/* breadcrumb */}
-          <div className="flex flex-row gap-1 font-sans text-sm text-gray-950 not-italic font-normal">
-            <span className="font-bold">Marketing</span>
-            <span>/</span>
-            <span>Automations (2)</span>
-          </div>
+          <MockBreadcrumb />
 
           <div className="flex flex-row gap-3">
             <Button variant="outline">New Sequence Automation</Button>
