@@ -8,10 +8,19 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 
+import {
+  Camera,
+  ChevronRight,
+  Lock,
+  LockOpen,
+  Eye,
+  EyeOff,
+} from "lucide-react";
+
 const MockIcon = ({ className = "", ...props }) => (
   <span
     className={cn(
-      "h-4 w-4 bg-gray-50 rounded inline-flex justify-center items-center text-[8px]",
+      "p-1 bg-[lime] inline-flex justify-center items-center",
       className
     )}
     {...props}
@@ -67,7 +76,9 @@ export const AutomationCard = ({
         <div className="flex flex-row justify-start items-start gap-3 flex-grow">
           {/* toggle */}
           <CollapsibleTrigger>
-            <MockIcon className="mt-1.5 ">➡️</MockIcon>
+            <MockIcon>
+              <ChevronRight size={16} />
+            </MockIcon>
           </CollapsibleTrigger>
 
           {/* main */}
@@ -77,8 +88,13 @@ export const AutomationCard = ({
               <div className="flex flex-col flex-1">
                 <div className="flex flex-row items-center gap-1">
                   <Text.Header size="sm">{title}</Text.Header>
-                  {isVisible && <MockIcon>👁️</MockIcon>}
-                  {isLocked && <MockIcon>🔒</MockIcon>}
+
+                  <MockIcon>
+                    {isVisible ? <Eye size={16} /> : <EyeOff size={16} />}
+                  </MockIcon>
+                  <MockIcon>
+                    {isLocked ? <Lock size={16} /> : <LockOpen size={16} />}
+                  </MockIcon>
                 </div>
                 <Text.Body>{description}</Text.Body>
               </div>
