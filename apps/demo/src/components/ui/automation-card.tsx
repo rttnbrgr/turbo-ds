@@ -17,12 +17,9 @@ import {
   EyeOff,
 } from "lucide-react";
 
-const MockIcon = ({ className = "", ...props }) => (
+const IconWrap = ({ className = "", ...props }) => (
   <span
-    className={cn(
-      "p-1 bg-[lime] inline-flex justify-center items-center",
-      className
-    )}
+    className={cn("p-1 inline-flex justify-center items-center", className)}
     {...props}
   />
 );
@@ -76,9 +73,9 @@ export const AutomationCard = ({
         <div className="flex flex-row justify-start items-start gap-3 flex-grow">
           {/* toggle */}
           <CollapsibleTrigger>
-            <MockIcon>
+            <IconWrap>
               <ChevronRight size={16} />
-            </MockIcon>
+            </IconWrap>
           </CollapsibleTrigger>
 
           {/* main */}
@@ -89,12 +86,12 @@ export const AutomationCard = ({
                 <div className="flex flex-row items-center gap-1">
                   <Text.Header size="sm">{title}</Text.Header>
 
-                  <MockIcon>
+                  <IconWrap>
                     {isVisible ? <Eye size={16} /> : <EyeOff size={16} />}
-                  </MockIcon>
-                  <MockIcon>
+                  </IconWrap>
+                  <IconWrap>
                     {isLocked ? <Lock size={16} /> : <LockOpen size={16} />}
-                  </MockIcon>
+                  </IconWrap>
                 </div>
                 <Text.Body>{description}</Text.Body>
               </div>
