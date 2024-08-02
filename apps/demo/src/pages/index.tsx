@@ -14,6 +14,8 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { AutomationCard } from "@/components/ui/automation-card";
+import { ChevronRight } from "lucide-react";
+import { useState } from "react";
 
 const Tab = props => (
   <a
@@ -41,19 +43,145 @@ const MockBreadcrumb = () => (
   </div>
 );
 
+type ChevronToggleProps = {
+  isOpen: boolean;
+  alt?: boolean;
+  classNames?: string;
+  size?: number;
+};
+
+const ChevronToggle = ({
+  isOpen = false,
+  classNames,
+  size = 12,
+  alt = false,
+  ...props
+}: ChevronToggleProps) => {
+  const _base = "rounded text-current transition";
+  let _rotate;
+
+  if (alt) {
+    _rotate = isOpen ? "rotate" : "rotate-180";
+
+    return (
+      <div className={cn(_base, _rotate, classNames)}>
+        <ChevronRight size={size} />
+      </div>
+    );
+  }
+
+  _rotate = isOpen ? "rotate-90" : "rotate";
+
+  return (
+    <div className={cn(_base, _rotate, classNames)}>
+      <ChevronRight size={size} />
+    </div>
+  );
+};
+
+type SideNavItemProps = {
+  isNested: boolean;
+  className?: string;
+  children?: any;
+  onClick?: any;
+  isActive: boolean;
+};
+
+const _navLiBase = `inline-flex flex-row items-center flex-1 gap-3 py-2 px-3 bg-transparent`;
+const _navLiTypography = `text-sm/4 font-semibold text-grey-800`;
+const _navLiHover = `cursor-pointer hover:bg-blue-500`;
+
+const SideNavItem = ({
+  isNested = true,
+  onClick,
+  isActive,
+  ...props
+}: SideNavItemProps) => {
+  const [open, setOpen] = useState(false);
+  //
+  const _navLiOpen = isActive && "bg-blue-600";
+
+  return (
+    //
+    <div
+      className={cn(
+        _navLiBase,
+        _navLiTypography,
+        _navLiHover,
+        _navLiOpen,
+        "rounded text-white"
+      )}
+      onClick={() => {
+        onClick(props.children);
+      }}
+    >
+      <div className="h-4 w-4 rounded bg-white flex-grow-0"></div>
+      <span className="flex-1">{props.children}</span>
+      {isNested && <ChevronToggle isOpen={isActive} />}
+    </div>
+  );
+};
+
+const navArray = [
+  { title: "My Day", type: "flat" },
+  { title: "KPI Cockpit", type: "flat" },
+  { title: "Customers", type: "nested" },
+  { title: "Team", type: "nested" },
+  { title: "Resources", type: "nested" },
+  { title: "Marketing", type: "nested" },
+  { title: "Calculator", type: "nested" },
+  { title: "Finances", type: "nested" },
+  { title: "Reports", type: "flat" },
+  { title: "CSV Imports", type: "flat" },
+  { title: "Support", type: "nested" },
+];
+
+const SideNav = ({ ...props }) => {
+  //
+  const [open, setOpen] = useState<undefined | string>();
+  const [expanded, setExpanded] = useState(true);
+
+  return (
+    <aside className={`flex flex-col w-[280px] min-w-[280px] bg-blue-900`}>
+      {/* top */}
+      <div className="py-5 px-6 flex flex-row justify-between items-center">
+        <div className="w-[108px] h-6 bg-blue-950" />
+        <ChevronToggle alt isOpen={expanded} />
+      </div>
+      {/* body */}
+      <div className="py-4 px-3 flex flex-col gap-8 flex-1">
+        <div className="flex flex-col gap-3">
+          {navArray.map((item, i) => (
+            <SideNavItem
+              key={i}
+              isNested={item.type === "nested"}
+              isActive={open === item.title}
+              onClick={() => setOpen(item.title)}
+            >
+              {item.title}
+            </SideNavItem>
+          ))}
+        </div>
+      </div>
+      {/* footer */}
+      {/*  */}
+
+      {/*  */}
+    </aside>
+  );
+};
+
 export default function Home() {
   // tab state
   return (
     <main className={`flex min-h-screen flex-row font-sans`}>
       {/* side */}
-      <aside className={`flex w-[280px] p-24 bg-blue-900`}>sidenav</aside>
+      <SideNav></SideNav>
       {/* main */}
       <div className="flex flex-col flex-1">
-        {/* Header */}
+        {/* Headbar */}
         <div className="px-8 py-4 bg-white flex flex-row justify-between items-center">
-          {/* breadcrumb */}
           <MockBreadcrumb />
-
           <div className="flex flex-row gap-3">
             <Button variant="outline">New Sequence Automation</Button>
             <Button variant="default">New +</Button>
@@ -61,10 +189,7 @@ export default function Home() {
         </div>
         <div className="p-8 flex-1 flex flex-col bg-slate-200">
           {/* tabs */}
-          <Tabs
-            defaultValue="automations-index"
-            className="border border-solid border-red-50"
-          >
+          <Tabs defaultValue="automations-index" className="">
             <TabsList>
               <TabsTrigger value="automations-index">Automations</TabsTrigger>
               <TabsTrigger value="automations-history">History</TabsTrigger>
@@ -110,27 +235,3 @@ export default function Home() {
     </main>
   );
 }
-
-// <div>
-//   This is an automation description that can be long but
-//   will eventually wrap.
-// </div>
-// {/* description */}
-// <div className="px-4 py-3 bg-slate-300">
-//   This is an automation description that can be long but
-//   will eventually wrap.
-//   {/* blocks */}
-//   <div>
-//     <span className="font-bold">IF</span>a visit is
-//     completed and the customer left a negative review (0 –
-//     3.5 stars)...
-//   </div>
-//   <div>
-//     <span className="font-bold">THEN</span>
-//     email customer the template “Response to Negative
-//     Review” after 1 day,{" "}
-//     <span className="font-bold">ADD</span>
-//     the tag “Dissatisfied” to the customer immediately.
-//   </div>
-//   <div></div>
-// </div>
