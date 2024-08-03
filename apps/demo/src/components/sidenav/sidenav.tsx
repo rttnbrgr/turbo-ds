@@ -5,7 +5,6 @@ import * as Text from "@/components/ui/text";
 import { cn } from "@/lib/utils";
 import { Children, useState } from "react";
 import { ChevronToggle } from "../ui/chevron-toggle";
-import { SideNavItem, SideNavSubItem } from "./sidenav-item";
 import { Clock } from "lucide-react";
 import {
   Collapsible,
@@ -13,9 +12,157 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 
+/**
+ * Shared styles for both list items and nested list items
+ */
+const _liBase = `inline-flex flex-row items-center flex-1 bg-transparent rounded`;
+const _liTypography = `text-sm/4 font-semibold text-white`; // #TODO: non-standard text style
+const _liHover = `cursor-pointer hover:bg-blue-500`;
+
+/**
+ *
+ * Nav Item
+ * -
+ * The list items for top level nav items
+ *
+ */
+type SideNavItemProps = {
+  /**
+   * Extend classnames for styles
+   */
+  className?: string;
+  /**
+   * Text of the sublist item
+   */
+  children?: any;
+  /**
+   * Click handler
+   */
+  onClick?: any;
+  /**
+   * Is the subitem active
+   */
+  isActive: boolean;
+  /**
+   * Is the list item collapsed or not
+   */
+  isExpanded: boolean;
+  /**
+   * Icon for the list item
+   */
+  icon?: boolean;
+  /**
+   * Does the nav list item have a sublist
+   */
+  isNested: boolean;
+};
+
+// Should maybe be a button?
+// Will need routing concerns
+const SideNavItem = ({
+  isNested = true,
+  onClick,
+  isActive,
+  icon = true,
+  className,
+  ...props
+}: SideNavItemProps) => {
+  // Adjust base spacing
+  const _navLiBase = `${_liBase} gap-3 py-2 px-3`;
+  // Compute open
+  const _navLiOpen = isActive && "bg-blue-600";
+
+  return (
+    <div
+      className={cn(_navLiBase, _liTypography, _liHover, _navLiOpen, className)}
+      onClick={() => {
+        onClick(props.children);
+      }}
+    >
+      {/* Icon */}
+      {icon && <div className="h-4 w-4 rounded bg-white flex-grow-0"></div>}
+      {props.isExpanded && (
+        <>
+          <span className="flex-1 text-left">{props.children}</span>
+          {isNested && <ChevronToggle isOpen={isActive} />}
+        </>
+      )}
+    </div>
+  );
+};
+
+/**
+ *
+ * Sublist Item
+ * -
+ * The list items for nested items within a nav item
+ *
+ */
+
+type SideNavSubItemProps = {
+  /**
+   * Extend classnames for styles
+   */
+  className?: string;
+  /**
+   * Text of the sublist item
+   */
+  children?: any;
+  /**
+   * Click handler
+   */
+  onClick?: any;
+  /**
+   * Is the subitem active
+   */
+  isActive: boolean;
+};
+
+// Should maybe be a button?
+// Will need routing concerns
+const SideNavSubItem = ({
+  onClick = () => {
+    console.log("subnav click");
+  },
+  isActive,
+  className,
+  ...props
+}: SideNavSubItemProps) => {
+  // Adjust base spacing
+  const _navSubLiBase = `${_liBase} py-1 px-3`;
+  // Compute open
+  const _navSubLiOpen = isActive && "bg-blue-600";
+
+  return (
+    <div
+      className={cn(
+        _navSubLiBase,
+        _liTypography,
+        _liHover,
+        _navSubLiOpen,
+        className
+      )}
+      onClick={() => {
+        onClick(props.children);
+      }}
+    >
+      <span className="flex-1">{props.children}</span>
+    </div>
+  );
+};
+
+/**
+ *
+ * Sublist Wrapper
+ * -
+ * Extracted for ease of composing (for now)
+ *
+ */
 const SideNavSublist = ({ children }) => (
   <div className="flex flex-row gap-4">
+    {/* Border */}
     <div className="w-4 border-r border-solid border-white" />
+    {/* Stack for Sublist */}
     <div className="flex flex-col gap-1 fle-1">
       {/* comment to keep fold */}
       {children}
@@ -23,6 +170,14 @@ const SideNavSublist = ({ children }) => (
   </div>
 );
 
+/**
+ *
+ * Nav data
+ * -
+ * Mock the data for us to use
+ * Eventually this should come from the pages/router info
+ *
+ */
 const navArray = [
   { title: "My Day", type: "flat" },
   { title: "KPI Cockpit", type: "flat" },
@@ -109,6 +264,15 @@ const navArray = [
 // build subnav items
 // dont build sub nav left rail <shopify version>
 
+/**
+ *
+ * Sidenav
+ * -
+ * The entire sidenav feature
+ * Might just call this the NAV?
+ * Since, there isn't another nav
+ *
+ */
 export const SideNav = ({ ...props }) => {
   //
   const [open, setOpen] = useState<undefined | string>();
