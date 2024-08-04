@@ -3,9 +3,22 @@ import { Inter } from "next/font/google";
 import { Button } from "@/components/ui/button";
 import * as Text from "@/components/ui/text";
 import { cn } from "@/lib/utils";
-import { Children, useState } from "react";
+import React, { Children, JSXElementConstructor, useState } from "react";
 import { ChevronToggle } from "../ui/chevron-toggle";
-import { Clock } from "lucide-react";
+import {
+  Book,
+  Calculator,
+  ChartNoAxesColumn,
+  ChartPie,
+  Clock,
+  FileInput,
+  LayoutGrid,
+  LifeBuoy,
+  Megaphone,
+  Receipt,
+  Users,
+  Wallet,
+} from "lucide-react";
 import {
   Collapsible,
   CollapsibleContent,
@@ -18,6 +31,8 @@ import {
 const _liBase = `inline-flex flex-row items-center flex-1 bg-transparent rounded`;
 const _liTypography = `text-sm/4 font-semibold text-white`; // #TODO: non-standard text style
 const _liHover = `cursor-pointer hover:bg-blue-500`;
+
+const navIconSize = 16;
 
 /**
  *
@@ -50,7 +65,7 @@ type SideNavItemProps = {
   /**
    * Icon for the list item
    */
-  icon?: boolean;
+  icon?: any;
   /**
    * Does the nav list item have a sublist
    */
@@ -63,7 +78,7 @@ const SideNavItem = ({
   isNested = true,
   onClick,
   isActive,
-  icon = true,
+  icon,
   className,
   ...props
 }: SideNavItemProps) => {
@@ -80,7 +95,7 @@ const SideNavItem = ({
       }}
     >
       {/* Icon */}
-      {icon && <div className="h-4 w-4 rounded bg-white flex-grow-0"></div>}
+      {icon && icon}
       {props.isExpanded && (
         <>
           <span className="flex-1 text-left">{props.children}</span>
@@ -179,16 +194,26 @@ const SideNavSublist = ({ children }) => (
  *
  */
 const navArray = [
-  { title: "My Day", type: "flat" },
-  { title: "KPI Cockpit", type: "flat" },
+  {
+    title: "My Day",
+    type: "flat",
+    icon: <LayoutGrid size={navIconSize} />,
+  },
+  {
+    title: "KPI Cockpit",
+    type: "flat",
+    icon: <ChartNoAxesColumn size={navIconSize} />,
+  },
   {
     title: "Customers",
     type: "nested",
+    icon: <Wallet size={navIconSize} />,
     children: ["Customers", "Properties", "Work Requests", "Map"],
   },
   {
     title: "Team",
     type: "nested",
+    icon: <Users size={navIconSize} />,
     children: [
       "Schedule",
       "Dispatch Board",
@@ -201,6 +226,7 @@ const navArray = [
   {
     title: "Resources",
     type: "nested",
+    icon: <Book size={navIconSize} />,
     children: [
       "Schedule",
       "Dispatch Board",
@@ -213,6 +239,7 @@ const navArray = [
   {
     title: "Marketing",
     type: "nested",
+    icon: <Megaphone size={navIconSize} />,
     children: [
       "Automations",
       "Email Templates",
@@ -228,11 +255,13 @@ const navArray = [
   {
     title: "Calculator",
     type: "nested",
+    icon: <Calculator size={navIconSize} />,
     children: ["Aerial Measurements", "Service Caclulators", "BH Calculator"],
   },
   {
     title: "Finances",
     type: "nested",
+    icon: <Receipt size={navIconSize} />,
     children: [
       "Invoices",
       "Estimates",
@@ -242,11 +271,20 @@ const navArray = [
       "Customer Statements",
     ],
   },
-  { title: "Reports", type: "flat" },
-  { title: "CSV Imports", type: "flat" },
+  {
+    title: "Reports",
+    type: "flat",
+    icon: <ChartPie size={navIconSize} />,
+  },
+  {
+    title: "CSV Imports",
+    type: "flat",
+    icon: <FileInput size={navIconSize} />,
+  },
   {
     title: "Support",
     type: "nested",
+    icon: <LifeBuoy size={navIconSize} />,
     children: [
       "Help Articles",
       "Release Notes",
@@ -323,6 +361,8 @@ export const SideNav = ({ ...props }) => {
                     isExpanded={expanded}
                     onClick={() => setOpen(item.title)}
                     className="w-full"
+                    icon={item.icon}
+                    // icon={props => <PostIcon {...props} color={'#fff'} />}
                   >
                     {item.title}
                   </SideNavItem>
