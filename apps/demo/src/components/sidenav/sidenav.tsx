@@ -302,6 +302,63 @@ const navArray = [
 // build subnav items
 // dont build sub nav left rail <shopify version>
 
+const NAV_WIDTH = 280;
+const NAV_PX = 24;
+
+/**
+ *
+ * Nav Header
+ * -
+ * The header of the nav;
+ * Contains loggle and toggle
+ *
+ */
+
+type SideNavProps = {
+  expanded: boolean;
+  setExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export const NavHeader = ({
+  expanded,
+  setExpanded,
+  ...props
+}: SideNavProps) => {
+  //
+
+  // Padding X
+  const px = `px-${NAV_PX / 4}`; // px-5
+
+  // Image wrapper
+  // this sets the width when expanded
+  const blockWidth = NAV_WIDTH - NAV_PX * 2;
+  const imageWidth = expanded ? `w-[${blockWidth}px]` : `w-0`;
+  const imageOpacity = expanded ? `opacity-100` : `opacity-0`;
+  // #TODO: fine tune the transition
+
+  // Icon Button
+  // #TODO: extract this to a icon button component
+  const iconBtnCn = "p-2 hover:bg-white/5 rounded-full text-white";
+
+  return (
+    <div
+      className={cn(px, "py-5 flex flex-row justify-between items-center", {})}
+    >
+      <div className={cn(imageWidth, imageOpacity, "transition-all")}>
+        <Image src={"/watermark.png"} alt="Logo" width="108" height="32" />
+      </div>
+      <button
+        onClick={() => {
+          setExpanded(cv => !cv);
+        }}
+        className={iconBtnCn}
+      >
+        <ChevronToggle alt isOpen={expanded} />
+      </button>
+    </div>
+  );
+};
+
 /**
  *
  * Sidenav
@@ -316,25 +373,24 @@ export const SideNav = ({ ...props }) => {
   const [open, setOpen] = useState<undefined | string>();
   const [expanded, setExpanded] = useState(true);
 
-  // build header
   // build footer mock
 
   return (
-    <aside className={`flex flex-col w-[280px] min-w-[280px] bg-blue-900`}>
+    <aside className={`flex flex-col  bg-blue-900`}>
       {/* top */}
 
-      <div className="py-5 px-6 flex flex-row justify-between items-center">
-        <Image src={"/watermark.png"} alt="Logo" width="108" height="32" />
-        <ChevronToggle alt isOpen={expanded} classNames="text-white" />
+      <NavHeader expanded={expanded} setExpanded={setExpanded} />
+      <div className="flex flex-col px-6py-2 text-white hidden">
+        <Text.Body>{expanded ? "Expanded" : "Not Expanded"}</Text.Body>
       </div>
       {/* body */}
-      <div className="py-4 px-3 flex flex-col gap-8 flex-1">
+      <div className="py-4 px-3 flex flex-col gap-8 flex-1 hidden">
         <div className="flex flex-col gap-3">
           {/* mock search */}
           <div className="w-full h-9 bg-white border border-solid border-grey-300 rounded" />
           {/* mock clock */}
           <div className="w-full bg-blue-600 p-2 flex flex-row justify-between items-center">
-            <div className="flex flex-col text-white ">
+            <div className="flex flex-col text-white">
               <Text.Body>Not Clocked In</Text.Body>
             </div>
             <Button variant="outline">
