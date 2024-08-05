@@ -1,9 +1,8 @@
 import Image from "next/image";
-import { Inter } from "next/font/google";
 import { Button } from "@/components/ui/button";
 import * as Text from "@/components/ui/text";
 import { cn } from "@/lib/utils";
-import React, { Children, JSXElementConstructor, useState } from "react";
+import React, { useState } from "react";
 import { ChevronToggle } from "../ui/chevron-toggle";
 import {
   Book,
@@ -53,7 +52,7 @@ type SideNavItemProps = {
   /**
    * Click handler
    */
-  onClick?: any;
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   /**
    * Is the subitem active
    */
@@ -78,6 +77,7 @@ const SideNavItem = ({
   isNested = true,
   onClick,
   isActive,
+  isExpanded,
   icon,
   className,
   ...props
@@ -87,22 +87,36 @@ const SideNavItem = ({
   // Compute open
   const _navLiOpen = isActive && "bg-blue-600";
 
+  const _navLiExpanded = isExpanded ? "w-full" : "px-2";
+
   return (
-    <div
-      className={cn(_navLiBase, _liTypography, _liHover, _navLiOpen, className)}
-      onClick={() => {
-        onClick(props.children);
+    <CollapsibleTrigger
+      className={cn(
+        _navLiBase,
+        _liTypography,
+        _liHover,
+        _navLiOpen,
+        _navLiExpanded,
+        className
+      )}
+      // onClick={e: React.mou => {
+      //   onClick(e);
+      // }}
+      onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+        console.log("before click");
+        // onClick(e);
+        console.log("click");
       }}
     >
       {/* Icon */}
       {icon && icon}
-      {props.isExpanded && (
+      {isExpanded && (
         <>
           <span className="flex-1 text-left">{props.children}</span>
           {isNested && <ChevronToggle isOpen={isActive} />}
         </>
       )}
-    </div>
+    </CollapsibleTrigger>
   );
 };
 
@@ -173,17 +187,32 @@ const SideNavSubItem = ({
  * Extracted for ease of composing (for now)
  *
  */
-const SideNavSublist = ({ children }) => (
-  <div className="flex flex-row gap-4">
-    {/* Border */}
-    <div className="w-4 border-r border-solid border-white" />
-    {/* Stack for Sublist */}
-    <div className="flex flex-col gap-1 fle-1">
-      {/* comment to keep fold */}
-      {children}
-    </div>
-  </div>
-);
+type SideNavSublistProps = {
+  children?: React.ReactNode;
+  className?: string;
+  expanded: boolean;
+};
+
+const SideNavSublist = ({
+  className,
+  children,
+  expanded,
+}: SideNavSublistProps) => {
+  const expandedCn = expanded ? "pt-3" : "hidden";
+  return (
+    <CollapsibleContent
+      className={cn("flex flex-row gap-4", expandedCn, className)}
+    >
+      {/* Border */}
+      <div className="w-4 border-r border-solid border-white" />
+      {/* Stack for Sublist */}
+      <div className="flex flex-col gap-1 fle-1">
+        {/* comment to keep fold */}
+        {children}
+      </div>
+    </CollapsibleContent>
+  );
+};
 
 /**
  *
@@ -314,7 +343,7 @@ const NAV_PX = 24;
  *
  */
 
-type SideNavProps = {
+type NavHeaderProps = {
   expanded: boolean;
   setExpanded: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -323,16 +352,19 @@ export const NavHeader = ({
   expanded,
   setExpanded,
   ...props
-}: SideNavProps) => {
+}: NavHeaderProps) => {
   //
 
   // Padding X
-  const px = `px-${NAV_PX / 4}`; // px-5
+  // const px = `px-${NAV_PX / 4}`; // px-5
+  const px = `px-5`; // px-5
 
   // Image wrapper
   // this sets the width when expanded
   const blockWidth = NAV_WIDTH - NAV_PX * 2;
-  const imageWidth = expanded ? `w-[${blockWidth}px]` : `w-0`;
+  // const blockWidthClass = `w-[${blockWidth}px]`; // fucking tailwind
+  const blockWidthClass = `w-[232px]`;
+  const imageWidth = expanded ? blockWidthClass : `w-0`;
   const imageOpacity = expanded ? `opacity-100` : `opacity-0`;
   // #TODO: fine tune the transition
 
@@ -345,7 +377,13 @@ export const NavHeader = ({
       className={cn(px, "py-5 flex flex-row justify-between items-center", {})}
     >
       <div className={cn(imageWidth, imageOpacity, "transition-all")}>
-        <Image src={"/watermark.png"} alt="Logo" width="108" height="32" />
+        <Image
+          src={"/watermark.png"}
+          alt="Logo"
+          width="108"
+          height="32"
+          className="max-w-none"
+        />
       </div>
       <button
         onClick={() => {
@@ -375,8 +413,15 @@ export const SideNav = ({ ...props }) => {
 
   // build footer mock
 
+  const bodyCn = expanded ? "" : "items-center";
+
   return (
-    <aside className={`flex flex-col  bg-blue-900`}>
+    <aside
+      className={`flex flex-col  bg-blue-900`}
+      onClick={() => {
+        setOpen(undefined);
+      }}
+    >
       {/* top */}
 
       <NavHeader expanded={expanded} setExpanded={setExpanded} />
@@ -384,8 +429,9 @@ export const SideNav = ({ ...props }) => {
         <Text.Body>{expanded ? "Expanded" : "Not Expanded"}</Text.Body>
       </div>
       {/* body */}
-      <div className="py-4 px-3 flex flex-col gap-8 flex-1 hidden">
-        <div className="flex flex-col gap-3">
+      <div className="py-4 px-3 flex flex-col gap-8 flex-1">
+        {/* Clock + Search */}
+        <div className="flex flex-col gap-3 hidden">
           {/* mock search */}
           <div className="w-full h-9 bg-white border border-solid border-grey-300 rounded" />
           {/* mock clock */}
@@ -400,47 +446,42 @@ export const SideNav = ({ ...props }) => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-3">
-          <div className="flex flex-col gap-2 text-white w-full p-2 px-4 bg-blue-800 rounded">
+        {/* Nav items */}
+        <div className={cn(bodyCn, "flex flex-col gap-3")}>
+          <div className="flex flex-col gap-2 text-white w-full p-2 px-4 bg-blue-800 rounded hidden">
             <Text.Body>{expanded ? "Expanded" : "Not Expanded"}</Text.Body>
             <Text.Body>{open ? open : "Nothing Open"}</Text.Body>
           </div>
+          {/* from here down should be its own component */}
           {navArray.map((item, i) => (
-            <>
-              {/* from here down should be its own component */}
-              <Collapsible>
-                <CollapsibleTrigger className="w-full">
-                  <SideNavItem
-                    key={i}
-                    isNested={item.type === "nested"}
-                    isActive={open === item.title}
-                    isExpanded={expanded}
-                    onClick={() => setOpen(item.title)}
-                    className="w-full"
-                    icon={item.icon}
-                    // icon={props => <PostIcon {...props} color={'#fff'} />}
-                  >
-                    {item.title}
-                  </SideNavItem>
-                </CollapsibleTrigger>
-                {item.type === "nested" && (
-                  <CollapsibleContent className="pt-3">
-                    <SideNavSublist>
-                      {item.children &&
-                        item.children.map((x, i) => (
-                          <SideNavSubItem
-                            key={i}
-                            isActive={false}
-                            className="flex-1"
-                          >
-                            {x}
-                          </SideNavSubItem>
-                        ))}
-                    </SideNavSublist>
-                  </CollapsibleContent>
-                )}
-              </Collapsible>
-            </>
+            <Collapsible key={i}>
+              <SideNavItem
+                isNested={item.type === "nested"}
+                isActive={open === item.title}
+                isExpanded={expanded}
+                onClick={e => {
+                  setOpen(item.title);
+                  // e.preventDefault();
+                }}
+                icon={item.icon}
+              >
+                {item.title}
+              </SideNavItem>
+              {item.type === "nested" && (
+                <SideNavSublist expanded={expanded}>
+                  {item.children &&
+                    item.children.map((x, j) => (
+                      <SideNavSubItem
+                        key={j}
+                        isActive={false}
+                        className="flex-1"
+                      >
+                        {x}
+                      </SideNavSubItem>
+                    ))}
+                </SideNavSublist>
+              )}
+            </Collapsible>
           ))}
         </div>
       </div>
