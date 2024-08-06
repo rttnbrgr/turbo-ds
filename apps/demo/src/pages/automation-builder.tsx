@@ -8,12 +8,16 @@ import {
 import { AutomationCard } from "@/components/ui/automation-card";
 import { MockBreadcrumb } from "@/components/ui/mock";
 import { Layout } from "@/components/ui/layout";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
-// clean unused parts here
-// move mocks to their own file
-// move nav wip to its own file
-
-export default function Home() {
+export default function AutomationBuilder() {
   // tab state
   return (
     <Layout
@@ -34,6 +38,18 @@ export default function Home() {
           visible
           on={false}
         />
+        <Card>
+          <CardHeader>
+            <CardTitle>Card Title</CardTitle>
+            <CardDescription>Card Description</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p>Card Content</p>
+          </CardContent>
+          <CardFooter>
+            <p>Card Footer</p>
+          </CardFooter>
+        </Card>
       </div>
     </Layout>
   );
