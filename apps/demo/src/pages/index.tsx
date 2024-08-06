@@ -5,13 +5,42 @@ import {
   MockViewAutomationsHistory,
   MockViewAutomationsReview,
 } from "@/components/views";
-import { AutomationCard } from "@/components/ui/automation-card";
+import {
+  AutomationCard,
+  AutomationCardProps,
+} from "@/components/ui/automation-card";
 import { MockBreadcrumb } from "@/components/ui/mock";
 import { Layout } from "@/components/ui/layout";
 
 // clean unused parts here
 // move mocks to their own file
 // move nav wip to its own file
+
+const data: AutomationCardProps[] = [
+  {
+    title: "Email Customer when Negatively Reviewed",
+    description:
+      "This is an automation description that can be long but will eventually wrap.",
+    visible: true,
+    on: false,
+  },
+  {
+    title: "Keanu Reaves is that dude",
+    description:
+      "This is an automation description that can be long but will eventually wrap.",
+    on: true,
+    visible: false,
+    locked: true,
+  },
+
+  {
+    title: "Email Customer when Negatively Reviewed",
+    description:
+      "This is an automation description that can be long but will eventually wrap.",
+    visible: true,
+    on: false,
+  },
+];
 
 export default function Home() {
   // tab state
@@ -46,25 +75,9 @@ export default function Home() {
 
         <TabsContent value="automations-index">
           <div className="flex flex-col gap-4">
-            <AutomationCard
-              title="Email Customer when Negatively Reviewed"
-              description="This is an automation description that can be long but will eventually wrap."
-              visible
-              on={false}
-            />
-            <AutomationCard
-              title="Keanu Reaves is that dude"
-              description="This is an automation description that can be long but will eventually wrap."
-              on
-              visible={false}
-              locked
-            />
-            <AutomationCard
-              title="Email Customer when Negatively Reviewed"
-              description="This is an automation description that can be long but will eventually wrap."
-              visible
-              on={false}
-            />
+            {data.map(({ ...cardProps }, i) => (
+              <AutomationCard key={i} {...cardProps} />
+            ))}
           </div>
         </TabsContent>
       </Tabs>
