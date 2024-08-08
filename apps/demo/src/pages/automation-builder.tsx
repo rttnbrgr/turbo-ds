@@ -16,6 +16,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import * as React from "react";
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function AutomationBuilder() {
   // tab state
@@ -44,6 +55,34 @@ export default function AutomationBuilder() {
             <CardDescription>Card Description</CardDescription>
           </CardHeader>
           <CardContent>
+            <div className="border border-solid border-gray-300 px-4 py-4 rounded gray-100">
+              {/* row */}
+              <div className="flex flex-row gap-3 items-center">
+                {/* if */}
+                <Text.Body className="uppercase" weight="bold">
+                  If
+                </Text.Body>
+
+                {/* dropdown */}
+                <Select open>
+                  <SelectTrigger className="w-[180px] flex-1">
+                    <SelectValue placeholder="Select a condition" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="apple">Visit is added</SelectItem>
+                    <SelectItem value="banana">Visit is completed</SelectItem>
+                    <SelectItem value="blueberry">
+                      Invoice becomes past due
+                    </SelectItem>
+                    <SelectItem value="grapes">
+                      Work request is submitted
+                    </SelectItem>
+                    <SelectItem value="pineapple">Estimate is sent</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
             <p>Card Content</p>
           </CardContent>
           <CardFooter>
