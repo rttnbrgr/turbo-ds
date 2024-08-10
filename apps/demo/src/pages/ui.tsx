@@ -12,16 +12,10 @@ export default function Ui() {
         <Text.Header>Button</Text.Header>
         <Text.Header>Size</Text.Header>
         <div className="flex flex-col gap-4 items-start">
-          <Button variant="default" size="icon">
-            Button
-          </Button>
           <Button variant="default" size="sm">
             Button
           </Button>
           <Button variant="default" size="default">
-            Button
-          </Button>
-          <Button variant="default" size="lg">
             Button
           </Button>
         </div>
