@@ -12,12 +12,38 @@ export default function Ui() {
         <Text.Header>Button</Text.Header>
         <Text.Header>Size</Text.Header>
         <div className="flex flex-col gap-4 items-start">
-          <Button variant="default" size="sm">
+          <Button variant="fill" size="sm">
             Button
           </Button>
-          <Button variant="default" size="default">
+          <Button variant="fill" size="md">
             Button
           </Button>
+        </div>
+        <Text.Header>Style + Intent</Text.Header>
+        <div className="flex flex-row justify-start items-start gap-2">
+          <div className="flex flex-col gap-4 items-start">
+            <Button variant="fill" intent="default">
+              Button
+            </Button>
+            <Button variant="fill" intent="action">
+              Button
+            </Button>
+            <Button variant="fill" intent="danger">
+              Button
+            </Button>
+          </div>
+          <Button variant="outline">Button</Button>
+          <div className="flex flex-col gap-4 items-start">
+            <Button variant="ghost" intent="default">
+              Button
+            </Button>
+            <Button variant="ghost" intent="action">
+              Button
+            </Button>
+            <Button variant="ghost" intent="danger">
+              Button
+            </Button>
+          </div>
         </div>
       </div>
     </Layout>
