@@ -5,6 +5,7 @@ import { MockBreadcrumb } from "@/components/ui/mock";
 import { Layout } from "@/components/ui/layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus } from "lucide-react";
+import { StatusChip } from "@/components/ui/status-chip";
 
 export default function Ui() {
   // tab state
@@ -57,6 +58,17 @@ export default function Ui() {
               Button
             </Button>
           </div>
+        </div>
+      </div>
+      {/* Status Chip */}
+      <div className="flex flex-col gap-4">
+        <Text.Header>Status Chip</Text.Header>
+        <div className="flex flex-col gap-4 items-start">
+          <StatusChip intent="neutral">Status</StatusChip>
+          <StatusChip intent="success">Status</StatusChip>
+          <StatusChip intent="warn">Status</StatusChip>
+          <StatusChip intent="danger">Status</StatusChip>
+          <StatusChip intent="action">Status</StatusChip>
         </div>
       </div>
       {/* Tabs */}
