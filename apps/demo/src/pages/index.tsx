@@ -51,7 +51,7 @@ export default function Home() {
           <MockBreadcrumb />
           <div className="flex flex-row gap-3">
             <Button variant="outline">New Sequence Automation</Button>
-            <Button variant="default">New +</Button>
+            <Button variant="fill">New +</Button>
           </div>
         </>
       }
