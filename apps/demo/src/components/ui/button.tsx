@@ -13,7 +13,8 @@ const _base =
 // const _typography = "text-sm font-medium ";
 const _typography = BodyVariants();
 const _focus =
-  "ring-offset-backgroundfocus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2  ";
+  "ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2  ";
+// "ring-offset-backgroundfocus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2  ";
 const _disabled = "disabled:pointer-events-none disabled:opacity-50";
 const _rest = "transition-colors";
 
@@ -55,7 +56,7 @@ const buttonVariants = cva([_base, _typography, _focus, _disabled, _rest], {
       danger: "",
     },
     size: {
-      md: "h-9 px-2 py-3 gap-2",
+      md: "h-9 px-3 py-2 gap-2",
       sm: "h-7 px-2 py-1 gap-1 ",
     },
   },
