@@ -53,7 +53,6 @@ const Breadcrumbs = React.forwardRef<HTMLDivElement, BreadcrumbProps>(
     const layerDepth = layers.length;
     return (
       <div ref={ref} className={cn(_base)} {...props}>
-        <div>layerDepth {layerDepth}</div>
         {layers.map((layer, i) => {
           const hasChildLayer = layerDepth > i + 1;
           if (hasChildLayer)

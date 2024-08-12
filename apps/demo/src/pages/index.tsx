@@ -9,8 +9,8 @@ import {
   AutomationCard,
   AutomationCardProps,
 } from "@/components/ui/automation-card";
-import { MockBreadcrumb } from "@/components/ui/mock";
 import { Layout } from "@/components/ui/layout";
+import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 
 // clean unused parts here
 // move mocks to their own file
@@ -48,7 +48,9 @@ export default function Home() {
     <Layout
       headbar={
         <>
-          <MockBreadcrumb />
+          <Breadcrumbs
+            layers={["Marketing", "Mock", "Next", "Automations (2)"]}
+          />
           <div className="flex flex-row gap-3">
             <Button variant="outline">New Sequence Automation</Button>
             <Button variant="fill">New +</Button>

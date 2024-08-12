@@ -45,7 +45,7 @@ const StatusChip = ({ on, ...props }: StatusChipProps) => {
   );
 };
 
-type AutomationCardProps = {
+export type AutomationCardProps = {
   visible?: boolean;
   locked?: boolean;
   on: boolean;
