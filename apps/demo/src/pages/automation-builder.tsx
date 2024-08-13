@@ -46,8 +46,8 @@ export default function AutomationBuilder() {
         <AutomationCard
           title="Email Customer when Negatively Reviewed"
           description="This is an automation description that can be long but will eventually wrap."
-          visible
-          on={false}
+          isVisible
+          isActive={false}
         />
         <Card>
           <CardHeader>

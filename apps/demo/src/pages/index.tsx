@@ -7,6 +7,8 @@ import {
 } from "@/components/ui/automation-card";
 import { Layout } from "@/components/ui/layout";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
+import { AutomationCondition } from "@/components/ui/automation-condition";
+import { ConditionBlock } from "@/components/ui/condition-block";
 
 /**
  * Mock tab views
@@ -43,6 +45,20 @@ export const MockViewAutomationsReview = () => (
   </div>
 );
 
+const MockAutomationCondition = () => (
+  <AutomationCondition>
+    <ConditionBlock block="IF">
+      a visit is completed and the customer left a negative review (0 – 3.5
+      stars)...
+    </ConditionBlock>
+    <ConditionBlock block="THEN">
+      email customer the template “Response to Negative Review” after 1 day,{" "}
+      <span className="font-bold">ADD </span>
+      the tag “Dissatisfied” to the customer immediately.
+    </ConditionBlock>
+  </AutomationCondition>
+);
+
 // clean unused parts here
 // move mocks to their own file
 // move nav wip to its own file
@@ -52,24 +68,24 @@ const data: AutomationCardProps[] = [
     title: "Email Customer when Negatively Reviewed",
     description:
       "This is an automation description that can be long but will eventually wrap.",
-    visible: true,
-    on: false,
+    isVisible: true,
+    isActive: false,
   },
   {
     title: "Keanu Reaves is that dude",
     description:
       "This is an automation description that can be long but will eventually wrap.",
-    on: true,
-    visible: false,
-    locked: true,
+    isActive: true,
+    isVisible: false,
+    isLocked: true,
   },
 
   {
     title: "Email Customer when Negatively Reviewed",
     description:
       "This is an automation description that can be long but will eventually wrap.",
-    visible: true,
-    on: false,
+    isVisible: true,
+    isActive: false,
   },
 ];
 
@@ -109,7 +125,9 @@ export default function Home() {
         <TabsContent value="automations-index">
           <div className="flex flex-col gap-4">
             {data.map(({ ...cardProps }, i) => (
-              <AutomationCard key={i} {...cardProps} />
+              <AutomationCard key={i} {...cardProps}>
+                <MockAutomationCondition />
+              </AutomationCard>
             ))}
           </div>
         </TabsContent>

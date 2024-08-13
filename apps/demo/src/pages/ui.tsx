@@ -8,6 +8,9 @@ import { StatusChip } from "@/components/ui/status-chip";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
+import { AutomationCard } from "@/components/ui/automation-card";
+import { AutomationCondition } from "@/components/ui/automation-condition";
+import { ConditionBlock } from "@/components/ui/condition-block";
 
 const _base = "flex flex-col";
 const sectionStyles = "flex flex-col gap-4";
@@ -144,6 +147,52 @@ export default function Ui() {
             <Breadcrumbs
               layers={["Grandparent layer", "Parent layer", "Child layer (10)"]}
             />
+          </div>
+        </Section>
+
+        {/* Automation Card */}
+        <Section title="Automation Card">
+          <div className="flex flex-col gap-4 items-start">
+            <Section variant="subSection" title="Condition Block">
+              <ConditionBlock block="IF">
+                a visit is completed and the customer left a negative review (0
+                – 3.5 stars)...
+              </ConditionBlock>
+            </Section>
+            <Section variant="subSection" title="Automation Condition">
+              <AutomationCondition>
+                <ConditionBlock block="IF">
+                  a visit is completed and the customer left a negative review
+                  (0 – 3.5 stars)...
+                </ConditionBlock>
+                <ConditionBlock block="THEN">
+                  email customer the template “Response to Negative Review”
+                  after 1 day, <span className="font-bold">ADD </span>
+                  the tag “Dissatisfied” to the customer immediately.
+                </ConditionBlock>
+              </AutomationCondition>
+            </Section>
+            <Section variant="subSection" title="Automation Card">
+              <AutomationCard
+                isVisible
+                isLocked
+                isActive
+                title="Automation card title"
+                description="This is an automation description that can be long but will eventually wrap."
+              >
+                <AutomationCondition>
+                  <ConditionBlock block="IF">
+                    a visit is completed and the customer left a negative review
+                    (0 – 3.5 stars)...
+                  </ConditionBlock>
+                  <ConditionBlock block="THEN">
+                    email customer the template “Response to Negative Review”
+                    after 1 day, <span className="font-bold">ADD </span>
+                    the tag “Dissatisfied” to the customer immediately.
+                  </ConditionBlock>
+                </AutomationCondition>
+              </AutomationCard>
+            </Section>
           </div>
         </Section>
       </div>

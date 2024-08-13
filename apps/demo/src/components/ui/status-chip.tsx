@@ -71,7 +71,9 @@ export interface StatusChipProps
 
 const StatusChip = React.forwardRef<HTMLDivElement, StatusChipProps>(
   ({ children, className, intent, ...props }, ref) => {
+    // #TODO wire up default text
     const defaultText = "Neutral";
+
     return (
       <div
         ref={ref}

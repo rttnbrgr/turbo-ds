@@ -16,6 +16,8 @@ import {
   Eye,
   EyeOff,
 } from "lucide-react";
+import { StatusChip } from "./status-chip";
+import { iconSize } from "./icon-button";
 
 const IconWrap = ({ className = "", ...props }) => (
   <span
@@ -24,41 +26,22 @@ const IconWrap = ({ className = "", ...props }) => (
   />
 );
 
-type StatusChipProps = {
-  on: boolean;
-};
-
-const StatusChip = ({ on, ...props }: StatusChipProps) => {
-  const _sharedWrap = `rounded py-1 px-2 inline-flex flex-row gap-1 items-center`;
-  const _sharedDot = `w-3 h-3 rounded-full`;
-
-  //
-  const _uniqueWrap = on ? `bg-green-100` : `bg-red-100`;
-  const _uniqueDot = on ? `bg-green-800` : `bg-red-800`;
-  const _uniqueChildren = on ? `On` : `Off`;
-
-  return (
-    <div className={cn(_sharedWrap, _uniqueWrap)}>
-      <span className={cn(_sharedDot, _uniqueDot)} />
-      <Text.Body size="sm">{_uniqueChildren}</Text.Body>
-    </div>
-  );
-};
-
 export type AutomationCardProps = {
-  visible?: boolean;
-  locked?: boolean;
-  on: boolean;
+  isVisible?: boolean;
+  isLocked?: boolean;
+  isActive: boolean;
   title: string;
   description: string;
+  children?: React.ReactNode;
 };
 
 export const AutomationCard = ({
-  visible: isVisible = true,
-  locked: isLocked = false,
-  on: isOn = false,
+  isVisible = true,
+  isLocked = false,
+  isActive = false,
   title,
   description,
+  children,
   ...props
 }: AutomationCardProps) => {
   function onEditAutomation() {
@@ -73,6 +56,7 @@ export const AutomationCard = ({
         <div className="flex flex-row justify-start items-start gap-3 flex-grow">
           {/* toggle */}
           <CollapsibleTrigger>
+            {/* #TODO: Replace with icon button */}
             <IconWrap>
               <ChevronRight size={16} />
             </IconWrap>
@@ -83,21 +67,28 @@ export const AutomationCard = ({
             {/* header row */}
             <div className="flex flex-row">
               <div className="flex flex-col flex-1">
-                <div className="flex flex-row items-center gap-1">
+                <div className="flex flex-row items-center gap-1.5">
                   <Text.Header size="sm">{title}</Text.Header>
-
-                  <IconWrap>
-                    {isVisible ? <Eye size={16} /> : <EyeOff size={16} />}
-                  </IconWrap>
-                  <IconWrap>
-                    {isLocked ? <Lock size={16} /> : <LockOpen size={16} />}
-                  </IconWrap>
+                  {isVisible ? (
+                    <Eye size={iconSize.md} />
+                  ) : (
+                    <EyeOff size={iconSize.md} />
+                  )}
+                  {isLocked ? (
+                    <Lock size={iconSize.md} />
+                  ) : (
+                    <LockOpen size={iconSize.md} />
+                  )}
                 </div>
                 <Text.Body>{description}</Text.Body>
               </div>
               {/* Right Sice */}
               <div className="flex flex-row justify-start items-center gap-6 ">
-                <StatusChip on={isOn} />
+                {isActive ? (
+                  <StatusChip intent="success">On</StatusChip>
+                ) : (
+                  <StatusChip intent="danger">Off</StatusChip>
+                )}
                 <Button variant="outline" onClick={onEditAutomation}>
                   Edit Automation
                 </Button>
@@ -105,22 +96,7 @@ export const AutomationCard = ({
             </div>
             {/* content */}
             <CollapsibleContent className="CollapsibleContent">
-              <div className="pt-6 pb-2">
-                {/* box wrapp */}
-                <div className="bg-gray-100 py-3 px-4 flex flex-col gap-3 max-w-[700px] border border-solid border-gray-300 rounded">
-                  {/* row */}
-                  <Text.Body>
-                    <span className="font-bold">IF</span> a visit is completed
-                    and the customer left a negative review (0 – 3.5 stars)...
-                  </Text.Body>
-                  <Text.Body>
-                    <span className="font-bold">THEN </span>
-                    email customer the template “Response to Negative Review”
-                    after 1 day, <span className="font-bold">ADD </span>
-                    the tag “Dissatisfied” to the customer immediately.
-                  </Text.Body>
-                </div>
-              </div>
+              <div className="pt-6 pb-2">{children}</div>
             </CollapsibleContent>
           </div>
         </div>
