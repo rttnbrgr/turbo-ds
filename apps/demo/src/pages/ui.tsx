@@ -8,9 +8,11 @@ import { StatusChip } from "@/components/ui/status-chip";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
-import { AutomationCard } from "@/components/ui/automation-card";
-import { AutomationCondition } from "@/components/ui/automation-condition";
-import { ConditionBlock } from "@/components/ui/condition-block";
+import {
+  AutomationCard,
+  AutomationCondition,
+  ConditionBlock,
+} from "@/components/ui/automation-card";
 
 const _base = "flex flex-col";
 const sectionStyles = "flex flex-col gap-4";

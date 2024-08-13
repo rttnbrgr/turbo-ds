@@ -4,11 +4,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   AutomationCard,
   AutomationCardProps,
+  ConditionBlock,
+  AutomationCondition,
 } from "@/components/ui/automation-card";
 import { Layout } from "@/components/ui/layout";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
-import { AutomationCondition } from "@/components/ui/automation-condition";
-import { ConditionBlock } from "@/components/ui/condition-block";
 
 /**
  * Mock tab views

@@ -1,12 +1,6 @@
 import { Button } from "@/components/ui/button";
 import * as Text from "@/components/ui/text";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  MockViewAutomationsHistory,
-  MockViewAutomationsReview,
-} from "@/components/views";
 import { AutomationCard } from "@/components/ui/automation-card";
-import { MockBreadcrumb } from "@/components/ui/mock";
 import { Layout } from "@/components/ui/layout";
 import {
   Card,
@@ -27,6 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 
 export default function AutomationBuilder() {
   // tab state
@@ -34,10 +29,10 @@ export default function AutomationBuilder() {
     <Layout
       headbar={
         <>
-          <MockBreadcrumb />
+          <Breadcrumbs layers={["Automation", "Edit Automation X"]} />
           <div className="flex flex-row gap-3">
             <Button variant="outline">New Sequence Automation</Button>
-            <Button variant="default">New +</Button>
+            <Button variant="fill">New +</Button>
           </div>
         </>
       }

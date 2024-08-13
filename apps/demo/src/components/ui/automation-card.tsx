@@ -1,3 +1,4 @@
+import * as React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import * as Text from "@/components/ui/text";
@@ -19,12 +20,54 @@ import {
 import { StatusChip } from "./status-chip";
 import { iconSize } from "./icon-button";
 
+/**
+ *
+ * Condition block (read only)
+ *
+ */
+
+interface ConditionBlockProps extends Text.TextBodyProps {
+  block: string;
+}
+
+const ConditionBlock = ({ block, children, ...props }: ConditionBlockProps) => (
+  <Text.Body>
+    <span className="font-bold">{block}</span> {children}
+  </Text.Body>
+);
+
+/**
+ *
+ * Automation Condition (read only)
+ *
+ */
+export interface AutomationConditionProps
+  extends React.HTMLAttributes<HTMLDivElement> {}
+
+const AutomationCondition = React.forwardRef<
+  HTMLDivElement,
+  AutomationConditionProps
+>(({ className, ...props }, ref) => {
+  // Base styles
+  const _styles =
+    "bg-gray-100 py-3 px-4 flex flex-col gap-3 max-w-[700px] border border-solid border-gray-300 rounded";
+
+  return <div ref={ref} className={cn([_styles, className])} {...props} />;
+});
+AutomationCondition.displayName = "Card";
+
 const IconWrap = ({ className = "", ...props }) => (
   <span
     className={cn("p-1 inline-flex justify-center items-center", className)}
     {...props}
   />
 );
+
+/**
+ *
+ * Automation Card
+ *
+ */
 
 export type AutomationCardProps = {
   isVisible?: boolean;
@@ -35,7 +78,7 @@ export type AutomationCardProps = {
   children?: React.ReactNode;
 };
 
-export const AutomationCard = ({
+const AutomationCard = ({
   isVisible = true,
   isLocked = false,
   isActive = false,
@@ -110,3 +153,5 @@ export const AutomationCard = ({
 //   will eventually wrap.
 // </div>
 // {/* description */}
+
+export { ConditionBlock, AutomationCondition, AutomationCard };
