@@ -7,7 +7,7 @@ import {
   ConditionBlock,
   AutomationCondition,
 } from "@/components/ui/automation-card";
-import { Layout } from "@/components/ui/layout";
+import { Layout } from "@/components/layout";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 
 /**

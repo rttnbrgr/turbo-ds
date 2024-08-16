@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import * as Text from "@/components/ui/text";
 import { AutomationCard } from "@/components/ui/automation-card";
-import { Layout } from "@/components/ui/layout";
+import { Layout } from "@/components/layout";
 import {
   Card,
   CardContent,

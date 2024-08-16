@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import * as Text from "@/components/ui/text";
-import { Layout } from "@/components/ui/layout";
+import { Layout } from "@/components/layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus } from "lucide-react";
 import { StatusChip } from "@/components/ui/status-chip";
