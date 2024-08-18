@@ -20,9 +20,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Toggle } from "@/components/ui/toggle";
 
 const _base = "flex flex-col";
-const sectionStyles = "flex flex-col gap-4";
 
 const sectionVariants = cva([_base], {
   variants: {
@@ -66,6 +66,27 @@ export default function Ui() {
   return (
     <Layout>
       <div className="flex flex-col gap-16">
+        {/* Sample */}
+        <Section title="Sample">
+          <div className="flex flex-row justify-start items-center gap-2">
+            <Text.Header>Sample</Text.Header>
+          </div>
+        </Section>
+
+        {/* Toggle */}
+        <Section title="Toggle">
+          <div className="flex flex-col justify-start items-start gap-2">
+            <div className="flex flex-row justify-start gap-2">
+              <Toggle variant="and-or" size="sm" />
+              <Toggle variant="off-on" size="sm" />
+            </div>
+            <div className="flex flex-row justify-start gap-2">
+              <Toggle variant="and-or" size="md" />
+              <Toggle variant="off-on" size="md" />
+            </div>
+          </div>
+        </Section>
+
         {/* Card */}
         <Section title="Card">
           <div className="flex flex-row justify-start items-center gap-2">
