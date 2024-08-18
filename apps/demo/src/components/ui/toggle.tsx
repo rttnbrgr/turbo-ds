@@ -7,14 +7,14 @@ import { cn } from "@/lib/utils";
 
 // toggle container
 const _containerBase =
-  "bg-slate-50 p-1 border border-solid border-gray-300 rounded group";
+  "bg-slate-50 p-1 border border-solid border-gray-300 rounded inline-flex justify-center items-center group";
 
 /**
  *
  * Toggle Switch
  *
  */
-const _toggleBase = `inline-flex items-center justify-center rounded-sm bg-blue-100`;
+const _toggleBase = `inline-flex items-center justify-center rounded-sm bg-transparent`;
 const _toggleTypography = Text.BodyVariants({ className: "uppercase" });
 const _toggleDisabled = "disabled:pointer-events-none disabled:opacity-50";
 
