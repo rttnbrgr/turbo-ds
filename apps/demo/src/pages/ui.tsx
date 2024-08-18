@@ -13,6 +13,13 @@ import {
   AutomationCondition,
   ConditionBlock,
 } from "@/components/ui/automation-card";
+import {
+  Card,
+  CardBody,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 const _base = "flex flex-col";
 const sectionStyles = "flex flex-col gap-4";
@@ -59,6 +66,43 @@ export default function Ui() {
   return (
     <Layout>
       <div className="flex flex-col gap-16">
+        {/* Card */}
+        <Section title="Card">
+          <div className="flex flex-row justify-start items-center gap-2">
+            <Card className="w-[400px]">
+              <CardHeader>
+                <CardTitle>Card title pickled shabby chic </CardTitle>
+                <CardDescription>
+                  Card Description flexitarian sartorial, YOLO palo santo art
+                  party kinfolk fanny pac
+                </CardDescription>
+              </CardHeader>
+              <CardBody>
+                <Text.Body>
+                  Hoodie health goth retro green juice, tofu authentic semiotics
+                  messenger bag typewriter same la croix. Praxis kogi DSA brunch
+                  pabst four loko yes plz. Chicharrones paleo actually, poke
+                  tumblr 3 wolf moon food truck DIY iPhone pour-over try-hard
+                  truffaut sriracha. Edison bulb lumbersexual pug tacos vinyl
+                  scenester. Marxism green juice brunch seitan knausgaard.
+                  Pop-up glossier art party chicharrones twee yes plz tattooed
+                  cray franzen edison bulb.
+                </Text.Body>
+                <div className="flex flex-row gap-2">
+                  <Button variant="outline" size="sm">
+                    <Plus size={16} />
+                    Button
+                  </Button>
+                  <Button variant="fill" size="sm">
+                    <Plus size={16} />
+                    Button
+                  </Button>
+                </div>
+              </CardBody>
+            </Card>
+          </div>
+        </Section>
+
         {/* Button */}
         <Section title="Button">
           <Section variant="subSection" title="Size">
