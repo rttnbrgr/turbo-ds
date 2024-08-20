@@ -21,6 +21,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Toggle } from "@/components/ui/toggle";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const _base = "flex flex-col";
 
@@ -70,6 +72,26 @@ export default function Ui() {
         <Section title="Sample">
           <div className="flex flex-row justify-start items-center gap-2">
             <Text.Header>Sample</Text.Header>
+          </div>
+        </Section>
+
+        {/* Sample */}
+        <Section title="Sample">
+          <div className="flex flex-row justify-start items-center gap-2">
+            <RadioGroup defaultValue="option-one">
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="option-one" id="option-one" />
+                <Label htmlFor="option-one">Option One</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="option-two" id="option-two" disabled />
+                <Label htmlFor="option-two">Option Two (Disabled)</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="option-three" id="option-three" />
+                <Label htmlFor="option-two">Option Three</Label>
+              </div>
+            </RadioGroup>
           </div>
         </Section>
 
