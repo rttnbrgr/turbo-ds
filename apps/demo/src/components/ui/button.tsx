@@ -4,6 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 import { BodyVariants } from "./text";
+import { _disabledPointer, _focus } from "./shared-styles";
 
 /**
  * Base styles
@@ -12,10 +13,6 @@ const _base =
   "inline-flex items-center justify-center whitespace-nowrap rounded";
 // const _typography = "text-sm font-medium ";
 const _typography = BodyVariants();
-const _focus =
-  "ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2  ";
-// "ring-offset-backgroundfocus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2  ";
-const _disabled = "disabled:pointer-events-none disabled:opacity-50";
 const _rest = "transition-colors";
 
 /**
@@ -43,51 +40,54 @@ const ghostAction =
 const ghostDanger =
   "bg-transparent text-red-600 hover:bg-red-50 active:bg-red-100";
 
-const buttonVariants = cva([_base, _typography, _focus, _disabled, _rest], {
-  variants: {
-    variant: {
-      fill,
-      outline,
-      ghost,
+const buttonVariants = cva(
+  [_base, _typography, _focus, _disabledPointer, _rest],
+  {
+    variants: {
+      variant: {
+        fill,
+        outline,
+        ghost,
+      },
+      intent: {
+        default: "",
+        action: "",
+        danger: "",
+      },
+      size: {
+        md: "h-9 px-3 py-2 gap-2",
+        sm: "h-7 px-2 py-1 gap-1 ",
+      },
     },
-    intent: {
-      default: "",
-      action: "",
-      danger: "",
-    },
-    size: {
-      md: "h-9 px-3 py-2 gap-2",
-      sm: "h-7 px-2 py-1 gap-1 ",
-    },
-  },
-  compoundVariants: [
-    {
+    compoundVariants: [
+      {
+        variant: "fill",
+        intent: "action",
+        class: fillAction,
+      },
+      {
+        variant: "fill",
+        intent: "danger",
+        className: fillDanger,
+      },
+      {
+        variant: "ghost",
+        intent: "action",
+        class: ghostAction,
+      },
+      {
+        variant: "ghost",
+        intent: "danger",
+        className: ghostDanger,
+      },
+    ],
+    defaultVariants: {
       variant: "fill",
-      intent: "action",
-      class: fillAction,
+      size: "md",
+      intent: "default",
     },
-    {
-      variant: "fill",
-      intent: "danger",
-      className: fillDanger,
-    },
-    {
-      variant: "ghost",
-      intent: "action",
-      class: ghostAction,
-    },
-    {
-      variant: "ghost",
-      intent: "danger",
-      className: ghostDanger,
-    },
-  ],
-  defaultVariants: {
-    variant: "fill",
-    size: "md",
-    intent: "default",
-  },
-});
+  }
+);
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
