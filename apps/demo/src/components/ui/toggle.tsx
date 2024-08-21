@@ -5,7 +5,7 @@ import * as Text from "@/components/ui/text";
 
 import { cn } from "@/lib/utils";
 
-// toggle container
+// Container
 const _containerBase =
   "bg-slate-50 p-1 border border-solid border-gray-300 rounded inline-flex justify-center items-center group";
 
@@ -18,23 +18,23 @@ const _toggleBase = `inline-flex items-center justify-center rounded-sm bg-trans
 const _toggleTypography = Text.BodyVariants({ className: "uppercase" });
 const _toggleDisabled = "disabled:pointer-events-none disabled:opacity-50";
 
+// Shared Base
+const _toggleSwitchShared = [_toggleBase, _toggleTypography, _toggleDisabled];
+
+// Shared Size
+const _toggleSm = "w-[60px] h-5";
+const _toggleMd = "w-[60px] h-7";
+
 /**
  *
- * Chages base on data state
+ * Active + Varaints
  *
  */
-
-// const _toggleTypographyActive = `group-data-[state=on]:${Text.KeywordVariants()}`; // can we do this ? programatically?
 const _toggleActive = `
   group-data-[state=on]:tracking-wide
   group-data-[state=on]:font-bold
   group-data-[state=on]:text-white
 `;
-
-const _toggleSwitchShared = [_toggleBase, _toggleTypography, _toggleDisabled];
-
-const _toggleSm = "w-[60px] h-5";
-const _toggleMd = "w-[60px] h-7";
 
 const toggleSwitchVariants = cva([..._toggleSwitchShared, _toggleActive], {
   variants: {
@@ -53,6 +53,11 @@ const toggleSwitchVariants = cva([..._toggleSwitchShared, _toggleActive], {
   },
 });
 
+/**
+ *
+ * Active + Varaints (Inverted)
+ *
+ */
 const _toggleActiveInvert = `
   group-data-[state=off]:tracking-wide
   group-data-[state=off]:font-bold
