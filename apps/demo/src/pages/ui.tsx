@@ -23,6 +23,7 @@ import {
 import { Toggle } from "@/components/ui/toggle";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const _base = "flex flex-col";
 
@@ -72,6 +73,23 @@ export default function Ui() {
         <Section title="Sample">
           <div className="flex flex-row justify-start items-center gap-2">
             <Text.Header>Sample</Text.Header>
+          </div>
+        </Section>
+
+        {/* Checkbox */}
+        <Section title="Checkbox">
+          <div className="flex flex-row justify-start items-center gap-2">
+            <div className="items-top flex space-x-2">
+              <Checkbox id="terms1" />
+              <div className="grid gap-1.5 leading-none">
+                <Label htmlFor="terms1" weight="medium">
+                  Accept terms and conditions
+                </Label>
+                <Text.Body size={"sm"} className="text-slate-500">
+                  You agree to our Terms of Service and Privacy Policy.
+                </Text.Body>
+              </div>
+            </div>
           </div>
         </Section>
 
