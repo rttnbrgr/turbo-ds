@@ -58,7 +58,7 @@ export default function AutomationBuilder() {
                 </Text.Body>
 
                 {/* dropdown */}
-                <Select open>
+                <Select>
                   <SelectTrigger className="w-[180px] flex-1">
                     <SelectValue placeholder="Select a condition" />
                   </SelectTrigger>
@@ -68,7 +68,7 @@ export default function AutomationBuilder() {
                     <SelectItem value="blueberry">
                       Invoice becomes past due
                     </SelectItem>
-                    <SelectItem value="grapes">
+                    <SelectItem value="grapes" disabled>
                       Work request is submitted
                     </SelectItem>
                     <SelectItem value="pineapple">Estimate is sent</SelectItem>
