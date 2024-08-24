@@ -10,7 +10,7 @@ import { _disabledPointer, _focus } from "./shared-styles";
  * Base styles
  */
 const _base =
-  "inline-flex items-center justify-center whitespace-nowrap rounded";
+  "inline-flex items-center justify-center whitespace-nowrap rounded gap-1";
 // const _typography = "text-sm font-medium ";
 const _typography = BodyVariants();
 const _rest = "transition-colors";
