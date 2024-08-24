@@ -24,6 +24,13 @@ import { Toggle } from "@/components/ui/toggle";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const _base = "flex flex-col";
 
@@ -76,6 +83,22 @@ export default function Ui() {
           </div>
         </Section>
 
+        {/* Select */}
+        <Section title="Select">
+          <div className="flex flex-row justify-start items-center gap-2">
+            <Select>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Theme" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="light">Light</SelectItem>
+                <SelectItem value="dark">Dark</SelectItem>
+                <SelectItem value="system">System</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </Section>
+
         {/* Checkbox */}
         <Section title="Checkbox">
           <div className="flex flex-row justify-start items-center gap-2">
@@ -93,8 +116,8 @@ export default function Ui() {
           </div>
         </Section>
 
-        {/* Sample */}
-        <Section title="Sample">
+        {/* Radio */}
+        <Section title="Radio">
           <div className="flex flex-row justify-start items-center gap-2">
             <RadioGroup defaultValue="option-one">
               <div className="flex items-center space-x-2">
