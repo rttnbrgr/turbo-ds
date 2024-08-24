@@ -4,9 +4,8 @@ import { AutomationCard } from "@/components/ui/automation-card";
 import { Layout } from "@/components/layout";
 import {
   Card,
-  CardContent,
+  CardBody,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -49,7 +48,7 @@ export default function AutomationBuilder() {
             <CardTitle>Card Title</CardTitle>
             <CardDescription>Card Description</CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardBody>
             <div className="border border-solid border-gray-300 px-4 py-4 rounded gray-100">
               {/* row */}
               <div className="flex flex-row gap-3 items-center">
@@ -79,10 +78,7 @@ export default function AutomationBuilder() {
             </div>
 
             <p>Card Content</p>
-          </CardContent>
-          <CardFooter>
-            <p>Card Footer</p>
-          </CardFooter>
+          </CardBody>
         </Card>
       </div>
     </Layout>
