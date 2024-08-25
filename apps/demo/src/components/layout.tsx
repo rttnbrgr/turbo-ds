@@ -45,7 +45,7 @@ export type BodyPaneProps = RootPaneProps;
 
 export const BodyPane = ({ className, ...props }: BodyPaneProps) => (
   <div
-    className={cn(`p-8 flex-1 flex flex-col bg-slate-200`, className)}
+    className={cn(`p-8 flex-1 flex flex-col bg-gray-50`, className)}
     {...props}
   />
 );

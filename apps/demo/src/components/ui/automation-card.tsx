@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { StatusChip } from "./status-chip";
 import { iconSize } from "./icon-button";
+import Link from "next/link";
 
 /**
  *
@@ -74,16 +75,19 @@ export type AutomationCardProps = {
   isLocked?: boolean;
   isActive: boolean;
   title: string;
-  description: string;
+  description?: string;
   children?: React.ReactNode;
 };
+
+const mockDescription =
+  "This is an automation description that can be long but will eventually wrap.";
 
 const AutomationCard = ({
   isVisible = true,
   isLocked = false,
   isActive = false,
   title,
-  description,
+  description = mockDescription,
   children,
   ...props
 }: AutomationCardProps) => {
@@ -132,8 +136,8 @@ const AutomationCard = ({
                 ) : (
                   <StatusChip intent="danger">Off</StatusChip>
                 )}
-                <Button variant="outline" onClick={onEditAutomation}>
-                  Edit Automation
+                <Button variant="outline" onClick={onEditAutomation} asChild>
+                  <Link href={"/automation-builder"}>Edit Automation</Link>
                 </Button>
               </div>
             </div>

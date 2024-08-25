@@ -79,15 +79,20 @@ const data: AutomationCardProps[] = [
     isVisible: false,
     isLocked: true,
   },
-
   {
-    title: "Email Customer when Negatively Reviewed",
+    title: "Estimate Follow-up",
     description:
-      "This is an automation description that can be long but will eventually wrap.",
+      "Triggers when an estimate is sent and sends the customer four follow-up emails spanning 30 days. This automation stops when the estimate is accepted or declined, or when changes are requested.",
     isVisible: true,
-    isActive: false,
+    isActive: true,
   },
+  { title: "Collections Warning", isVisible: true, isActive: true },
+  { title: "Skipped Visit Notification", isVisible: true, isActive: true },
+  { title: "Estimate Accepted", isVisible: true, isActive: true },
+  { title: "Scheduled Meeting", isVisible: true, isActive: true },
 ];
+
+export const automationMockData = data;
 
 export default function Home() {
   // tab state
