@@ -29,57 +29,15 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Toggle } from "@/components/ui/toggle";
 import { automationMockData } from ".";
-
-const AutomationInfoCard = ({
-  title,
-  description,
-  isActive,
-  isLocked,
-  isVisible,
-  ...props
-}: AutomationCardProps & {}) => {
-  return (
-    <Card className="basis-[320px] grow gap-6 max-w-[400px]">
-      <CardHeader>
-        <CardTitle>Basic Information</CardTitle>
-      </CardHeader>
-      <CardBody className="flex flex-col gap-6">
-        <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="automation-name">Automation Name</Label>
-          <Input type="text" id="automation-name" value={title} />
-        </div>
-        <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="automation-description">Automation Description</Label>
-          <Input type="text" id="automation-description" value={description} />
-          <Text.Body size="sm">
-            This will appear under this automation’s name in the summary view.
-          </Text.Body>
-        </div>
-        <div className="h-[1px] w-full bg-gray-300" />
-        <div className="items-top flex space-x-2">
-          <Checkbox id="automation-review" defaultChecked={isVisible} />
-          <div className="grid gap-1.5 leading-none">
-            <Label htmlFor="automation-review" weight="medium">
-              Review Before Activation
-            </Label>
-            <Text.Body size={"sm"} className="text-slate-500">
-              When checked, this automation sequence will be reviewed before it
-              can be activated.
-            </Text.Body>
-          </div>
-        </div>
-        <div className="items-top flex space-x-2">
-          <Checkbox id="automation-password" defaultChecked={isLocked} />
-          <div className="grid gap-1.5 leading-none">
-            <Label htmlFor="automation-password" weight="medium">
-              Password Protect Automation
-            </Label>
-          </div>
-        </div>
-      </CardBody>
-    </Card>
-  );
-};
+import { Plus } from "lucide-react";
+import { AutomationInfoCard } from "@/components/automation-builder/automation-info-card";
+import {
+  Divider,
+  IfBuilder,
+  NestedCard,
+  StopBlock,
+  ThenBlock,
+} from "@/components/automation-builder";
 
 export default function AutomationBuilder() {
   const mockAutomation = automationMockData[2];
@@ -103,7 +61,7 @@ export default function AutomationBuilder() {
       }
     >
       <div className="flex flex-row gap-4 flex-wrap">
-        <AutomationInfoCard {...mockAutomation} />
+        {/* <AutomationInfoCard {...mockAutomation} /> */}
         <Card className="basis-[500px] grow-[3]">
           <CardHeader>
             <CardTitle>Automation Conditions</CardTitle>
@@ -115,36 +73,16 @@ export default function AutomationBuilder() {
               at Copilot University.
             </CardDescription>
           </CardHeader>
-          <CardBody>
-            <div className="border border-solid border-gray-300 px-4 py-4 rounded gray-100">
-              {/* row */}
-              <div className="flex flex-row gap-3 items-center">
-                {/* if */}
-                <Text.Body className="uppercase" weight="bold">
-                  If
-                </Text.Body>
+          <CardBody className="flex flex-col gap-6">
+            <NestedCard className="flex flex-col gap-6">
+              <IfBuilder />
+              <Divider />
+              <ThenBlock />
+            </NestedCard>
 
-                {/* dropdown */}
-                <Select>
-                  <SelectTrigger className="w-[180px] flex-1">
-                    <SelectValue placeholder="Select a condition" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="apple">Visit is added</SelectItem>
-                    <SelectItem value="banana">Visit is completed</SelectItem>
-                    <SelectItem value="blueberry">
-                      Invoice becomes past due
-                    </SelectItem>
-                    <SelectItem value="grapes" disabled>
-                      Work request is submitted
-                    </SelectItem>
-                    <SelectItem value="pineapple">Estimate is sent</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            <p>Card Content</p>
+            <NestedCard className="flex flex-col gap-4">
+              <StopBlock />
+            </NestedCard>
           </CardBody>
         </Card>
       </div>
