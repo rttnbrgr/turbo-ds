@@ -27,30 +27,51 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Toggle } from "@/components/ui/toggle";
-import { Plus } from "lucide-react";
+import { Plus, Trash } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { IconButton, iconSize } from "../ui/icon-button";
 // import { automationMockData } from ".";
 
 const conditionsSelect = [
-  { value: "apple", text: "Visit is added" },
-  { value: "banana", text: "Visit is completed" },
-  { value: "blueberry", text: "Invoice becomes past due" },
-  { value: "grapes", text: "Work request is submitted" },
-  { value: "pineapple", text: "Estimate is sent" },
+  { value: "if1", text: "Visit is added" },
+  { value: "if2", text: "Visit is completed" },
+  { value: "if3", text: "Meeeting is completed" },
+  { value: "if4", text: "Invoice becomes past due" },
+  { value: "if5", text: "Work request is submitted" },
+  { value: "if6", text: "Estimate is sent" },
 ];
 
+type toggleValue = "and" | "or";
+
 // const IfBlock = ({ canDelete }) => {
-export const IfBlock = ({ ...props }) => {
+
+type IfBlockShape = {
+  blockType: "if";
+  toggleValue?: toggleValue;
+  selectValue?: string;
+  canDelete: boolean;
+  dependents?: [];
+};
+
+type IfBlockProps = IfBlockShape & {
+  onDelete?: () => void;
+};
+
+export const IfBlock = ({ canDelete, ...props }: IfBlockProps) => {
+  const [value, setValue] = React.useState<string | undefined>();
+  const [toggleValue, setToggleValue] = React.useState<string | undefined>();
+
   return (
     <div className="flex flex-row gap-3 items-center">
-      {/* if */}
-      <Text.Body className="uppercase" weight="bold">
-        If
-      </Text.Body>
-      {/* and/or */}
+      {canDelete ? (
+        <Toggle size={"sm"} variant={"and-or"} />
+      ) : (
+        <Text.Body className="uppercase" weight="bold">
+          If
+        </Text.Body>
+      )}
 
-      {/* dropdown */}
-      <Select>
+      <Select value={value} onValueChange={setValue}>
         <SelectTrigger className="w-[180px] flex-1">
           <SelectValue placeholder="Select a condition" />
         </SelectTrigger>
@@ -63,12 +84,146 @@ export const IfBlock = ({ ...props }) => {
         </SelectContent>
       </Select>
 
-      {/* delete */}
+      {canDelete && (
+        <IconButton size="md" variant={"ghost"}>
+          <Trash size={iconSize.md} />
+        </IconButton>
+      )}
     </div>
   );
 };
 
+const newBlock: IfBlockShape = {
+  blockType: "if",
+  toggleValue: "and",
+  selectValue: undefined,
+  canDelete: true,
+  dependents: [],
+};
+
 export const IfBuilder = () => {
+  const [blocks, setBlocks] = React.useState<IfBlockShape[]>([
+    {
+      blockType: "if",
+      toggleValue: "and",
+      selectValue: undefined,
+      canDelete: false,
+      dependents: [],
+    },
+    {
+      ...newBlock,
+    },
+  ]);
+
+  function addNewBlock() {
+    setBlocks(cv => {
+      return [
+        ...cv,
+        {
+          ...newBlock,
+        },
+      ];
+    });
+  }
+
+  return (
+    <div className="flex flex-col gap-4">
+      {blocks.map((block, i) => (
+        <IfBlock key={i} {...block} />
+      ))}
+      <div className="flex flex-row gap-3 items-center">
+        <Button variant="ghost" intent={"action"} onClick={addNewBlock}>
+          <Plus />
+          Add condition
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+const thenOptions = [
+  { value: "then01", text: "Email customer" },
+  { value: "then02", text: "Email company owner" },
+  { value: "then03", text: "Email employee" },
+  { value: "then04", text: "Add a tag to customer" },
+  { value: "then05", text: "Remove a tag from customer" },
+  { value: "then06", text: "Text customer" },
+  { value: "then07", text: "Text company owner" },
+];
+
+const thenTemplateOptions = [
+  { value: "thenTemplate01", text: "Positive review request" },
+  { value: "thenTemplate02", text: "Check for customer review" },
+  { value: "thenTemplate03", text: "Pick up your dog shit!" },
+  { value: "thenTemplate04", text: "Unpaid balance (1st reminder)" },
+  { value: "thenTemplate05", text: "Unpaid balance (2nd reminder)" },
+  { value: "thenTemplate06", text: "Unpaid balance (Final reminder)" },
+  { value: "thenTemplate07", text: "We'll be in touch" },
+  { value: "thenTemplate08", text: "Contact potential customer" },
+  { value: "thenTemplate09", text: "Estimate follow up 1" },
+  { value: "thenTemplate10", text: "Estimate follow up 2" },
+  { value: "thenTemplate11", text: "Estimate follow up 3" },
+];
+
+export const ThenBlock = () => {
+  const canDelete = true;
+  const showTemplateBlock = true;
+  return (
+    <div className="flex flex-col gap-4">
+      {/* row */}
+      <div className="flex flex-row gap-3 items-center">
+        {/* if */}
+        <Text.Body className="uppercase" weight="bold">
+          {canDelete ? "And" : "Then"}
+        </Text.Body>
+
+        <Select>
+          <SelectTrigger className="w-[180px] flex-1">
+            <SelectValue placeholder="Select a condition" />
+          </SelectTrigger>
+          <SelectContent>
+            {thenOptions.map((condition, i) => (
+              <SelectItem key={i} value={condition.value}>
+                {condition.text}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        {/* conditionals */}
+
+        {/* Template Dropdown */}
+        <Text.Body>the template</Text.Body>
+        <Select>
+          <SelectTrigger className="w-[180px] flex-1">
+            <SelectValue placeholder="Select a condition" />
+          </SelectTrigger>
+          <SelectContent>
+            {thenTemplateOptions.map((condition, i) => (
+              <SelectItem key={i} value={condition.value}>
+                {condition.text}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        {canDelete && (
+          <IconButton size="md" variant={"ghost"}>
+            <Trash size={iconSize.md} />
+          </IconButton>
+        )}
+      </div>
+      <div className="flex flex-row gap-3 items-center">
+        <Button variant="ghost" intent={"action"}>
+          <Plus />
+          Add Action
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+export const ThenBuilder = () => {
   const [blockCount, setBlockCount] = React.useState(1);
   return (
     <div className="flex flex-col gap-4">
@@ -86,56 +241,6 @@ export const IfBuilder = () => {
         >
           <Plus />
           Add condition
-        </Button>
-      </div>
-    </div>
-  );
-};
-
-export const ThenBlock = () => {
-  return (
-    <div className="flex flex-col gap-4">
-      {/* row */}
-      <div className="flex flex-row gap-3 items-center">
-        {/* if */}
-        <Text.Body className="uppercase" weight="bold">
-          Then
-        </Text.Body>
-
-        {/* dropdown */}
-        <Select>
-          <SelectTrigger className="w-[180px] flex-1">
-            <SelectValue placeholder="Select a condition" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="apple">Email Customer</SelectItem>
-            <SelectItem value="banana">Visit is completed</SelectItem>
-            <SelectItem value="blueberry">Invoice becomes past due</SelectItem>
-            <SelectItem value="grapes">Work request is submitted</SelectItem>
-            <SelectItem value="pineapple">Estimate is sent</SelectItem>
-          </SelectContent>
-        </Select>
-
-        <Text.Body>the template</Text.Body>
-
-        {/* dropdown */}
-        <Select>
-          <SelectTrigger className="w-[180px] flex-1">
-            <SelectValue placeholder="Select a condition" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="apple">Pick up your dog shit</SelectItem>
-            <SelectItem value="banana">Visit is completed</SelectItem>
-            <SelectItem value="blueberry">Invoice becomes past due</SelectItem>
-            <SelectItem value="grapes">Work request is submitted</SelectItem>
-            <SelectItem value="pineapple">Estimate is sent</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-      <div className="flex flex-row gap-3 items-center">
-        <Button variant="ghost" intent={"action"}>
-          <Plus />
-          Add Action
         </Button>
       </div>
     </div>

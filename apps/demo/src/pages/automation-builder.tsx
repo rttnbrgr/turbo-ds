@@ -28,7 +28,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Toggle } from "@/components/ui/toggle";
-import { automationMockData } from ".";
 import { Plus } from "lucide-react";
 import { AutomationInfoCard } from "@/components/automation-builder/automation-info-card";
 import {
@@ -38,9 +37,10 @@ import {
   StopBlock,
   ThenBlock,
 } from "@/components/automation-builder";
+import { automationMockData } from "@/mocks/automation-builder";
 
 export default function AutomationBuilder() {
-  const mockAutomation = automationMockData[2];
+  const mockAutomation = automationMockData[1];
   // tab state
   return (
     <Layout
@@ -61,7 +61,7 @@ export default function AutomationBuilder() {
       }
     >
       <div className="flex flex-row gap-4 flex-wrap">
-        {/* <AutomationInfoCard {...mockAutomation} /> */}
+        <AutomationInfoCard {...mockAutomation} />
         <Card className="basis-[500px] grow-[3]">
           <CardHeader>
             <CardTitle>Automation Conditions</CardTitle>
