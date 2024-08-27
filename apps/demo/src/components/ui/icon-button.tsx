@@ -10,7 +10,7 @@ export let iconSize = {
   lg: 24,
 };
 
-const _base = "inline-flex items-center justify-center h-10 p-2";
+const _base = "inline-flex items-center justify-center";
 const _focus =
   "ring-offset-backgroundfocus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2  ";
 const _disabled = "disabled:pointer-events-none disabled:opacity-50";
@@ -22,10 +22,14 @@ const iconButtonVariants = cva([_base, _focus, _disabled, _rest], {
       fill: "bg-primary text-primary-foreground hover:bg-primary/90",
       ghost: "hover:bg-accent hover:text-accent-foreground",
     },
+    size: {
+      md: "h-7 w-7",
+    },
   },
+
   defaultVariants: {
     variant: "fill",
-    // size: "default",
+    size: "md",
   },
 });
 
