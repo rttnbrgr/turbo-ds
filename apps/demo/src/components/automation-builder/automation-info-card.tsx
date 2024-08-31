@@ -22,11 +22,15 @@ export const AutomationInfoCard = ({
       <CardBody className="flex flex-col gap-6">
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="automation-name">Automation Name</Label>
-          <Input type="text" id="automation-name" value={title} />
+          <Input type="text" id="automation-name" placeholder={title} />
         </div>
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="automation-description">Automation Description</Label>
-          <Input type="text" id="automation-description" value={description} />
+          <Input
+            type="text"
+            id="automation-description"
+            placeholder={description}
+          />
           <Text.Body size="sm">
             This will appear under this automation’s name in the summary view.
           </Text.Body>
