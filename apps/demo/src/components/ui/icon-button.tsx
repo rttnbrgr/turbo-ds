@@ -28,7 +28,7 @@ const iconButtonVariants = cva([_base, _focus, _disabled, _rest], {
   },
 
   defaultVariants: {
-    variant: "fill",
+    variant: "ghost",
     size: "md",
   },
 });

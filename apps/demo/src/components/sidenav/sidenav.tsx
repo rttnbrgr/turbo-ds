@@ -23,6 +23,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import Link, { LinkProps } from "next/link";
 
 /**
  * Shared styles for both list items and nested list items
@@ -31,7 +32,7 @@ const _liBase = `inline-flex flex-row items-center flex-1 bg-transparent rounded
 const _liTypography = `text-sm/4 font-semibold text-white`; // #TODO: non-standard text style
 const _liHover = `cursor-pointer hover:bg-blue-500`;
 
-const navIconSize = 16;
+export const navIconSize = 16;
 
 /**
  *
@@ -73,7 +74,7 @@ type SideNavItemProps = {
 
 // Should maybe be a button?
 // Will need routing concerns
-const SideNavItem = ({
+export const SideNavItem = ({
   isNested = true,
   onClick,
   isActive,
@@ -120,6 +121,46 @@ const SideNavItem = ({
   );
 };
 
+type SideNavItemSimpleProps = Omit<
+  SideNavItemProps,
+  "isNested" | "isExpanded" | "onClick"
+> & {
+  href: LinkProps["href"];
+};
+
+export const SideNavItemSimple = ({
+  isActive,
+  icon,
+  className,
+  href,
+  ...props
+}: SideNavItemSimpleProps) => {
+  // Adjust base spacing
+  const _navLiBase = `${_liBase} gap-3 py-2 px-3`;
+  // Compute open
+  const _navLiActive = isActive && "bg-blue-600";
+  // Overrides
+  const _overrides = `text-foreground hover:bg-gray-50`;
+
+  return (
+    <Link
+      href={href}
+      className={cn(
+        _navLiBase,
+        _liTypography,
+        _liHover,
+        _navLiActive,
+        _overrides,
+        className
+      )}
+    >
+      {/* Icon */}
+      {icon && icon}
+      <span className="flex-1 text-left">{props.children}</span>
+    </Link>
+  );
+};
+
 /**
  *
  * Sublist Item
@@ -149,7 +190,7 @@ type SideNavSubItemProps = {
 
 // Should maybe be a button?
 // Will need routing concerns
-const SideNavSubItem = ({
+export const SideNavSubItem = ({
   onClick = () => {
     console.log("subnav click");
   },
@@ -193,7 +234,7 @@ type SideNavSublistProps = {
   expanded: boolean;
 };
 
-const SideNavSublist = ({
+export const SideNavSublist = ({
   className,
   children,
   expanded,
