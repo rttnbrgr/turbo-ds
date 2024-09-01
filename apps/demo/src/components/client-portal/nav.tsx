@@ -160,7 +160,7 @@ export const Nav = ({ ...props }) => {
         <Text.Header size={"default"}>Madison Handyman</Text.Header>
         <div className="flex-shrink-0 md:hidden">
           <IconButton onClick={toggleOpen}>
-            {open ? <Menu size={16} /> : <X size={16} />}
+            {open ? <X size={16} /> : <Menu size={16} />}
           </IconButton>
         </div>
       </div>
