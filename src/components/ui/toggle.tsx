@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as TogglePrimitive from "@radix-ui/react-toggle";
 import { cva, type VariantProps } from "class-variance-authority";
-import * as Text from "@/components/ui/text";
+import { textBodyVariants } from "@/components/ui/text";
 
 import { cn } from "@/lib/utils";
 
@@ -15,7 +15,7 @@ const _containerBase =
  *
  */
 const _toggleBase = `inline-flex items-center justify-center rounded-sm bg-transparent`;
-const _toggleTypography = Text.BodyVariants({ className: "uppercase" });
+const _toggleTypography = textBodyVariants({ className: "uppercase" });
 const _toggleDisabled = "disabled:pointer-events-none disabled:opacity-50";
 
 // Shared Base

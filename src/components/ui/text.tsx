@@ -5,26 +5,28 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /**
- * body
+ *
+ * Body Text
+ *
  */
 
-const _BASE = "font-sans not-italic text-sm";
+const _BODY_BASE = "font-sans not-italic text-sm";
 
-const textBodyVariants = cva(_BASE, {
+const textBodyVariants = cva(_BODY_BASE, {
   variants: {
     weight: {
-      default: "font-normal",
+      normal: "font-normal",
       medium: "font-medium",
       bold: "font-bold",
     },
     size: {
       sm: "text-xs",
-      default: "text-sm",
+      md: "text-sm",
     },
   },
   defaultVariants: {
-    weight: "default",
-    size: "default",
+    weight: "normal",
+    size: "md",
   },
 });
 
@@ -46,52 +48,54 @@ const TextBody = React.forwardRef<HTMLParagraphElement, TextBodyProps>(
     );
   }
 );
-TextBody.displayName = "Text";
-
-// export { TextBody, textBodyVariants };
+TextBody.displayName = "Body Text";
 
 /**
- * header
+ *
+ * Header
+ *
  */
 
 const _HEADER_BASE = "font-sans not-italic font-bold leading-normal capitalize";
 
-const textHeaderVariants = cva(_HEADER_BASE, {
+const textHeadingVariants = cva(_HEADER_BASE, {
   variants: {
     size: {
       sm: "text-base",
-      default: "text-xl",
+      md: "text-xl",
       lg: "text-2xl",
       xl: "text-4xl", // not exact to henry
     },
   },
   defaultVariants: {
-    size: "default",
+    size: "md",
   },
 });
 
-export interface TextHeaderProps
+export interface TextHeadingProps
   extends React.HTMLAttributes<HTMLParagraphElement>,
-    VariantProps<typeof textHeaderVariants> {
+    VariantProps<typeof textHeadingVariants> {
   asChild?: boolean;
 }
 
-const TextHeader = React.forwardRef<HTMLParagraphElement, TextHeaderProps>(
+const TextHeading = React.forwardRef<HTMLParagraphElement, TextHeadingProps>(
   ({ className, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "h2";
     return (
       <Comp
-        className={cn(textHeaderVariants({ size, className }))}
+        className={cn(textHeadingVariants({ size, className }))}
         ref={ref}
         {...props}
       />
     );
   }
 );
-TextHeader.displayName = "Header";
+TextHeading.displayName = "Text Heading";
 
 /**
- * keyword
+ *
+ * Keyword
+ *
  */
 
 const _KEYWORD_BASE = "font-sans not-italic font-bold tracking-wide uppercase";
@@ -100,11 +104,11 @@ const textKeywordVariants = cva(_KEYWORD_BASE, {
   variants: {
     size: {
       sm: "text-xs",
-      default: "text-sm",
+      md: "text-sm",
     },
   },
   defaultVariants: {
-    size: "default",
+    size: "md",
   },
 });
 
@@ -126,11 +130,17 @@ const TextKeyword = React.forwardRef<HTMLParagraphElement, TextKeywordProps>(
     );
   }
 );
-TextKeyword.displayName = "Keyword";
+TextKeyword.displayName = "Text Keyword";
 
-export const Body = TextBody;
-export const BodyVariants = textBodyVariants;
-export const Header = TextHeader;
-export const HeaderVariants = textHeaderVariants;
-export const Keyword = TextKeyword;
-export const KeywordVariants = textKeywordVariants;
+const Body = TextBody;
+const Heading = TextHeading;
+const Keyword = TextKeyword;
+
+export {
+  Body,
+  Heading,
+  Keyword,
+  textBodyVariants,
+  textHeadingVariants,
+  textKeywordVariants,
+};

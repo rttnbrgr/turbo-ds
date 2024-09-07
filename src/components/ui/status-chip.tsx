@@ -2,7 +2,7 @@ import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
-import { BodyVariants } from "./text";
+import { textBodyVariants } from "./text";
 
 const statusDotVariants = cva(["w-2 h-2 rounded-full"], {
   variants: {
@@ -43,7 +43,7 @@ StatusDot.displayName = "Status Dot";
  * Base styles
  */
 const _base = "px-2 py-1 inline-flex items-center justify-center gap-1";
-const _typography = BodyVariants({
+const _typography = textBodyVariants({
   size: "sm",
   weight: "default",
   className: "text-gray-950",

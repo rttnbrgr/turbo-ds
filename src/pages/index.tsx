@@ -17,7 +17,7 @@ import { automationMockData } from "@/mocks/automation-builder";
  */
 export const MockViewAutomationsHistory = () => (
   <div>
-    <Text.Header size="sm">Automations History</Text.Header>
+    <Text.Heading size="sm">Automations History</Text.Heading>
     <Text.Body>
       Cold-pressed ethical next level tote bag poutine art party hashtag
       affogato polaroid seitan vibecession af bespoke. Humblebrag selfies
@@ -33,7 +33,7 @@ export const MockViewAutomationsHistory = () => (
 
 export const MockViewAutomationsReview = () => (
   <div>
-    <Text.Header size="sm">Automations Review</Text.Header>
+    <Text.Heading size="sm">Automations Review</Text.Heading>
     <Text.Body>
       Cold-pressed ethical next level tote bag poutine art party hashtag
       affogato polaroid seitan vibecession af bespoke. Humblebrag selfies

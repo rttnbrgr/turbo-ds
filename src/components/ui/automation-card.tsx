@@ -115,7 +115,7 @@ const AutomationCard = ({
             <div className="flex flex-row">
               <div className="flex flex-col flex-1">
                 <div className="flex flex-row items-center gap-1.5">
-                  <Text.Header size="sm">{title}</Text.Header>
+                  <Text.Heading size="sm">{title}</Text.Heading>
                   {isVisible ? (
                     <Eye size={iconSize.md} />
                   ) : (

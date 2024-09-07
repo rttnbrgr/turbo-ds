@@ -144,7 +144,9 @@ export const Nav = ({ ...props }) => {
   }
 
   // Styles that require state
-  const _bodyTransform = `${open ? "translate-y-0" : "translate-y-[-100%]"} transition-all ease-in-out duration-500`;
+  const _bodyTransform = `${
+    open ? "translate-y-0" : "translate-y-[-100%]"
+  } transition-all ease-in-out duration-500`;
 
   return (
     <aside className={cn(_mobile, _tablet, "color-debug", _bg)}>
@@ -157,7 +159,7 @@ export const Nav = ({ ...props }) => {
           height={90}
           className="w-full hidden md:block"
         />
-        <Text.Header size={"default"}>Madison Handyman</Text.Header>
+        <Text.Heading>Madison Handyman</Text.Heading>
         <div className="flex-shrink-0 md:hidden">
           <IconButton onClick={toggleOpen}>
             {open ? <X size={16} /> : <Menu size={16} />}

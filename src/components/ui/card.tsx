@@ -46,8 +46,8 @@ CardHeader.displayName = "CardHeader";
  * Extends Text.Header
  *
  */
-const CardTitle = ({ ...props }: Text.TextHeaderProps) => (
-  <Text.Header size="sm" {...props} />
+const CardTitle = ({ ...props }: Text.TextHeadingProps) => (
+  <Text.Heading size="sm" {...props} />
 );
 
 /**

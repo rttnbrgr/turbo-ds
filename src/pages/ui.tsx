@@ -62,9 +62,9 @@ const Section = ({
   return (
     <div className={cn(sectionVariants({ variant, className }))} {...props}>
       {title && (
-        <Text.Header size={variant === "section" ? "default" : "sm"}>
+        <Text.Heading size={variant === "section" ? "md" : "sm"}>
           {title}
-        </Text.Header>
+        </Text.Heading>
       )}
       {children}
     </div>
@@ -79,7 +79,7 @@ export default function Ui() {
         {/* Sample */}
         <Section title="Sample">
           <div className="flex flex-row justify-start items-center gap-2">
-            <Text.Header>Sample</Text.Header>
+            <Text.Heading>Sample</Text.Heading>
           </div>
         </Section>
 
@@ -255,17 +255,17 @@ export default function Ui() {
               </TabsList>
               <TabsContent value="1">
                 <div className="w-[400px] h-[100px] bg-red-100 flex justify-center items-center">
-                  <Text.Header>One</Text.Header>
+                  <Text.Heading>One</Text.Heading>
                 </div>
               </TabsContent>
               <TabsContent value="2">
                 <div className="w-[400px] h-[100px] bg-blue-100 flex justify-center items-center">
-                  <Text.Header>Two</Text.Header>
+                  <Text.Heading>Two</Text.Heading>
                 </div>
               </TabsContent>
               <TabsContent value="3">
                 <div className="w-[400px] h-[100px] bg-green-100 flex justify-center items-center">
-                  <Text.Header>Three</Text.Header>
+                  <Text.Heading>Three</Text.Heading>
                 </div>
               </TabsContent>
             </Tabs>

@@ -3,7 +3,7 @@ import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
-import { BodyVariants } from "./text";
+import { textBodyVariants } from "./text";
 import { _disabledPointer, _focus } from "./shared-styles";
 
 /**
@@ -12,7 +12,7 @@ import { _disabledPointer, _focus } from "./shared-styles";
 const _base =
   "inline-flex items-center justify-center whitespace-nowrap rounded gap-1";
 // const _typography = "text-sm font-medium ";
-const _typography = BodyVariants();
+const _typography = textBodyVariants();
 const _rest = "transition-colors";
 
 /**

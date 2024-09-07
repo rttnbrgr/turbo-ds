@@ -5,7 +5,7 @@ export default function RateUs() {
   return (
     <Layout>
       <div className="flex flex-col gap-4">
-        <Text.Header size={"xl"}>Rate Us</Text.Header>
+        <Text.Heading size={"xl"}>Rate Us</Text.Heading>
       </div>
     </Layout>
   );
