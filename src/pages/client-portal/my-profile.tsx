@@ -67,7 +67,7 @@ export default function MyProfile() {
   return (
     <Layout>
       <div className="flex flex-col gap-4">
-        <Text.Header size={"xl"}>My Profile</Text.Header>
+        <Text.Heading size={"xl"}>My Profile</Text.Heading>
         <div className="flex flex-row row-wrap gap-6">
           <Card className="w-[572px]">
             <CardHeader>

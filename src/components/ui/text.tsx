@@ -58,7 +58,7 @@ TextBody.displayName = "Text";
 
 const _HEADER_BASE = "font-sans not-italic font-bold leading-normal capitalize";
 
-const textHeaderVariants = cva(_HEADER_BASE, {
+const textHeadingVariants = cva(_HEADER_BASE, {
   variants: {
     size: {
       sm: "text-base",
@@ -72,18 +72,18 @@ const textHeaderVariants = cva(_HEADER_BASE, {
   },
 });
 
-export interface TextHeaderProps
+export interface TextHeadingProps
   extends React.HTMLAttributes<HTMLParagraphElement>,
-    VariantProps<typeof textHeaderVariants> {
+    VariantProps<typeof textHeadingVariants> {
   asChild?: boolean;
 }
 
-const TextHeader = React.forwardRef<HTMLParagraphElement, TextHeaderProps>(
+const TextHeading = React.forwardRef<HTMLParagraphElement, TextHeadingProps>(
   ({ className, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "h2";
     return (
       <Comp
-        className={cn(textHeaderVariants({ size, className }))}
+        className={cn(textHeadingVariants({ size, className }))}
         ref={ref}
         {...props}
       />
@@ -133,14 +133,14 @@ const TextKeyword = React.forwardRef<HTMLParagraphElement, TextKeywordProps>(
 TextKeyword.displayName = "Keyword";
 
 const Body = TextBody;
-const Header = TextHeader;
+const Heading = TextHeading;
 const Keyword = TextKeyword;
 
 export {
   Body,
-  Header,
+  Heading,
   Keyword,
   textBodyVariants,
-  textHeaderVariants,
+  textHeadingVariants,
   textKeywordVariants,
 };

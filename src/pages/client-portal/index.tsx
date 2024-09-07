@@ -6,7 +6,7 @@ export default function ClientPortalIndex() {
   return (
     <Layout>
       <div className="flex flex-col gap-4">
-        <Text.Header size={"xl"}>Home</Text.Header>
+        <Text.Heading size={"xl"}>Home</Text.Heading>
       </div>
     </Layout>
   );

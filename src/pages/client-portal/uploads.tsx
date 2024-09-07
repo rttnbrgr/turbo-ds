@@ -5,7 +5,7 @@ export default function Uploads() {
   return (
     <Layout>
       <div className="flex flex-col gap-4">
-        <Text.Header size={"xl"}>Uploads</Text.Header>
+        <Text.Heading size={"xl"}>Uploads</Text.Heading>
       </div>
     </Layout>
   );

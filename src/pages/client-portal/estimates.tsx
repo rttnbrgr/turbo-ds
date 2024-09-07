@@ -5,7 +5,7 @@ export default function Estimates() {
   return (
     <Layout>
       <div className="flex flex-col gap-4">
-        <Text.Header size={"xl"}>Estimates</Text.Header>
+        <Text.Heading size={"xl"}>Estimates</Text.Heading>
       </div>
     </Layout>
   );
