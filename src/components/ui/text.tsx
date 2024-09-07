@@ -15,18 +15,18 @@ const _BODY_BASE = "font-sans not-italic text-sm";
 const textBodyVariants = cva(_BODY_BASE, {
   variants: {
     weight: {
-      default: "font-normal",
+      normal: "font-normal",
       medium: "font-medium",
       bold: "font-bold",
     },
     size: {
       sm: "text-xs",
-      default: "text-sm",
+      md: "text-sm",
     },
   },
   defaultVariants: {
-    weight: "default",
-    size: "default",
+    weight: "normal",
+    size: "md",
   },
 });
 
@@ -48,7 +48,7 @@ const TextBody = React.forwardRef<HTMLParagraphElement, TextBodyProps>(
     );
   }
 );
-TextBody.displayName = "Text";
+TextBody.displayName = "Body Text";
 
 /**
  *
@@ -62,13 +62,13 @@ const textHeadingVariants = cva(_HEADER_BASE, {
   variants: {
     size: {
       sm: "text-base",
-      default: "text-xl",
+      md: "text-xl",
       lg: "text-2xl",
       xl: "text-4xl", // not exact to henry
     },
   },
   defaultVariants: {
-    size: "default",
+    size: "md",
   },
 });
 
@@ -90,7 +90,7 @@ const TextHeading = React.forwardRef<HTMLParagraphElement, TextHeadingProps>(
     );
   }
 );
-TextHeader.displayName = "Header";
+TextHeading.displayName = "Text Heading";
 
 /**
  *
@@ -104,11 +104,11 @@ const textKeywordVariants = cva(_KEYWORD_BASE, {
   variants: {
     size: {
       sm: "text-xs",
-      default: "text-sm",
+      md: "text-sm",
     },
   },
   defaultVariants: {
-    size: "default",
+    size: "md",
   },
 });
 
@@ -130,7 +130,7 @@ const TextKeyword = React.forwardRef<HTMLParagraphElement, TextKeywordProps>(
     );
   }
 );
-TextKeyword.displayName = "Keyword";
+TextKeyword.displayName = "Text Keyword";
 
 const Body = TextBody;
 const Heading = TextHeading;
