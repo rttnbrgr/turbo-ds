@@ -129,7 +129,8 @@ const TextKeyword = React.forwardRef<HTMLParagraphElement, TextKeywordProps>(
 TextKeyword.displayName = "Keyword";
 
 export const Body = TextBody;
-export const BodyVariants = textBodyVariants;
+// export const BodyVariants = textBodyVariants;
+export { textBodyVariants };
 export const Header = TextHeader;
 export const HeaderVariants = textHeaderVariants;
 export const Keyword = TextKeyword;

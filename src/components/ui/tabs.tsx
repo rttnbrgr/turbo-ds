@@ -2,7 +2,7 @@ import * as React from "react";
 import * as TabsPrimitive from "@radix-ui/react-tabs";
 
 import { cn } from "@/lib/utils";
-import { BodyVariants } from "./text";
+import { textBodyVariants } from "./text";
 
 const Tabs = TabsPrimitive.Root;
 
@@ -34,7 +34,7 @@ TabsList.displayName = TabsPrimitive.List.displayName;
 
 const _triggerBase = `inline-flex items-center justify-center whitespace-nowrap px-3 py-3`;
 // const _triggerTypography = `text-sm/4 font-semibold text-grey-800`;
-const _triggerTypography = `${BodyVariants()} font-semibold text-slate-600`;
+const _triggerTypography = `${textBodyVariants()} font-semibold text-slate-600`;
 const _triggerBorder = `border-b-2 border-solid border-transparent`;
 const _triggerHover = `hover:border-slate-400`;
 const _triggerFocus = `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2`;
