@@ -45,7 +45,6 @@ StatusDot.displayName = "Status Dot";
 const _base = "px-2 py-1 inline-flex items-center justify-center gap-1";
 const _typography = textBodyVariants({
   size: "sm",
-  weight: "default",
   className: "text-gray-950",
 });
 const _border = "border border-solid border-transparent ";

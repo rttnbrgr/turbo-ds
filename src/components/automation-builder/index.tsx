@@ -227,10 +227,11 @@ export const ThenBuilder = () => {
   const [blockCount, setBlockCount] = React.useState(1);
   return (
     <div className="flex flex-col gap-4">
+      <div>then builder</div>
       {/* row */}
-      {Array.from(Array(blockCount)).map((block, i) => (
+      {/* {Array.from(Array(blockCount)).map((block, i) => (
         <IfBlock key={i} />
-      ))}
+      ))} */}
       <div className="flex flex-row gap-3 items-center">
         <Button
           variant="ghost"
