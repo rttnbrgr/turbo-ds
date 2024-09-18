@@ -18,6 +18,16 @@ export type Estimate = {
   preferredArrivalTimes: string[];
   frequency: string;
   requested_by: string;
+  notes?: string;
+  lineItems?: LineItem[];
+};
+
+export type LineItem = {
+  id: string;
+  name: string;
+  description: string;
+  quantity: number;
+  price: number;
 };
 
 export const SERVICE_TYPES = {
@@ -39,6 +49,17 @@ export const ESTIMATES_FIXTURE: Estimate[] = [
     preferredArrivalTimes: ["Anytime", "Morning", "Afternoon", "Evening"],
     frequency: "One Time",
     requested_by: "00123",
+    notes:
+      "This section will only populate if general notes do exist. This is an example of a pretty long note that can span multiple lines.",
+    lineItems: [
+      {
+        id: "0000001",
+        name: "Resod Front Yard",
+        description: "",
+        quantity: 4,
+        price: 130,
+      },
+    ],
   },
   {
     id: "0000033",
@@ -51,6 +72,32 @@ export const ESTIMATES_FIXTURE: Estimate[] = [
     preferredArrivalTimes: ["Anytime", "Morning", "Afternoon", "Evening"],
     frequency: "One Time",
     requested_by: "00123",
+    notes:
+      "This section will only populate if general notes do exist. This is an example of a pretty long note that can span multiple lines.",
+    lineItems: [
+      {
+        id: "0000001",
+        name: "Mowing Full Lawn",
+        description:
+          'Includes mowing with a 21"-33" push mower, including a moderately steep hill in the backyard.',
+        quantity: 1,
+        price: 30,
+      },
+      {
+        id: "0000002",
+        name: "Full Weeding",
+        description: "Includes weeding around the entire property.",
+        quantity: 0.75,
+        price: 15,
+      },
+      {
+        id: "0000003",
+        name: "Lawn Fertilizer",
+        description: "Includes 90-day supply for full lawn.",
+        quantity: 1,
+        price: 65,
+      },
+    ],
   },
   {
     id: "0000034",
@@ -63,6 +110,32 @@ export const ESTIMATES_FIXTURE: Estimate[] = [
     preferredArrivalTimes: ["Anytime", "Morning", "Afternoon", "Evening"],
     frequency: "One Time",
     requested_by: "00123",
+    notes:
+      "This section will only populate if general notes do exist. This is an example of a pretty long note that can span multiple lines.",
+    lineItems: [
+      {
+        id: "0000001",
+        name: "Mowing Full Lawn",
+        description:
+          'Includes mowing with a 21"-33" push mower, including a moderately steep hill in the backyard.',
+        quantity: 1,
+        price: 30,
+      },
+      {
+        id: "0000002",
+        name: "Full Weeding",
+        description: "Includes weeding around the entire property.",
+        quantity: 0.75,
+        price: 15,
+      },
+      {
+        id: "0000003",
+        name: "Lawn Fertilizer",
+        description: "Includes 90-day supply for full lawn.",
+        quantity: 1,
+        price: 65,
+      },
+    ],
   },
   {
     id: "0000035",
@@ -75,6 +148,17 @@ export const ESTIMATES_FIXTURE: Estimate[] = [
     preferredArrivalTimes: ["Anytime", "Morning", "Afternoon", "Evening"],
     frequency: "One Time",
     requested_by: "00123",
+    notes:
+      "This section will only populate if general notes do exist. This is an example of a pretty long note that can span multiple lines.",
+    lineItems: [
+      {
+        id: "0000001",
+        name: "Resod Front Yard",
+        description: "",
+        quantity: 4,
+        price: 130,
+      },
+    ],
   },
   {
     id: "0000036",
@@ -87,6 +171,32 @@ export const ESTIMATES_FIXTURE: Estimate[] = [
     preferredArrivalTimes: ["Anytime", "Morning", "Afternoon", "Evening"],
     frequency: "One Time",
     requested_by: "00123",
+    notes:
+      "This section will only populate if general notes do exist. This is an example of a pretty long note that can span multiple lines.",
+    lineItems: [
+      {
+        id: "0000001",
+        name: "Mowing Full Lawn",
+        description:
+          'Includes mowing with a 21"-33" push mower, including a moderately steep hill in the backyard.',
+        quantity: 1,
+        price: 30,
+      },
+      {
+        id: "0000002",
+        name: "Full Weeding",
+        description: "Includes weeding around the entire property.",
+        quantity: 0.75,
+        price: 15,
+      },
+      {
+        id: "0000003",
+        name: "Lawn Fertilizer",
+        description: "Includes 90-day supply for full lawn.",
+        quantity: 1,
+        price: 65,
+      },
+    ],
   },
   {
     id: "0000037",

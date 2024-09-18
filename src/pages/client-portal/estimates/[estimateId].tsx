@@ -9,6 +9,17 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { ChevronsLeft } from "lucide-react";
+import { LineItems, Overview } from "@/components/ui/estimate-variants";
+import { Estimate as EstimateType } from "@/mocks/estimates";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+
+const STATUS_VARIANT_MAP: { [key in EstimateType["status"]]: any } = {
+  "Ready for Review": LineItems,
+  Approved: LineItems,
+  "Changes Requested": LineItems,
+  Declined: LineItems,
+  "Request Submitted": Overview,
+};
 
 export default function Estimate({}) {
   const router = useRouter();
@@ -20,17 +31,7 @@ export default function Estimate({}) {
     return <div>Estimate not found</div>;
   }
 
-  const factTable = [
-    { label: "Service Type", value: estimate.service_type },
-    { label: "Additional Details", value: estimate.details },
-    { label: "Requested Visit Date", value: estimate.request_date },
-    { label: "Alternate Visit Date", value: estimate.visit_date },
-    {
-      label: "Preferred Arrival Times",
-      value: estimate.preferredArrivalTimes.join(", "),
-    },
-    { label: "Frequency", value: estimate.frequency },
-  ];
+  const StatusVariant = STATUS_VARIANT_MAP[estimate.status];
 
   return (
     <Layout>
@@ -66,6 +67,16 @@ export default function Estimate({}) {
           </div>
         </div>
 
+        {estimate.status === "Changes Requested" && (
+          <Alert variant="warn">
+            <AlertTitle>Changes were requested on 08/10/24</AlertTitle>
+            <AlertDescription>
+              Could we please update so that this estimate includes resodding
+              the full yard, not just the front? Thank you!
+            </AlertDescription>
+          </Alert>
+        )}
+
         <div className="border border-solid rounded-md bg-white p-8">
           <div className="flex flex-col gap-6">
             <div className="flex justify-between">
@@ -96,14 +107,20 @@ export default function Estimate({}) {
               </div>
             </div>
 
-            <div className="flex justify-between w-full">
+            <div className={`grid grid-cols-4 w-full items-start`}>
               <div className="flex flex-col">
                 <Heading size="sm">Requested By</Heading>
                 <Body size="sm">Jane Doe</Body>
                 <Body size="sm">456 Grand Ave</Body>
                 <Body size="sm">Madison, WI 53703</Body>
               </div>
-              <div className="grid grid-cols-2 items-center gap-x-3 self-end">
+              {estimate.notes ? (
+                <div className="col-start-2">
+                  <Heading size="sm">Notes</Heading>
+                  <Body size="sm">{estimate.notes}</Body>
+                </div>
+              ) : null}
+              <div className="grid grid-cols-2 items-center gap-x-3 self-end col-start-4">
                 <Body size="sm" weight="bold">
                   Estimate Number
                 </Body>
@@ -127,18 +144,7 @@ export default function Estimate({}) {
               </div>
             </div>
 
-            <Table>
-              <TableBody>
-                {factTable.map((fact) => (
-                  <TableRow key={fact.label} className="border-t border-solid">
-                    <TableCell className="font-bold w-1/5">
-                      {fact.label}
-                    </TableCell>
-                    <TableCell>{fact.value}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+            <StatusVariant estimate={estimate} />
           </div>
         </div>
       </div>
