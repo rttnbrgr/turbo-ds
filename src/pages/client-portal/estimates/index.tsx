@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Estimate, ESTIMATES_FIXTURE, SERVICE_TYPES } from "@/mocks/estimates";
-import { ColumnDef } from "@tanstack/react-table";
+import { Column, ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "@/components/ui/data-table";
 import router from "next/router";
 import {
@@ -44,7 +44,7 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCallback } from "react";
+import { PropsWithChildren, useCallback } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Popover,
@@ -57,7 +57,14 @@ import { format } from "date-fns";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
-function HeaderCell({ children, column, sortable = true }) {
+function HeaderCell({
+  children,
+  column,
+  sortable = true,
+}: PropsWithChildren<{
+  column: Column<Estimate, unknown>;
+  sortable?: boolean;
+}>) {
   if (!sortable) {
     return <Text.Heading size="sm">{children}</Text.Heading>;
   }
