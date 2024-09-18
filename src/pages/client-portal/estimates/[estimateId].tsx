@@ -8,6 +8,7 @@ import { ESTIMATES_FIXTURE } from "@/mocks/estimates";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { ChevronsLeft } from "lucide-react";
 
 export default function Estimate({}) {
   const router = useRouter();
@@ -35,7 +36,15 @@ export default function Estimate({}) {
     <Layout>
       <div className="flex flex-col gap-9">
         <div className="flex justify-between">
-          <Link href="/client-portal/estimates">{`<< Back to all estimates`}</Link>
+          <Link
+            href="/client-portal/estimates"
+            className="flex gap-2 items-center"
+          >
+            <ChevronsLeft className="text-blue-600" size={12} />
+            <Body size="sm" className="text-blue-600">
+              Back to all estimates
+            </Body>
+          </Link>
           <div className="flex gap-3">
             <Button
               variant="outline"
@@ -58,7 +67,7 @@ export default function Estimate({}) {
         </div>
 
         <div className="border border-solid rounded-md bg-white p-8">
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-6">
             <div className="flex justify-between">
               <div className="flex flex-col gap-3">
                 <div className="flex gap-3">
@@ -121,8 +130,10 @@ export default function Estimate({}) {
             <Table>
               <TableBody>
                 {factTable.map((fact) => (
-                  <TableRow key={fact.label}>
-                    <TableCell className="font-bold">{fact.label}</TableCell>
+                  <TableRow key={fact.label} className="border-t border-solid">
+                    <TableCell className="font-bold w-1/5">
+                      {fact.label}
+                    </TableCell>
                     <TableCell>{fact.value}</TableCell>
                   </TableRow>
                 ))}

@@ -9,11 +9,22 @@ export type Estimate = {
     | "Changes Requested"
     | "Ready for Review"
     | "Request Submitted";
-  service_type: string;
+  service_type:
+    | "Service Type 1"
+    | "Service Type 2"
+    | "Service Type 3"
+    | "Service Type 4";
   details: string;
   preferredArrivalTimes: string[];
   frequency: string;
   requested_by: string;
+};
+
+export const SERVICE_TYPES = {
+  "Service Type 1": "Service Type 1",
+  "Service Type 2": "Service Type 2",
+  "Service Type 3": "Service Type 3",
+  "Service Type 4": "Service Type 4",
 };
 
 export const ESTIMATES_FIXTURE: Estimate[] = [
