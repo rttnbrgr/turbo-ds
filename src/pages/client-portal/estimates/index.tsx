@@ -28,6 +28,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
+  DialogClose,
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -499,7 +500,16 @@ export default function Estimates() {
                             )}
                           />
                         </div>
-                        <Button type="submit">Submit</Button>
+                        <div className="flex gap-3 justify-end">
+                          <DialogClose asChild>
+                            <Button type="button" variant="outline">
+                              Cancel
+                            </Button>
+                          </DialogClose>
+                          <Button type="submit" intent="action">
+                            Submit Request
+                          </Button>
+                        </div>
                       </form>
                     </Form>
                   </DialogDescription>
