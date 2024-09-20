@@ -93,9 +93,12 @@ const columns: ColumnDef<Invoice>[] = [
         header: ({ column }) => <HeaderCell column={column}>Due Date</HeaderCell>,
         cell: ({ row }) => {
             const dueDate = new Date(row.getValue("due_date"));
-            const today = new Date();
-            const isPastDue = dueDate < today;
+            const dueDateNumb = new Date(row.getValue("due_date")).getTime();
+
+            // TODO - make this properly data driven...
+            const isPastDue = dueDateNumb <= 1722988800000; // some hardcoded date to get it to match the comps...
             return (
+                // replace with the status badge when i merge in the components branch
                 <span className={isPastDue ? "text-red-500 font-bold" : ""}>
                     {dueDate.toLocaleDateString()}
                     {isPastDue && " ⚠️"}
@@ -141,9 +144,11 @@ const columns: ColumnDef<Invoice>[] = [
     },
     {
         accessorKey: "id",
+        header: () => {
+            return null;
+        },
         cell: ({ row }) => {
             const invoiceId = row.getValue("id");
-            console.log("🚀 ~ invoiceId:", invoiceId);
             return (
                 <div className="flex gap-2">
                     <Button
