@@ -48,12 +48,13 @@ export type Invoice = {
     dateIssued: string;
     dateDue: string;
     total: number;
+    paid: number;
 };
 
 export const STATUS_VS_CHIP_INTENT: {
-    [key in Invoice["status"]]: "danger" | "success" | "action";
+    [key in Invoice["status"]]: "danger" | "success" | "warn";
 } = {
-    Partial: "action",
+    Partial: "warn",
     Paid: "success",
     Unpaid: "danger",
 };

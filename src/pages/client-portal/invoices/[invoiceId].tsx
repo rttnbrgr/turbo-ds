@@ -17,6 +17,7 @@ import { useRouter } from "next/router";
 import { INVOICES_MOCKED_DATA } from "@/mocks/invoices.mock";
 import { Invoice, STATUS_VS_CHIP_INTENT } from "@/pages/client-portal/invoices";
 import { StatusChip } from "@/components/ui/status-chip";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
 export default function InvoicePage() {
     const router = useRouter();
@@ -50,7 +51,16 @@ export default function InvoicePage() {
         taxRate,
         taxAmount,
         total,
+        paid,
     } = invoice as Invoice;
+
+    const dueAmount = total - paid || 0;
+
+    const formattedDueDate = new Date(dateDue).toLocaleDateString("en-US", {
+        year: "2-digit",
+        month: "2-digit",
+        day: "2-digit",
+    });
 
     return (
         <Layout>
@@ -71,6 +81,20 @@ export default function InvoicePage() {
                 </div>
 
                 <div className="flex flex-col gap-6">
+                    {/* what about past due and partial */}
+                    {/* what about unpaid but not past due */}
+                    {status === "Unpaid" ? (
+                        <Alert variant="destructive">
+                            <AlertTitle>This invoice is past Due</AlertTitle>
+                            <AlertDescription>{`The $${dueAmount} balance on this invoice has not been paid and is now late. Please pay as soon as possible to avoid late charges.`}</AlertDescription>
+                        </Alert>
+                    ) : null}
+                    {status === "Partial" ? (
+                        <Alert variant="warn">
+                            <AlertTitle>This invoice is only partially paid</AlertTitle>
+                            <AlertDescription>{`A partial amount of $${paid} has been paid towards this invoice, while $${dueAmount} is still due. Please submit this payment before it’s due date of ${formattedDueDate}.`}</AlertDescription>
+                        </Alert>
+                    ) : null}
                     <div className="flex justify-between">
                         <div className="flex flex-col gap-3">
                             <div className="flex gap-3 items-center">
@@ -120,7 +144,7 @@ export default function InvoicePage() {
                             <Body size="sm" weight="bold">
                                 Date Due
                             </Body>
-                            <Body size="sm">{dateDue}</Body>
+                            <Body size="sm">{formattedDueDate}</Body>
                         </div>
                     </div>
 
