@@ -37,6 +37,11 @@ export default function InvoicePage() {
     invoice => invoice.id === invoiceId
   );
 
+  const handleClosePaymentDialog = useCallback(() => {
+    // close the dialog here...
+    // LEGZ TODO: need to move dialog state to this component to do this
+  }, []);
+
   if (!invoice) {
     return (
       <Layout>
@@ -103,7 +108,7 @@ export default function InvoicePage() {
                   <DialogTitle>Pay Invoice</DialogTitle>
                 </DialogHeader>
                 <DialogDescription>
-                  <PaymentDialog />
+                  <PaymentDialog onClose={handleClosePaymentDialog} />
                 </DialogDescription>
               </DialogContent>
             </div>

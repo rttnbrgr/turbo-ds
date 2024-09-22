@@ -4,30 +4,30 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Body, Heading } from "@/components/ui/text";
+import { Body } from "@/components/ui/text";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 
 type PaymentType = "invoice" | "balance" | "other";
 type PaymentMethod = "card" | "paypal" | "other";
 
-export function PaymentDialog() {
+export function PaymentDialog({ onClose }: { onClose?: () => void }) {
   const [paymentType, setPaymentType] = useState<PaymentType>("invoice");
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("card");
-  const [tipPercentage, setTipPercentage] = useState<number | null>(null);
+  const [tipPercentage, setTipPercentage] = useState<number | null | "custom">(
+    null
+  );
   const [customTip, setCustomTip] = useState<string>("20.00");
 
   const invoiceAmount = 110.5;
   const accountBalance = 135.5;
 
   const calculateTip = () => {
-    if (tipPercentage === null) {
+    if (tipPercentage === "custom") {
       return parseFloat(customTip);
+    }
+    if (tipPercentage === null) {
+      return 0;
     }
     return (invoiceAmount * tipPercentage) / 100;
   };
@@ -100,69 +100,90 @@ export function PaymentDialog() {
           Add a Tip
         </Body>
 
-        <div className="flex space-x-2 mb-2">
-          <Button
-            variant={tipPercentage === null ? "outline" : "fill"}
-            onClick={() => setTipPercentage(null)}
-          >
-            No Tip
-          </Button>
-          <Button
-            variant={tipPercentage === 10 ? "fill" : "outline"}
-            onClick={() => setTipPercentage(10)}
-          >
-            10%
-          </Button>
-          <Button
-            variant={tipPercentage === 15 ? "fill" : "outline"}
-            onClick={() => setTipPercentage(15)}
-          >
-            15%
-          </Button>
-          <Button
-            variant={tipPercentage === 20 ? "fill" : "outline"}
-            onClick={() => setTipPercentage(20)}
-          >
-            20%
-          </Button>
-          <Button
-            variant={tipPercentage === null ? "fill" : "outline"}
-            onClick={() => setTipPercentage(null)}
-          >
-            Custom
-          </Button>
+        <div className="flex space-x-2 gap-3">
+          <ToggleGroup type="single">
+            <ToggleGroupItem value="5" onClick={() => setTipPercentage(null)}>
+              <div className="whitespace-nowrap">No Tip</div>
+            </ToggleGroupItem>
+            <ToggleGroupItem value="10" onClick={() => setTipPercentage(10)}>
+              10%
+            </ToggleGroupItem>
+            <ToggleGroupItem value="15" onClick={() => setTipPercentage(15)}>
+              15%
+            </ToggleGroupItem>
+            <ToggleGroupItem value="20" onClick={() => setTipPercentage(20)}>
+              20%
+            </ToggleGroupItem>
+            <ToggleGroupItem
+              value="custom"
+              onClick={() => setTipPercentage("custom")}
+            >
+              Custom
+            </ToggleGroupItem>
+          </ToggleGroup>
+
+          {tipPercentage === "custom" ? (
+            <div className="flex items-center space-x-2">
+              <span className="text-sm">$</span>
+              <Input
+                type="number"
+                value={customTip}
+                onChange={e => setCustomTip(e.target.value)}
+                className="text-md"
+              />
+            </div>
+          ) : null}
         </div>
-        <div className="flex items-center space-x-2">
-          <span className="text-2xl">$</span>
-          <Input
-            type="number"
-            value={customTip}
-            onChange={e => setCustomTip(e.target.value)}
-            className="text-md"
-          />
-        </div>
-        <p className="text-sm text-gray-500 mt-1">
+
+        <p className="text-gray-400 text-xs">
           Tip based on invoice amount before taxes.
         </p>
       </div>
-      <CardFooter className="flex-col items-stretch">
-        <div className="flex justify-between mb-2">
-          <span>Subtotal</span>
-          <span>${invoiceAmount.toFixed(2)}</span>
-        </div>
-        <div className="flex justify-between mb-2">
-          <span>Tip</span>
-          <span>${tip.toFixed(2)}</span>
-        </div>
-        <div className="flex justify-between font-bold mb-4">
-          <span>TOTAL</span>
-          <span>${total.toFixed(2)}</span>
-        </div>
-        <div className="flex justify-between space-x-2">
-          <Button variant="outline">Cancel</Button>
-          <Button className="flex-1">Pay ${total.toFixed(2)}</Button>
-        </div>
-      </CardFooter>
+
+      <Table>
+        <TableBody>
+          <TableRow>
+            <TableCell className="p-2 w-full text-right">Subtotal</TableCell>
+            <TableCell className="p-2 pr-5 text-right whitespace-nowrap">
+              ${invoiceAmount.toFixed(2)}
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell className="p-2 w-full text-right">Tip</TableCell>
+            <TableCell className="p-2 pr-5 text-right whitespace-nowrap">
+              ${tip.toFixed(2)}
+            </TableCell>
+          </TableRow>
+          <TableRow className="font-bold" data-state="selected">
+            <TableCell className="p-2 w-full text-right">TOTAL</TableCell>
+            <TableCell className="p-2 pr-5 text-right whitespace-nowrap">
+              ${total.toFixed(2)}
+            </TableCell>
+          </TableRow>
+
+          {/* separator row - likely better way to do this...*/}
+          <TableRow className="h-4 border-none"></TableRow>
+
+          <TableRow className="pt-3 border-none">
+            <TableCell className="p-2 w-full text-right">
+              <Button variant="outline" size="sm" onClick={() => onClose?.()}>
+                Cancel
+              </Button>
+            </TableCell>
+            <TableCell className="p-2 text-right whitespace-nowrap">
+              <Button
+                variant="fill"
+                intent="action"
+                className="flex-1 px-4"
+                size="sm"
+              >
+                <Image src="/lock.svg" alt="Lock Icon" width={12} height={12} />
+                Pay ${total.toFixed(2)}
+              </Button>
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
     </div>
   );
 }
