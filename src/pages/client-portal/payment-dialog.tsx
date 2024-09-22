@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Image from "next/image";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -80,31 +81,12 @@ export function PaymentDialog() {
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="paypal" id="paypal" />
             <Label htmlFor="paypal" className="flex items-center">
-              <svg
-                className="h-6 w-6 mr-2"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6.5 21C5.09554 21 4.08934 19.7889 4.33882 18.4222L6.67843 6.56101C6.86411 5.52659 7.78276 4.75 8.83922 4.75H17.1608C18.2172 4.75 19.1359 5.52659 19.3216 6.56101L21.6612 18.4222C21.9107 19.7889 20.9045 21 19.5 21H6.5Z"
-                  stroke="#000000"
-                  strokeWidth="1.5"
-                />
-                <path
-                  d="M4 8H20"
-                  stroke="#000000"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M15 12.5C15 14.0188 14.0188 14.5 12.5 14.5C10.9812 14.5 10 14.0188 10 12.5C10 10.9812 10.9812 10 12.5 10C14.0188 10 15 10.9812 15 12.5Z"
-                  stroke="#000000"
-                  strokeWidth="1.5"
-                />
-              </svg>
-              PayPal
+              <Image
+                alt="Pay With Paypal"
+                src="/paypal-logo.png"
+                width={76}
+                height={20}
+              />
             </Label>
           </div>
           <div className="flex items-center space-x-2">
