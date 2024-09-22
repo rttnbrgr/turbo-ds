@@ -56,6 +56,22 @@ export const INVOICES_MOCKED_DATA: Invoice[] = [
     dateDue: "2024-08-07",
     total: 208.0,
     paid: 104.0,
+    assets: [
+      {
+        id: 1,
+        src: "/asset1.png",
+        alt: "Asset 1",
+        width: 1312,
+        height: 848,
+      },
+      {
+        id: 2,
+        src: "/asset2.png",
+        alt: "Asset 2",
+        height: 277,
+        width: 422,
+      },
+    ],
   },
   {
     id: "0000000002",
@@ -96,6 +112,22 @@ export const INVOICES_MOCKED_DATA: Invoice[] = [
     dateDue: "2024-08-14",
     total: 312.0,
     paid: 312.0,
+    assets: [
+      {
+        id: 1,
+        src: "/asset1.png",
+        alt: "Asset 1",
+        width: 1312,
+        height: 848,
+      },
+      {
+        id: 2,
+        src: "/asset2.png",
+        alt: "Asset 2",
+        height: 277,
+        width: 422,
+      },
+    ],
   },
   {
     id: "0000000003",
@@ -145,6 +177,22 @@ export const INVOICES_MOCKED_DATA: Invoice[] = [
     dateDue: "2024-08-21",
     total: 110.5,
     paid: 0,
+    assets: [
+      {
+        id: 1,
+        src: "/asset1.png",
+        alt: "Asset 1",
+        width: 1312,
+        height: 848,
+      },
+      {
+        id: 2,
+        src: "/asset2.png",
+        alt: "Asset 2",
+        height: 277,
+        width: 422,
+      },
+    ],
   },
   {
     id: "0000000004",

@@ -14,6 +14,7 @@ import { Column, ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "@/components/ui/data-table";
 import { INVOICES_MOCKED_DATA } from "@/mocks/invoices.mock";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { Asset } from "../attached-images";
 
 export interface InvoiceItem {
   description: string;
@@ -49,6 +50,8 @@ export type Invoice = {
   dateDue: string;
   total: number;
   paid: number;
+
+  assets?: Asset[];
 };
 
 export const STATUS_VS_CHIP_INTENT: {
