@@ -23,6 +23,7 @@
   },
   "plugins": ["@typescript-eslint", "prettier", "react", "react-hooks"],
   "rules": {
+    "react/no-unescaped-entities": "off", // this was preventing me from using a single quote in a string, it would be pretty annoying to have to escape every single quote
     "@typescript-eslint/no-empty-object-type": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unused-vars": "off",
