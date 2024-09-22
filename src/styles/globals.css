@@ -71,3 +71,7 @@
 .color-debug {
   @apply bg-blue-300 sm:bg-orange-300 md:bg-green-300 lg:bg-purple-300 xl:bg-pink-300;
 }
+
+.debug * {
+  outline: 1px solid magenta;
+}
