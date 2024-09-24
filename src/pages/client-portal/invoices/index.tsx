@@ -15,6 +15,7 @@ import { DataTable } from "@/components/ui/data-table";
 import { INVOICES_MOCKED_DATA } from "@/mocks/invoices.mock";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Asset } from "../attached-images";
+import { useMemo, useState } from "react";
 
 export interface InvoiceItem {
   description: string;
@@ -184,6 +185,21 @@ const columns: ColumnDef<Invoice>[] = [
 ];
 
 export default function Invoices() {
+  // LEGZ TODO - this might be nice to be query param controlled...
+  const [statusFilter, setStatusFilter] = useState<Invoice["status"] | "all">(
+    "all"
+  );
+
+  const filteredData = useMemo(() => {
+    if (statusFilter === "all") {
+      return INVOICES_MOCKED_DATA;
+    } else {
+      return INVOICES_MOCKED_DATA.filter(
+        invoice => invoice.status === statusFilter
+      );
+    }
+  }, [statusFilter]);
+
   return (
     <Layout>
       <div className="flex flex-col gap-9">
@@ -191,7 +207,11 @@ export default function Invoices() {
           <Text.Heading size="xl">Invoices</Text.Heading>
           <div className="flex gap-3 items-center">
             <Text.Body>Status</Text.Body>
-            <Select>
+            <Select
+              onValueChange={value =>
+                setStatusFilter(value as Invoice["status"])
+              }
+            >
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="All Statuses" />
               </SelectTrigger>
@@ -201,11 +221,12 @@ export default function Invoices() {
                     {status}
                   </SelectItem>
                 ))}
+                <SelectItem value="all">All Statuses</SelectItem>
               </SelectContent>
             </Select>
           </div>
         </div>
-        <DataTable columns={columns} data={INVOICES_MOCKED_DATA} />
+        <DataTable columns={columns} data={filteredData} />
       </div>
     </Layout>
   );

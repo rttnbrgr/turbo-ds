@@ -125,7 +125,7 @@ export default function InvoicePage() {
             {status === "Partial" ? (
               <Alert variant="warn">
                 <AlertTitle>This invoice is only partially paid</AlertTitle>
-                <AlertDescription>{`A partial amount of $${paid} has been paid towards this invoice, while $${dueAmount} is still due. Please submit this payment before it&#39;s due date of ${formattedDueDate}.`}</AlertDescription>
+                <AlertDescription>{`A partial amount of $${paid} has been paid towards this invoice, while $${dueAmount} is still due. Please submit this payment before it's due date of ${formattedDueDate}.`}</AlertDescription>
               </Alert>
             ) : null}
             <div className="flex justify-between">
