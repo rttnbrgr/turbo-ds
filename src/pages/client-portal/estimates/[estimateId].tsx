@@ -129,16 +129,16 @@ export default function Estimate({}) {
                   Date Requested
                 </Body>
                 <Body size="sm">
-                  {estimate.request_date
-                    ? new Date(estimate.request_date).toLocaleDateString()
+                  {estimate.requestDate
+                    ? new Date(estimate.requestDate).toLocaleDateString()
                     : "--"}
                 </Body>
                 <Body size="sm" weight="bold">
                   Visit Date
                 </Body>
                 <Body size="sm">
-                  {estimate.visit_date
-                    ? new Date(estimate.visit_date).toLocaleDateString()
+                  {estimate.visitDate
+                    ? new Date(estimate.visitDate).toLocaleDateString()
                     : "--"}
                 </Body>
               </div>

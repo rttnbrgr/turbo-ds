@@ -71,10 +71,10 @@ export function LineItems({ estimate }: { estimate: Estimate }) {
 
 export function Overview({ estimate }: { estimate: Estimate }) {
   const factTable = [
-    { label: "Service Type", value: estimate.service_type },
+    { label: "Service Type", value: estimate.serviceType },
     { label: "Additional Details", value: estimate.details },
-    { label: "Requested Visit Date", value: estimate.request_date },
-    { label: "Alternate Visit Date", value: estimate.visit_date },
+    { label: "Requested Visit Date", value: estimate.requestDate },
+    { label: "Alternate Visit Date", value: estimate.visitDate },
     {
       label: "Preferred Arrival Times",
       value: estimate.preferredArrivalTimes.join(", "),
