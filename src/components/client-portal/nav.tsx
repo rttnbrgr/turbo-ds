@@ -38,6 +38,7 @@ import {
 } from "@/components/sidenav";
 import { Url } from "next/dist/shared/lib/router/router";
 import { IconButton } from "../ui/icon-button";
+import { RequestEstimateDialog } from "./request-estimate";
 
 /**
  *
@@ -140,7 +141,11 @@ export const Nav = ({ ...props }) => {
   const [open, setOpen] = useState(true);
 
   function toggleOpen() {
-    setOpen(cv => !cv);
+    setOpen((cv) => !cv);
+  }
+
+  function handleSubmit(args: any) {
+    console.log("submit", args);
   }
 
   // Styles that require state
@@ -179,15 +184,16 @@ export const Nav = ({ ...props }) => {
       >
         {/* Top */}
         <div className={cn("flex flex-col gap-8")}>
-          <Button
-            variant="outline"
-            onClick={() => {
-              console.log("Estimate");
-            }}
-          >
-            <Plus />
-            Request an estimate
-          </Button>
+          <RequestEstimateDialog
+            userId="1"
+            onSubmit={handleSubmit}
+            trigger={
+              <Button variant="outline">
+                <Plus />
+                Request an estimate
+              </Button>
+            }
+          />
           {/* Nav items */}
           <div className={cn("flex flex-col gap-3")}>
             {navArray.map((item, i) => {
