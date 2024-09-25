@@ -34,7 +34,7 @@ function StarRating({
           key={index}
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
-          className={`w-8 h-8 stroke-current stroke-1 cursor-pointer ${index + 1 > visibleRating ? "fill-transparent" : "fill-current"}`}
+          className={`w-8 h-8 cursor-pointer ${index + 1 > visibleRating ? "fill-gray-400" : "fill-yellow-500"}`}
           onClick={() => handleRating(index + 1)}
           onMouseEnter={() => handleHover(index + 1)}
           onMouseLeave={() => handleHover(0)}
