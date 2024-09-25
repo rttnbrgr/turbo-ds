@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
-export let iconSize = {
+export const iconSize = {
   sm: 12,
   md: 16,
   lg: 24,
