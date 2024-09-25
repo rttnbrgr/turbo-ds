@@ -178,7 +178,7 @@ export default function Estimates() {
                   <SelectItem key={"all"} value={"default"}>
                     All Statuses
                   </SelectItem>
-                  {Object.keys(STATUS_VS_CHIP_INTENT).map((status) => (
+                  {Object.keys(STATUS_VS_CHIP_INTENT).map(status => (
                     <SelectItem key={status} value={status}>
                       {status}
                     </SelectItem>

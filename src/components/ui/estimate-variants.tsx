@@ -26,7 +26,7 @@ export function LineItems({ estimate }: { estimate: Estimate }) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {estimate.lineItems?.map((lineItem) => (
+        {estimate.lineItems?.map(lineItem => (
           <TableRow
             key={lineItem.name}
             className={`border-t border-solid ${strikeThrough}`}
@@ -85,7 +85,7 @@ export function Overview({ estimate }: { estimate: Estimate }) {
   return (
     <Table>
       <TableBody>
-        {factTable.map((fact) => (
+        {factTable.map(fact => (
           <TableRow key={fact.label} className="border-t border-solid">
             <TableCell className="font-bold w-1/5">{fact.label}</TableCell>
             <TableCell>{fact.value}</TableCell>

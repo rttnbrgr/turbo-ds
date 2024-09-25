@@ -141,7 +141,7 @@ export const Nav = ({ ...props }) => {
   const [open, setOpen] = useState(true);
 
   function toggleOpen() {
-    setOpen((cv) => !cv);
+    setOpen(cv => !cv);
   }
 
   function handleSubmit(args: any) {

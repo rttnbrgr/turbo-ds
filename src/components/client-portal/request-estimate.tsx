@@ -194,7 +194,7 @@ export function RequestEstimateDialog({
                                   >
                                     {field.value
                                       ? STATES_US.find(
-                                          (usState) =>
+                                          usState =>
                                             usState.value === field.value
                                         )?.label
                                       : "Select State"}
@@ -208,7 +208,7 @@ export function RequestEstimateDialog({
                                   <CommandList>
                                     <CommandEmpty>No state found.</CommandEmpty>
                                     <CommandGroup>
-                                      {STATES_US.map((state) => (
+                                      {STATES_US.map(state => (
                                         <CommandItem
                                           value={state.label}
                                           key={state.value}
@@ -287,7 +287,7 @@ export function RequestEstimateDialog({
                             <SelectValue placeholder="Select an Option" />
                           </SelectTrigger>
                           <SelectContent>
-                            {Object.keys(serviceTypeS).map((serviceType) => (
+                            {Object.keys(serviceTypeS).map(serviceType => (
                               <SelectItem key={serviceType} value={serviceType}>
                                 {serviceType}
                               </SelectItem>
@@ -348,7 +348,7 @@ export function RequestEstimateDialog({
                               mode="single"
                               selected={field.value}
                               onSelect={field.onChange}
-                              disabled={(date) =>
+                              disabled={date =>
                                 date > new Date() ||
                                 date < new Date("1900-01-01")
                               }
@@ -394,7 +394,7 @@ export function RequestEstimateDialog({
                               mode="single"
                               selected={field.value}
                               onSelect={field.onChange}
-                              disabled={(date) =>
+                              disabled={date =>
                                 date > new Date() ||
                                 date < new Date("1900-01-01")
                               }
@@ -419,7 +419,7 @@ export function RequestEstimateDialog({
                             Preferred Arrival Times
                           </FormLabel>
                         </div>
-                        {ARRIVAL_TIMES.map((item) => (
+                        {ARRIVAL_TIMES.map(item => (
                           <FormField
                             key={item.id}
                             control={form.control}
@@ -435,7 +435,7 @@ export function RequestEstimateDialog({
                                       checked={field.value?.includes(
                                         item.id as any
                                       )}
-                                      onCheckedChange={(checked) => {
+                                      onCheckedChange={checked => {
                                         return checked
                                           ? field.onChange([
                                               ...field.value,
@@ -443,7 +443,7 @@ export function RequestEstimateDialog({
                                             ])
                                           : field.onChange(
                                               field.value?.filter(
-                                                (value) => value !== item.id
+                                                value => value !== item.id
                                               )
                                             );
                                       }}

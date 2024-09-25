@@ -1,7 +1,6 @@
 import { Layout } from "@/components/client-portal/layout";
 import { Button } from "@/components/ui/button";
 import { StatusChip } from "@/components/ui/status-chip";
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Body, Heading } from "@/components/ui/text";
 import { STATUS_VS_CHIP_INTENT } from "@/lib/constants";
 import { ESTIMATES_FIXTURE } from "@/mocks/estimates";
@@ -21,11 +20,11 @@ const STATUS_VARIANT_MAP: { [key in EstimateType["status"]]: any } = {
   "Request Submitted": Overview,
 };
 
-export default function Estimate({}) {
+export default function Estimate() {
   const router = useRouter();
   const { estimateId } = router.query;
 
-  const estimate = ESTIMATES_FIXTURE.find((e) => e.id === estimateId);
+  const estimate = ESTIMATES_FIXTURE.find(e => e.id === estimateId);
 
   if (!estimate) {
     return <div>Estimate not found</div>;
