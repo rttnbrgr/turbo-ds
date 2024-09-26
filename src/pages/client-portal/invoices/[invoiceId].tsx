@@ -5,6 +5,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -36,6 +37,14 @@ export default function InvoicePage() {
   const invoice = INVOICES_MOCKED_DATA.find(
     invoice => invoice.id === invoiceId
   );
+
+  const formatDate = useCallback((date: string) => {
+    return new Date(date).toLocaleDateString("en-US", {
+      year: "2-digit",
+      month: "2-digit",
+      day: "2-digit",
+    });
+  }, []);
 
   const handleClosePaymentDialog = useCallback(() => {
     // close the dialog here...
@@ -74,12 +83,8 @@ export default function InvoicePage() {
 
   const dueAmount = total - paid || 0;
 
-  const formattedDueDate = new Date(dateDue).toLocaleDateString("en-US", {
-    year: "2-digit",
-    month: "2-digit",
-    day: "2-digit",
-  });
-
+  const formattedDueDate = formatDate(dateDue);
+  const formattedDateIssued = formatDate(dateIssued);
   return (
     <Layout>
       <div className="flex flex-col gap-4">
@@ -97,11 +102,13 @@ export default function InvoicePage() {
             <div className="flex gap-3">
               <Button variant="outline">Print</Button>
 
-              <DialogTrigger>
-                <Button variant="fill" intent="action">
-                  Pay Invoice
-                </Button>
-              </DialogTrigger>
+              {status !== "Paid" ? (
+                <DialogTrigger>
+                  <Button variant="fill" intent="action">
+                    Pay Invoice
+                  </Button>
+                </DialogTrigger>
+              ) : null}
 
               <DialogContent className="font-sans">
                 <DialogHeader>
@@ -155,78 +162,104 @@ export default function InvoicePage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-3 w-full items-start">
+            <div className="grid grid-cols-6 w-full items-start">
               <div className="flex flex-col">
                 <Heading size="sm">Bill To</Heading>
                 <Body size="sm">{clientName}</Body>
                 <Body size="sm">{clientAddress}</Body>
               </div>
-              <div className="col-start-2">
+              <div className="col-start-3">
                 <Heading size="sm">Notes</Heading>
                 <Body size="sm">{notes}</Body>
               </div>
-              <div className="grid grid-cols-2 items-center gap-x-3 self-end col-start-3">
-                <Body size="sm" weight="bold">
-                  Invoice Number
-                </Body>
-                <Body size="sm">{invoiceNumber}</Body>
-                <Body size="sm" weight="bold">
-                  Date Issued
-                </Body>
-                <Body size="sm">{dateIssued}</Body>
-                <Body size="sm" weight="bold">
-                  Date Due
-                </Body>
-                <Body size="sm">{formattedDueDate}</Body>
+
+              <div className="grid-cols-2 col-start-6 items-center self-end ">
+                <Table>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell className="font-bold p-2">
+                        Invoice Number
+                      </TableCell>
+                      <TableCell className="p-2 text-right">
+                        {invoiceNumber}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="p-2 font-bold">
+                        Date Issued
+                      </TableCell>
+                      <TableCell className="p-2 text-right">
+                        {formattedDateIssued}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow
+                      className={
+                        dateDue > dateIssued && status !== "Paid"
+                          ? `text-destructive`
+                          : ""
+                      }
+                    >
+                      <TableCell className="p-2 font-bold">Date Due</TableCell>
+                      <TableCell className="p-2 text-right">
+                        {formattedDueDate}
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
               </div>
             </div>
 
             <Table>
               <TableHeader>
-                <TableRow>
-                  <TableHead>Description</TableHead>
+                <TableRow className="border-t border-black/20">
+                  <TableHead className="w-2/3">Description</TableHead>
                   <TableHead>Qty./Hrs.</TableHead>
-                  <TableHead>Cost/Rate</TableHead>
-                  <TableHead>Total</TableHead>
+                  <TableHead className="text-right">Cost/Rate</TableHead>
+                  <TableHead className="text-right">Total</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {items?.map((item, index) => (
-                  <TableRow key={index}>
+                  <TableRow key={index} className={`border-t border-solid`}>
                     <TableCell>
-                      <div>
-                        <strong>{item.description}</strong>
-                        <p>{item.details}</p>
-                      </div>
+                      <Heading size="sm">{item.description}</Heading>
+                      <Body size="sm">{item.details}</Body>
                     </TableCell>
                     <TableCell>{item.quantity.toFixed(2)}</TableCell>
-                    <TableCell>${item.rate.toFixed(2)}</TableCell>
-                    <TableCell>${item.total.toFixed(2)}</TableCell>
+                    <TableCell className="text-right">
+                      ${item.rate.toFixed(2)}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      ${item.total.toFixed(2)}
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
-            </Table>
 
-            <div className="flex justify-end">
-              <div className="w-1/3">
-                <div className="flex justify-between">
-                  <Body size="sm" weight="bold">
-                    Subtotal
-                  </Body>
-                  <Body size="sm">${subtotal.toFixed(2)}</Body>
-                </div>
-                <div className="flex justify-between">
-                  <Body size="sm" weight="bold">
-                    Tax ({(taxRate * 100).toFixed(2)}%)
-                  </Body>
-                  <Body size="sm">${taxAmount.toFixed(2)}</Body>
-                </div>
-                <div className="flex justify-between mt-2">
-                  <Heading size="sm">TOTAL DUE</Heading>
-                  <Heading size="sm">${total.toFixed(2)}</Heading>
-                </div>
-              </div>
-            </div>
+              <TableFooter className="bg-inherit">
+                <TableRow>
+                  <TableCell colSpan={3}>
+                    <div className="flex flex-col text-right font-bold">
+                      SubTotal <span>Tax ({(taxRate * 100).toFixed(2)}%)</span>
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <div className={`flex flex-col text-right `}>
+                      ${subtotal.toFixed(2)}
+                      <span> ${taxAmount.toFixed(2)}</span>
+                    </div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className="bg-gray-100">
+                  <TableCell colSpan={3} className="text-right font-bold">
+                    TOTAL DUE
+                  </TableCell>
+                  <TableCell className={`text-right `}>
+                    ${total.toFixed(2)}
+                  </TableCell>
+                </TableRow>
+              </TableFooter>
+            </Table>
 
             <div className="mt-8">
               <Heading size="sm">Thank You For Your Business!</Heading>

@@ -38,6 +38,7 @@ export interface InvoiceItem {
 export type Invoice = {
   id: string;
   invoice_date: string;
+  over_due: boolean;
   due_date: string;
   invoice_number: string;
   invoice_total: number;
@@ -114,14 +115,14 @@ const columns: ColumnDef<Invoice>[] = [
     header: ({ column }) => <HeaderCell column={column}>Due Date</HeaderCell>,
     cell: ({ row }) => {
       const dueDate = new Date(row.getValue("due_date"));
-      const dueDateNumb = new Date(row.getValue("due_date")).getTime();
+      const isPastDue: boolean = row.original.over_due;
 
-      // TODO - make this properly data driven...
-      const isPastDue = dueDateNumb <= 1722988800000; // some hardcoded date to get it to match the comps...
       return (
         // replace with the status badge when i merge in the components branch
         <span className={isPastDue ? "flex gap-2 items-center" : ""}>
-          <span className="text-red-500">{dueDate.toLocaleDateString()}</span>
+          <span className={`${isPastDue ? "text-red-500" : ""}`}>
+            {dueDate.toLocaleDateString()}
+          </span>
           {isPastDue && (
             <Image alt="!" src="/alert.svg" width={15} height={15} />
           )}
@@ -146,7 +147,7 @@ const columns: ColumnDef<Invoice>[] = [
         style: "currency",
         currency: "USD",
       }).format(amount);
-      return <div className="text-right font-medium">{formatted}</div>;
+      return <div className="font-medium">{formatted}</div>;
     },
   },
   {
@@ -160,7 +161,7 @@ const columns: ColumnDef<Invoice>[] = [
         style: "currency",
         currency: "USD",
       }).format(amount);
-      return <div className="text-right font-medium">{formatted}</div>;
+      return <div className="font-medium">{formatted}</div>;
     },
   },
   {
