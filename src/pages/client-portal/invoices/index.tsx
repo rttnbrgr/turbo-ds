@@ -1,5 +1,10 @@
-import { Layout } from "@client-portal/layout";
+import { ChangeEvent, useCallback, useState } from "react";
 import router from "next/router";
+import Image from "next/image";
+
+import { Layout } from "@client-portal/layout";
+
+// components
 import * as Text from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
 import { StatusChip } from "@/components/ui/status-chip";
@@ -10,12 +15,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Column, ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "@/components/ui/data-table";
-import { INVOICES_MOCKED_DATA } from "@/mocks/invoices.mock";
+
+// icons
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Asset } from "../attached-images";
-import { useMemo, useState } from "react";
+
+// mocks
+import { INVOICES_MOCKED_DATA } from "@/mocks/invoices.mock";
+
+// types
+import { Column, ColumnDef, ColumnFiltersState } from "@tanstack/react-table";
 
 export interface InvoiceItem {
   description: string;
@@ -110,9 +120,11 @@ const columns: ColumnDef<Invoice>[] = [
       const isPastDue = dueDateNumb <= 1722988800000; // some hardcoded date to get it to match the comps...
       return (
         // replace with the status badge when i merge in the components branch
-        <span className={isPastDue ? "text-red-500 font-bold" : ""}>
-          {dueDate.toLocaleDateString()}
-          {isPastDue && " ⚠️"}
+        <span className={isPastDue ? "flex gap-2 items-center" : ""}>
+          <span className="text-red-500">{dueDate.toLocaleDateString()}</span>
+          {isPastDue && (
+            <Image alt="!" src="/alert.svg" width={15} height={15} />
+          )}
         </span>
       );
     },
@@ -186,19 +198,20 @@ const columns: ColumnDef<Invoice>[] = [
 
 export default function Invoices() {
   // LEGZ TODO - this might be nice to be query param controlled...
-  const [statusFilter, setStatusFilter] = useState<Invoice["status"] | "all">(
-    "all"
-  );
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
-  const filteredData = useMemo(() => {
-    if (statusFilter === "all") {
-      return INVOICES_MOCKED_DATA;
-    } else {
-      return INVOICES_MOCKED_DATA.filter(
-        invoice => invoice.status === statusFilter
-      );
+  const handleFilterChange = useCallback((e: ChangeEvent<HTMLFormElement>) => {
+    const value = e.target.value;
+    if (value === "default") {
+      return setColumnFilters([]);
     }
-  }, [statusFilter]);
+    setColumnFilters([
+      {
+        id: "status",
+        value,
+      },
+    ]);
+  }, []);
 
   return (
     <Layout>
@@ -207,26 +220,28 @@ export default function Invoices() {
           <Text.Heading size="xl">Invoices</Text.Heading>
           <div className="flex gap-3 items-center">
             <Text.Body>Status</Text.Body>
-            <Select
-              onValueChange={value =>
-                setStatusFilter(value as Invoice["status"])
-              }
-            >
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="All Statuses" />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.keys(STATUS_VS_CHIP_INTENT).map(status => (
-                  <SelectItem key={status} value={status}>
-                    {status}
-                  </SelectItem>
-                ))}
-                <SelectItem value="all">All Statuses</SelectItem>
-              </SelectContent>
-            </Select>
+            <form onChange={handleFilterChange}>
+              <Select defaultValue="default">
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="All Statuses" />
+                </SelectTrigger>
+                <SelectItem value="default">All Statuses</SelectItem>
+                <SelectContent>
+                  {Object.keys(STATUS_VS_CHIP_INTENT).map(status => (
+                    <SelectItem key={status} value={status}>
+                      {status}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </form>
           </div>
         </div>
-        <DataTable columns={columns} data={filteredData} />
+        <DataTable
+          columns={columns}
+          columnFilters={columnFilters}
+          data={INVOICES_MOCKED_DATA}
+        />
       </div>
     </Layout>
   );
