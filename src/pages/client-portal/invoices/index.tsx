@@ -225,8 +225,8 @@ export default function Invoices() {
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="All Statuses" />
                 </SelectTrigger>
-                <SelectItem value="default">All Statuses</SelectItem>
                 <SelectContent>
+                  <SelectItem value="default">All Statuses</SelectItem>
                   {Object.keys(STATUS_VS_CHIP_INTENT).map(status => (
                     <SelectItem key={status} value={status}>
                       {status}
