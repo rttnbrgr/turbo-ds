@@ -62,6 +62,7 @@ export type Invoice = {
   dateDue: string;
   total: number;
   paid: number;
+  datePaid: string;
 
   assets?: Asset[];
 };

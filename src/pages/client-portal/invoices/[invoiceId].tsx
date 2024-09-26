@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/dialog";
 import { PaymentDialog } from "../payment-dialog";
 import { AttachedImages } from "../attached-images";
+import { stat } from "fs";
 
 export default function InvoicePage() {
   const router = useRouter();
@@ -79,12 +80,14 @@ export default function InvoicePage() {
     total,
     paid,
     assets,
+    datePaid,
   } = invoice as Invoice;
 
   const dueAmount = total - paid || 0;
 
   const formattedDueDate = formatDate(dateDue);
   const formattedDateIssued = formatDate(dateIssued);
+  const formattedDatePaid = formatDate(datePaid);
   return (
     <Layout>
       <div className="flex flex-col gap-4">
@@ -237,25 +240,57 @@ export default function InvoicePage() {
               </TableBody>
 
               <TableFooter className="bg-inherit">
-                <TableRow>
-                  <TableCell colSpan={3}>
-                    <div className="flex flex-col text-right font-bold">
-                      SubTotal <span>Tax ({(taxRate * 100).toFixed(2)}%)</span>
-                    </div>
+                <TableRow className="border-spacing-4">
+                  <TableCell
+                    colSpan={3}
+                    className="text-right font-bold p-05 pr-4 pt-4"
+                  >
+                    SubTotal
                   </TableCell>
-                  <TableCell className="text-right">
-                    <div className={`flex flex-col text-right `}>
-                      ${subtotal.toFixed(2)}
-                      <span> ${taxAmount.toFixed(2)}</span>
-                    </div>
+                  <TableCell className="text-right p-05 pr-4 pt-4">
+                    ${subtotal.toFixed(2)}
                   </TableCell>
                 </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    colSpan={3}
+                    className={`text-right font-bold p-05 pr-4 ${status === "Unpaid" ? "pb-4" : ""}`}
+                  >
+                    Tax ({(taxRate * 100).toFixed(2)}%)
+                  </TableCell>
+                  <TableCell
+                    className={`text-right p-05 pr-4 ${status === "Unpaid" ? "pb-4" : ""}`}
+                  >
+                    ${taxAmount.toFixed(2)}
+                  </TableCell>
+                </TableRow>
+
+                {status === "Partial" || status === "Paid" ? (
+                  <TableRow className="">
+                    <TableCell
+                      colSpan={3}
+                      className="text-right font-bold p-05 pr-4"
+                    >
+                      <div className="flex flex-col">
+                        <span>Payment on {formattedDatePaid}</span>
+                        <span className=" text-gray-500 font-normal text-[11px] pb-4">
+                          Tip Not Included
+                        </span>
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-right p-05 pr-4 pb-4">
+                      -${paid.toFixed(2)}
+                    </TableCell>
+                  </TableRow>
+                ) : null}
+
                 <TableRow className="bg-gray-100">
                   <TableCell colSpan={3} className="text-right font-bold">
                     TOTAL DUE
                   </TableCell>
                   <TableCell className={`text-right `}>
-                    ${total.toFixed(2)}
+                    {status === "Paid" ? "$0.00" : total.toFixed(2)}
                   </TableCell>
                 </TableRow>
               </TableFooter>

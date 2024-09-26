@@ -57,6 +57,7 @@ export const INVOICES_MOCKED_DATA: Invoice[] = [
     dateDue: "2024-08-07",
     total: 208.0,
     paid: 104.0,
+    datePaid: "2024-08-01",
     assets: [
       {
         id: 1,
@@ -114,6 +115,7 @@ export const INVOICES_MOCKED_DATA: Invoice[] = [
     dateDue: "2024-08-14",
     total: 312.0,
     paid: 312.0,
+    datePaid: "2024-08-09",
     assets: [
       {
         id: 1,
@@ -180,6 +182,7 @@ export const INVOICES_MOCKED_DATA: Invoice[] = [
     dateDue: "2024-08-21",
     total: 110.5,
     paid: 0,
+    datePaid: "",
     assets: [
       {
         id: 1,
@@ -237,5 +240,6 @@ export const INVOICES_MOCKED_DATA: Invoice[] = [
     dateDue: "2024-08-28",
     total: 520.0,
     paid: 0,
+    datePaid: "",
   },
 ];
