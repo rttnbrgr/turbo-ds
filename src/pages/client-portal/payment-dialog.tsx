@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import Image from "next/image";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
@@ -7,33 +7,55 @@ import { Input } from "@/components/ui/input";
 import { Body } from "@/components/ui/text";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import { INVOICES_MOCKED_DATA } from "@/mocks/invoices.mock";
+import { Invoice } from "./invoices";
+import CardDetails from "./card-details";
 
 type PaymentType = "invoice" | "balance" | "other";
 type PaymentMethod = "card" | "paypal" | "other";
 
-export function PaymentDialog({ onClose }: { onClose?: () => void }) {
+const ACCOUNT_BALANCE = 300.0; // where should this come from for now?
+
+export function PaymentDialog({
+  onClose,
+  invoice,
+}: {
+  onClose?: () => void;
+  invoice: Invoice;
+}) {
+  const { paid, total } = invoice;
   const [paymentType, setPaymentType] = useState<PaymentType>("invoice");
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("card");
   const [tipPercentage, setTipPercentage] = useState<number | null | "custom">(
     null
   );
   const [customTip, setCustomTip] = useState<string>("20.00");
+  const [paymentAmount, setPaymentAmount] = useState<number>(
+    invoice?.total - paid || 0
+  );
 
-  const invoiceAmount = 110.5;
-  const accountBalance = 135.5;
+  useEffect(() => {
+    if (paymentType === "invoice") {
+      setPaymentAmount(invoice?.total - paid || 0);
+    }
+    if (paymentType === "balance") {
+      setPaymentAmount(ACCOUNT_BALANCE);
+    }
+  }, [invoice?.total, paid, paymentType]);
 
   const calculateTip = () => {
     if (tipPercentage === "custom") {
-      return parseFloat(customTip);
+      return parseFloat(customTip) || 0;
     }
     if (tipPercentage === null) {
       return 0;
     }
-    return (invoiceAmount * tipPercentage) / 100;
+    return (paymentAmount * tipPercentage) / 100;
   };
+  const invoiceDueAmount = total - paid || 0;
 
   const tip = calculateTip();
-  const total = invoiceAmount + tip;
+  const totalPayment = paymentAmount + tip;
 
   return (
     <div className="flex flex-col gap-6">
@@ -49,13 +71,13 @@ export function PaymentDialog({ onClose }: { onClose?: () => void }) {
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="invoice" id="invoice" />
             <Label htmlFor="invoice">
-              Invoice Amount: ${invoiceAmount.toFixed(2)}
+              Invoice Amount: ${invoiceDueAmount.toFixed(2)}
             </Label>
           </div>
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="balance" id="balance" />
             <Label htmlFor="balance">
-              Account Balance: ${accountBalance.toFixed(2)}
+              Account Balance: ${ACCOUNT_BALANCE.toFixed(2)}
             </Label>
           </div>
           <div className="flex items-center space-x-2">
@@ -63,6 +85,18 @@ export function PaymentDialog({ onClose }: { onClose?: () => void }) {
             <Label htmlFor="other">Other Amount</Label>
           </div>
         </RadioGroup>
+
+        {paymentType === "other" ? (
+          <div className="flex items-center space-x-2">
+            <span className="text-sm">$</span>
+            <Input
+              type="number"
+              value={paymentAmount}
+              onChange={e => setPaymentAmount(+e.target.value || 0)}
+              className="text-md"
+            />
+          </div>
+        ) : null}
       </div>
 
       <div className="flex flex-col gap-2">
@@ -140,12 +174,14 @@ export function PaymentDialog({ onClose }: { onClose?: () => void }) {
         </p>
       </div>
 
+      {paymentMethod === "other" ? <CardDetails /> : null}
+
       <Table>
         <TableBody>
           <TableRow>
             <TableCell className="p-2 w-full text-right">Subtotal</TableCell>
             <TableCell className="p-2 pr-5 text-right whitespace-nowrap">
-              ${invoiceAmount.toFixed(2)}
+              ${paymentAmount.toFixed(2)}
             </TableCell>
           </TableRow>
           <TableRow>
@@ -157,7 +193,7 @@ export function PaymentDialog({ onClose }: { onClose?: () => void }) {
           <TableRow className="font-bold" data-state="selected">
             <TableCell className="p-2 w-full text-right">TOTAL</TableCell>
             <TableCell className="p-2 pr-5 text-right whitespace-nowrap">
-              ${total.toFixed(2)}
+              ${totalPayment.toFixed(2)}
             </TableCell>
           </TableRow>
 
@@ -178,7 +214,7 @@ export function PaymentDialog({ onClose }: { onClose?: () => void }) {
                 size="sm"
               >
                 <Image src="/lock.svg" alt="Lock Icon" width={12} height={12} />
-                Pay ${total.toFixed(2)}
+                Pay ${totalPayment.toFixed(2)}
               </Button>
             </TableCell>
           </TableRow>
