@@ -13,7 +13,6 @@ import * as Text from "@/components/ui/text";
 import { Textarea } from "@/components/ui/textarea";
 import { Layout } from "@client-portal/layout";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -24,8 +23,6 @@ const formSchema = z.object({
 });
 
 export default function RateUs() {
-  const [rating, setRating] = useState(0);
-
   const form = useForm<z.infer<typeof formSchema>>({
     shouldUnregister: true,
     resolver: zodResolver(formSchema),
@@ -35,13 +32,6 @@ export default function RateUs() {
       rating: 0,
     },
   });
-
-  const { setValue } = form;
-
-  // updates the rating value in the form when the rating state changes
-  useEffect(() => {
-    setValue("rating", rating);
-  }, [rating, setValue]);
 
   const handleSubmit = (data: z.infer<typeof formSchema>) => {
     console.log("data", data);
@@ -68,10 +58,10 @@ export default function RateUs() {
               <div>
                 <Text.Body>Madison Handyman Rating</Text.Body>
                 <StarRating
+                  rating={form.watch("rating")}
                   totalStars={5}
-                  initialRating={5}
                   onRatingChange={value => {
-                    setRating(value);
+                    form.setValue("rating", value);
                   }}
                 />
 

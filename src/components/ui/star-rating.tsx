@@ -1,21 +1,19 @@
 import React, { useState } from "react";
 
 type StarRatingProps = {
+  rating: number;
   totalStars?: number;
-  initialRating?: number;
   onRatingChange?: (rating: number) => void;
 };
 
 function StarRating({
+  rating,
   totalStars = 5,
-  initialRating = 0,
   onRatingChange,
 }: StarRatingProps) {
-  const [rating, setRating] = useState(initialRating);
   const [hoverRating, setHoverRating] = useState(0);
 
   const handleRating = (newRating: number) => {
-    setRating(newRating);
     if (onRatingChange) {
       onRatingChange(newRating);
     }
