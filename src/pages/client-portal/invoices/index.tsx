@@ -37,13 +37,15 @@ export interface InvoiceItem {
 
 export type Invoice = {
   id: string;
+  invoice_number: string;
+
   invoice_date: string;
   over_due: boolean;
   due_date: string;
-  invoice_number: string;
-  invoice_total: number;
-  paid_amount: number;
+  issued_date: string;
+  paid_date: string;
   status: "Partial" | "Paid" | "Unpaid";
+
   companyName: string;
   companyAddress: string;
   companyPhone: string;
@@ -52,18 +54,13 @@ export type Invoice = {
   clientAddress: string;
   notes: string;
 
-  items: InvoiceItem[];
   subtotal: number;
   taxRate: number;
   taxAmount: number;
-
-  invoiceNumber: string;
-  dateIssued: string;
-  dateDue: string;
   total: number;
   paid: number;
-  datePaid: string;
 
+  items: InvoiceItem[];
   assets?: Asset[];
 };
 
@@ -152,12 +149,12 @@ const columns: ColumnDef<Invoice>[] = [
     },
   },
   {
-    accessorKey: "paid_amount",
+    accessorKey: "paid",
     header: ({ column }) => (
       <HeaderCell column={column}>Paid Amount</HeaderCell>
     ),
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("paid_amount"));
+      const amount = parseFloat(row.getValue("paid"));
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",

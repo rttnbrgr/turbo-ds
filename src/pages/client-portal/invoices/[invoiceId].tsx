@@ -29,7 +29,6 @@ import {
 } from "@/components/ui/dialog";
 import { PaymentDialog } from "../payment-dialog";
 import { AttachedImages } from "../attached-images";
-import { stat } from "fs";
 
 export default function InvoicePage() {
   const router = useRouter();
@@ -70,9 +69,7 @@ export default function InvoicePage() {
     clientName,
     clientAddress,
     notes,
-    invoiceNumber,
-    dateIssued,
-    dateDue,
+    invoice_number,
     items,
     subtotal,
     taxRate,
@@ -80,14 +77,29 @@ export default function InvoicePage() {
     total,
     paid,
     assets,
-    datePaid,
+    paid_date,
+    issued_date,
+    due_date,
   } = invoice as Invoice;
 
   const dueAmount = total - paid || 0;
 
-  const formattedDueDate = formatDate(dateDue);
-  const formattedDateIssued = formatDate(dateIssued);
-  const formattedDatePaid = formatDate(datePaid);
+  const formattedDueDate = formatDate(due_date);
+  const formattedIssuedDate = formatDate(issued_date);
+  const formattedDatePaid = formatDate(paid_date);
+
+  const calculateTotal = () => {
+    switch (status) {
+      case "Paid":
+        return "$0.00";
+      case "Partial":
+        return `$${dueAmount.toFixed(2)}`;
+      case "Unpaid":
+      default:
+        return `$${total.toFixed(2)}`;
+    }
+  };
+
   return (
     <Layout>
       <div className="flex flex-col gap-4">
@@ -118,7 +130,10 @@ export default function InvoicePage() {
                   <DialogTitle>Pay Invoice</DialogTitle>
                 </DialogHeader>
                 <DialogDescription>
-                  <PaymentDialog onClose={handleClosePaymentDialog} />
+                  <PaymentDialog
+                    onClose={handleClosePaymentDialog}
+                    invoice={invoice}
+                  />
                 </DialogDescription>
               </DialogContent>
             </div>
@@ -184,7 +199,7 @@ export default function InvoicePage() {
                         Invoice Number
                       </TableCell>
                       <TableCell className="p-2 text-right">
-                        {invoiceNumber}
+                        {invoice_number}
                       </TableCell>
                     </TableRow>
                     <TableRow>
@@ -192,12 +207,12 @@ export default function InvoicePage() {
                         Date Issued
                       </TableCell>
                       <TableCell className="p-2 text-right">
-                        {formattedDateIssued}
+                        {formattedIssuedDate}
                       </TableCell>
                     </TableRow>
                     <TableRow
                       className={
-                        dateDue > dateIssued && status !== "Paid"
+                        due_date > issued_date && status !== "Paid"
                           ? `text-destructive`
                           : ""
                       }
@@ -279,7 +294,7 @@ export default function InvoicePage() {
                         </span>
                       </div>
                     </TableCell>
-                    <TableCell className="text-right p-05 pr-4 pb-4">
+                    <TableCell className="text-right p-05 pr-4 pb-4 align-top">
                       -${paid.toFixed(2)}
                     </TableCell>
                   </TableRow>
@@ -290,7 +305,7 @@ export default function InvoicePage() {
                     TOTAL DUE
                   </TableCell>
                   <TableCell className={`text-right `}>
-                    {status === "Paid" ? "$0.00" : total.toFixed(2)}
+                    {calculateTotal()}
                   </TableCell>
                 </TableRow>
               </TableFooter>
