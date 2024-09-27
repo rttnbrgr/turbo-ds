@@ -1,40 +1,88 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Contributors Guide
 
-## Getting Started
+### 1. **Identify or Create a GitHub Issue**
 
-First, run the development server:
+Before starting work, be sure you have an issue with relevant details identifying the work to be done. Ideally, the issue should provide clear acceptance criteria and as much additional context as feasible. If you're not already assigned, assign yourself to the issue to indicate ownership.
+
+### 2. **Create a Branch**
+
+Follow the branch naming convention to include the issue number and a brief description.
+
+**Format:** `<issue-number>-<short-description>`
+
+- **Issue Number**: Each branch must include the corresponding issue number to link it to the issue in GitHub.
+- **Short Description**: Use a concise description of the branch purpose in kebab-case (e.g., `setup-storybook`).
+
+  _Example:_ `43-setup-storybook`
+
+_Alternatively_, use the "Create a branch for this issue or link a pull request" option from the GitHub issue sidebar to automatically apply the issue number and issue title as the branch name. You can then clone and checkout the created branch to your local git repository.
+
+### 3. **Commit Guidelines**
+
+Commit your work frequently, using descriptive messages, optionally following the [Conventional Commits](https://www.conventionalcommits.org/) specification for adding clarity to the purpose of each commit.
+
+#### Best Practices
+
+- **Be Concise**: Keep the description short and to the point, focusing on what the commit introduces or fixes.
+- **Use Imperative Mood**: Write as if you are giving commands, not describing past actions (e.g., "adds feature" rather than "added feature").
+- **Commit Often**: Commit regularly, with logical chunks of work.
+
+### 4. **Open a Pull Request (PR)**
+
+After completing your work, open a PR for the issue. This is a good time to do a final review of the code changes from the perspective of a code reviewer, looking for any unexpected changesets and ensuring there are no logs or stray code not intended to be merged.
+
+When creating a Pull Request, **include the issue number** in the PR title or description (e.g., `Closes #123`). This ensures that the associated issue is automatically closed when the PR is merged.
+
+_TODO: Add additional guidance on a PR description template. (Should we include screenshots or a more detailed breakdown of the work for the reviewer?)_
+
+### 5. **Merge the PR**
+
+Once approved by at least one peer and after confirming that all tests and checks (CI/CD pipeline, code quality checks, etc.) have passed, use the "Squash and Merge" option to combine your commits. (_TODO: Need to check if this can be turned on by default._)
+
+> At some point, we will include a Design/QA/Product sign-off flow here as well.
+
+### 6. **Delete the Branch**
+
+Optionally, delete the branch after merging to keep the repository clean. _(TODO: Confirm branch deletion policy with the team.)_
+
+---
+
+## Development
+
+To start the development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+---
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Formatting with Prettier
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+To manually format the codebase with Prettier:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```bash
+pnpm format
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Linting
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To manually run ESLint across the codebase:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+pnpm lint
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Local Build
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+To create a local build:
+
+```bash
+pnpm build
+```
