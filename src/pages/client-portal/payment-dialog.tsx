@@ -1,20 +1,44 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, useWatch } from "react-hook-form";
+import * as z from "zod";
 import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Body } from "@/components/ui/text";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { INVOICES_MOCKED_DATA } from "@/mocks/invoices.mock";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { Body } from "@/components/ui/text";
 import { Invoice } from "./invoices";
-import CardDetails from "./card-details";
+import CardDetails, { CardDetailsPayload } from "./card-details";
 
-type PaymentType = "invoice" | "balance" | "other";
-type PaymentMethod = "card" | "paypal" | "other";
+const ACCOUNT_BALANCE = 300.0;
 
-const ACCOUNT_BALANCE = 300.0; // where should this come from for now?
+const formSchema = z.object({
+  paymentType: z.enum(["invoice", "balance", "other"]),
+  paymentMethod: z.enum(["card", "paypal", "other"]),
+  tipPercentage: z.enum(["0", "10", "15", "20", "custom"]),
+  customTip: z
+    .string()
+    .optional()
+    .refine(
+      val => {
+        if (val === undefined) return true;
+        const parsed = parseFloat(val);
+        return !isNaN(parsed) && parsed >= 0;
+      },
+      { message: "Custom tip must be a non-negative number" }
+    ),
+  subTotal: z.number().min(0, "Subtotal must be a non-negative number"),
+});
 
 export function PaymentDialog({
   onClose,
@@ -24,202 +48,308 @@ export function PaymentDialog({
   invoice: Invoice;
 }) {
   const { paid, total } = invoice;
-  const [paymentType, setPaymentType] = useState<PaymentType>("invoice");
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("card");
-  const [tipPercentage, setTipPercentage] = useState<number | null | "custom">(
-    null
-  );
-  const [customTip, setCustomTip] = useState<string>("20.00");
-  const [paymentAmount, setPaymentAmount] = useState<number>(
-    invoice?.total - paid || 0
-  );
+  const invoiceAmount = total - paid || 0;
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      paymentType: "invoice",
+      paymentMethod: "card",
+      tipPercentage: "0",
+      customTip: "20.00",
+      subTotal: invoiceAmount,
+    },
+  });
+
+  const {
+    control,
+    setValue,
+    formState: { errors },
+  } = form;
+  const paymentType = useWatch({ control, name: "paymentType" });
+  const paymentMethod = useWatch({ control, name: "paymentMethod" });
+  const tipPercentage = useWatch({ control, name: "tipPercentage" });
+  const customTip = useWatch({ control, name: "customTip" });
+  const subTotal = useWatch({ control, name: "subTotal" });
 
   useEffect(() => {
     if (paymentType === "invoice") {
-      setPaymentAmount(invoice?.total - paid || 0);
+      setValue("subTotal", invoiceAmount);
+    } else if (paymentType === "balance") {
+      setValue("subTotal", ACCOUNT_BALANCE);
     }
-    if (paymentType === "balance") {
-      setPaymentAmount(ACCOUNT_BALANCE);
-    }
-  }, [invoice?.total, paid, paymentType]);
+  }, [paymentType, invoiceAmount, setValue]);
 
   const calculateTip = () => {
     if (tipPercentage === "custom") {
-      return parseFloat(customTip) || 0;
+      return parseFloat(customTip || "0") || 0;
     }
-    if (tipPercentage === null) {
-      return 0;
-    }
-    return (paymentAmount * tipPercentage) / 100;
+    return (subTotal * parseInt(tipPercentage)) / 100;
   };
-  const invoiceDueAmount = total - paid || 0;
 
   const tip = calculateTip();
-  const totalPayment = paymentAmount + tip;
+  const totalPayment = subTotal + tip;
+
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
+    console.log(data);
+    alert(JSON.stringify({ ...data, totalPayment }));
+  };
+
+  const [cardDetailsPayload, setCardDetailsPayload] =
+    useState<CardDetailsPayload | null>(null);
+
+  const handleCardDetails = (cardDetails: CardDetailsPayload) => {
+    setCardDetailsPayload(cardDetails);
+  };
+
+  const canCheckout =
+    (paymentMethod === "other" && !cardDetailsPayload?.hasErrors) ||
+    paymentMethod !== "other";
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-col gap-2">
-        <Body size="md" className="font-semibold">
-          Payment Type
-        </Body>
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-6"
+      >
+        <FormField
+          control={form.control}
+          name="paymentType"
+          render={({ field }) => (
+            <FormItem className="flex flex-col gap-2">
+              <FormLabel>
+                <Body size="md" className="font-semibold">
+                  Payment Type
+                </Body>
+              </FormLabel>
+              <FormControl>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  value={field.value}
+                  className="flex flex-col space-y-1"
+                >
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="invoice" />
+                    </FormControl>
+                    <FormLabel className="font-normal">
+                      Invoice Amount: ${invoiceAmount.toFixed(2)}
+                    </FormLabel>
+                  </FormItem>
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="balance" />
+                    </FormControl>
+                    <FormLabel className="font-normal">
+                      Account Balance: ${ACCOUNT_BALANCE.toFixed(2)}
+                    </FormLabel>
+                  </FormItem>
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="other" />
+                    </FormControl>
+                    <FormLabel className="font-normal">Other Amount</FormLabel>
+                  </FormItem>
+                </RadioGroup>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-        <RadioGroup
-          value={paymentType}
-          onValueChange={(value: PaymentType) => setPaymentType(value)}
-        >
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="invoice" id="invoice" />
-            <Label htmlFor="invoice">
-              Invoice Amount: ${invoiceDueAmount.toFixed(2)}
-            </Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="balance" id="balance" />
-            <Label htmlFor="balance">
-              Account Balance: ${ACCOUNT_BALANCE.toFixed(2)}
-            </Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="other" id="other" />
-            <Label htmlFor="other">Other Amount</Label>
-          </div>
-        </RadioGroup>
+        {paymentType === "other" && (
+          <FormField
+            control={form.control}
+            name="subTotal"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-sm">$</span>
+                    <Input
+                      type="number"
+                      {...field}
+                      onChange={e => field.onChange(parseFloat(e.target.value))}
+                      className="text-md"
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
 
-        {paymentType === "other" ? (
-          <div className="flex items-center space-x-2">
-            <span className="text-sm">$</span>
-            <Input
-              type="number"
-              value={paymentAmount}
-              onChange={e => setPaymentAmount(+e.target.value || 0)}
-              className="text-md"
-            />
-          </div>
-        ) : null}
-      </div>
+        <FormField
+          control={form.control}
+          name="paymentMethod"
+          render={({ field }) => (
+            <FormItem className="flex flex-col gap-2">
+              <FormLabel>
+                <Body size="md" className="font-semibold">
+                  Payment Method
+                </Body>
+              </FormLabel>
+              <FormControl>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  value={field.value}
+                  className="flex flex-col space-y-1"
+                >
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="card" />
+                    </FormControl>
+                    <FormLabel className="font-normal">
+                      Card Ending in 3456
+                    </FormLabel>
+                  </FormItem>
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="paypal" />
+                    </FormControl>
+                    <FormLabel className="font-normal flex items-center">
+                      <Image
+                        alt="Pay With Paypal"
+                        src="/paypal-logo.png"
+                        width={76}
+                        height={20}
+                      />
+                    </FormLabel>
+                  </FormItem>
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="other" />
+                    </FormControl>
+                    <FormLabel className="font-normal">Other Method</FormLabel>
+                  </FormItem>
+                </RadioGroup>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <div className="flex flex-col gap-2">
-        <Body size="md" className="font-semibold">
-          Payment Method
-        </Body>
-
-        <RadioGroup
-          value={paymentMethod}
-          onValueChange={(value: PaymentMethod) => setPaymentMethod(value)}
-        >
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="card" id="card" />
-            <Label htmlFor="card">Card Ending in 3456</Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="paypal" id="paypal" />
-            <Label htmlFor="paypal" className="flex items-center">
-              <Image
-                alt="Pay With Paypal"
-                src="/paypal-logo.png"
-                width={76}
-                height={20}
-              />
-            </Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="other" id="other-method" />
-            <Label htmlFor="other-method">Other Method</Label>
-          </div>
-        </RadioGroup>
-      </div>
-      <div className="flex flex-col gap-2">
-        <Body size="md" className="font-semibold">
-          Add a Tip
-        </Body>
-
-        <div className="flex space-x-2 gap-3">
-          <ToggleGroup type="single">
-            <ToggleGroupItem value="5" onClick={() => setTipPercentage(null)}>
-              <div className="whitespace-nowrap">No Tip</div>
-            </ToggleGroupItem>
-            <ToggleGroupItem value="10" onClick={() => setTipPercentage(10)}>
-              10%
-            </ToggleGroupItem>
-            <ToggleGroupItem value="15" onClick={() => setTipPercentage(15)}>
-              15%
-            </ToggleGroupItem>
-            <ToggleGroupItem value="20" onClick={() => setTipPercentage(20)}>
-              20%
-            </ToggleGroupItem>
-            <ToggleGroupItem
-              value="custom"
-              onClick={() => setTipPercentage("custom")}
-            >
-              Custom
-            </ToggleGroupItem>
-          </ToggleGroup>
-
-          {tipPercentage === "custom" ? (
-            <div className="flex items-center space-x-2">
-              <span className="text-sm">$</span>
-              <Input
-                type="number"
-                value={customTip}
-                onChange={e => setCustomTip(e.target.value)}
-                className="text-md"
-              />
-            </div>
-          ) : null}
-        </div>
+        <FormField
+          control={form.control}
+          name="tipPercentage"
+          render={({ field }) => (
+            <FormItem className="flex flex-col gap-2">
+              <FormLabel>
+                <Body size="md" className="font-semibold">
+                  Add a Tip
+                </Body>
+              </FormLabel>
+              <div className="flex gap-2">
+                <FormControl className="justify-start">
+                  <ToggleGroup
+                    type="single"
+                    onValueChange={field.onChange}
+                    value={field.value}
+                  >
+                    <ToggleGroupItem value="0">
+                      <div className="whitespace-nowrap">No Tip</div>
+                    </ToggleGroupItem>
+                    <ToggleGroupItem value="10">10%</ToggleGroupItem>
+                    <ToggleGroupItem value="15">15%</ToggleGroupItem>
+                    <ToggleGroupItem value="20">20%</ToggleGroupItem>
+                    <ToggleGroupItem value="custom">Custom</ToggleGroupItem>
+                  </ToggleGroup>
+                </FormControl>
+                {tipPercentage === "custom" && (
+                  <FormField
+                    control={form.control}
+                    name="customTip"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <div className="flex items-center space-x-2">
+                            <span className="text-sm">$</span>
+                            <Input
+                              type="number"
+                              {...field}
+                              className="text-md"
+                            />
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+                <FormMessage />
+              </div>
+            </FormItem>
+          )}
+        />
 
         <p className="text-gray-400 text-xs">
           Tip based on invoice amount before taxes.
         </p>
-      </div>
 
-      {paymentMethod === "other" ? <CardDetails /> : null}
+        {paymentMethod === "other" && (
+          <CardDetails onCardDetails={handleCardDetails} />
+        )}
 
-      <Table>
-        <TableBody>
-          <TableRow>
-            <TableCell className="p-2 w-full text-right">Subtotal</TableCell>
-            <TableCell className="p-2 pr-5 text-right whitespace-nowrap">
-              ${paymentAmount.toFixed(2)}
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="p-2 w-full text-right">Tip</TableCell>
-            <TableCell className="p-2 pr-5 text-right whitespace-nowrap">
-              ${tip.toFixed(2)}
-            </TableCell>
-          </TableRow>
-          <TableRow className="font-bold" data-state="selected">
-            <TableCell className="p-2 w-full text-right">TOTAL</TableCell>
-            <TableCell className="p-2 pr-5 text-right whitespace-nowrap">
-              ${totalPayment.toFixed(2)}
-            </TableCell>
-          </TableRow>
+        {Object.keys(errors).length > 0 && (
+          <div className="text-red-500 text-sm">
+            Please correct the errors above before submitting.
+          </div>
+        )}
 
-          {/* separator row - likely better way to do this...*/}
-          <TableRow className="h-4 border-none"></TableRow>
+        <Table>
+          <TableBody>
+            <TableRow>
+              <TableCell className="p-2 w-full text-right">Subtotal</TableCell>
+              <TableCell className="p-2 pr-5 text-right whitespace-nowrap">
+                ${subTotal.toFixed(2)}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="p-2 w-full text-right">Tip</TableCell>
+              <TableCell className="p-2 pr-5 text-right whitespace-nowrap">
+                ${tip.toFixed(2)}
+              </TableCell>
+            </TableRow>
+            <TableRow className="font-bold" data-state="selected">
+              <TableCell className="p-2 w-full text-right">TOTAL</TableCell>
+              <TableCell className="p-2 pr-5 text-right whitespace-nowrap">
+                ${totalPayment.toFixed(2)}
+              </TableCell>
+            </TableRow>
 
-          <TableRow className="pt-3 border-none">
-            <TableCell className="p-2 w-full text-right">
-              <Button variant="outline" size="sm" onClick={() => onClose?.()}>
-                Cancel
-              </Button>
-            </TableCell>
-            <TableCell className="p-2 text-right whitespace-nowrap">
-              <Button
-                variant="fill"
-                intent="action"
-                className="flex-1 px-4"
-                size="sm"
-              >
-                <Image src="/lock.svg" alt="Lock Icon" width={12} height={12} />
-                Pay ${totalPayment.toFixed(2)}
-              </Button>
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    </div>
+            <TableRow className="h-4 border-none"></TableRow>
+
+            <TableRow className="pt-3 border-none">
+              <TableCell className="p-2 w-full text-right">
+                <Button variant="outline" size="sm" onClick={() => onClose?.()}>
+                  Cancel
+                </Button>
+              </TableCell>
+
+              {canCheckout ? (
+                <TableCell className="p-2 text-right whitespace-nowrap">
+                  <Button
+                    type="submit"
+                    variant="fill"
+                    intent="action"
+                    className="flex-1 px-4"
+                    size="sm"
+                  >
+                    <Image
+                      src="/lock.svg"
+                      alt="Lock Icon"
+                      width={12}
+                      height={12}
+                    />
+                    Pay ${totalPayment.toFixed(2)}
+                  </Button>
+                </TableCell>
+              ) : null}
+            </TableRow>
+          </TableBody>
+        </Table>
+      </form>
+    </Form>
   );
 }
