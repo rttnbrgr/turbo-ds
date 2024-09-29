@@ -54,6 +54,7 @@ import { format } from "date-fns";
 import { Checkbox } from "../ui/checkbox";
 import { Separator } from "../ui/separator";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { useQuery } from "@tanstack/react-query";
 
 const formSchema = z.object({
   serviceType: z.enum(["Service Type 1", "Service Type 2", "Service Type 3"]),
@@ -74,6 +75,11 @@ const formSchema = z.object({
   }),
 });
 
+const fetchData = async () => {
+  const response = await fetch("https://api.example.com/users");
+  return response.json();
+};
+
 export function RequestEstimateDialog({
   userId,
   onSubmit,
@@ -84,7 +90,14 @@ export function RequestEstimateDialog({
   trigger: JSX.Element;
 }) {
   // fetch the user info
-  const user = USER_2;
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["users"],
+    queryFn: fetchData,
+  });
+
+  const user = data?.find((user: any) => user.id === userId);
+  console.log("data", data);
+  console.log("user", user);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -96,11 +109,11 @@ export function RequestEstimateDialog({
       preferredArrivalTimes: ["Anytime"],
       frequency: "One Time",
       property: {
-        address: user.address,
-        address2: user.address2,
-        city: user.city,
-        state: user.state,
-        zip: user.zip,
+        address: user?.address,
+        address2: user?.address2,
+        city: user?.city,
+        state: user?.state,
+        zip: user?.zip,
         country: "USA",
       },
     },
@@ -109,24 +122,28 @@ export function RequestEstimateDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent className="max-w-xl">
+      <DialogContent className="max-w-3xl">
         <DialogHeader>
           <DialogTitle>Request An Estimate</DialogTitle>
           <DialogDescription>
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8"
+                className="space-y-8 overflow-y-auto max-h-[80vh] pr-3 "
               >
                 <div className="flex justify-between w-full">
                   <div className="flex flex-col gap-3 w-full">
                     <div className="flex flex-col">
                       <Heading size="sm">Contact Details</Heading>
-                      <Body size="sm">{user.name}</Body>
-                      <Body size="sm">{user.address} </Body>
-                      <Body size="sm">{`${user.city}, ${user.state} ${user.zip}`}</Body>
-                      <Body size="sm">{user.phone}</Body>
-                      <Body size="sm">{user.email}</Body>
+                      {user && (
+                        <>
+                          <Body size="sm">{user.name}</Body>
+                          <Body size="sm">{user.address} </Body>
+                          <Body size="sm">{`${user.city}, ${user.state} ${user.zip}`}</Body>
+                          <Body size="sm">{user.phone}</Body>
+                          <Body size="sm">{user.email}</Body>
+                        </>
+                      )}
                     </div>
 
                     <div className="flex gap-3 justify-between">

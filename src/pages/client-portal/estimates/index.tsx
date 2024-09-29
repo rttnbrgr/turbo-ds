@@ -24,6 +24,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { STATUS_VS_CHIP_INTENT } from "@/lib/constants";
 import { Body } from "@/components/ui/text";
 import { RequestEstimateDialog } from "@/components/client-portal/request-estimate";
+import { useQuery } from "@tanstack/react-query";
 
 function HeaderCell({
   children,
@@ -162,6 +163,15 @@ export default function Estimates() {
     ]);
   }, []);
 
+  const { data, isLoading } = useQuery({
+    queryKey: ["estimates"],
+    queryFn: () =>
+      fetch("https://api.example.com/data").then(res => res.json()),
+  });
+
+  console.log("data", data);
+  console.log("isLoading", isLoading);
+
   return (
     <Layout>
       <div className="flex flex-col gap-9">
@@ -188,7 +198,7 @@ export default function Estimates() {
             </form>
 
             <RequestEstimateDialog
-              userId="1"
+              userId="00124"
               onSubmit={handleSubmit}
               trigger={<Button intent="action">+ Request an Estimate</Button>}
             />

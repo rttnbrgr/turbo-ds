@@ -185,7 +185,7 @@ export const Nav = ({ ...props }) => {
         {/* Top */}
         <div className={cn("flex flex-col gap-8")}>
           <RequestEstimateDialog
-            userId="1"
+            userId="00124"
             onSubmit={handleSubmit}
             trigger={
               <Button variant="outline">
