@@ -22,3 +22,5 @@ export const USER_2 = {
   zip: "53703",
   role: "Client",
 };
+
+export const USERS = [USER_1, USER_2];
