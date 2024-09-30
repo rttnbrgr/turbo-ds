@@ -27,8 +27,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { PaymentDialog } from "../payment-dialog";
-import { AttachedImages } from "../attached-images";
+import { PaymentDialog } from "../../../components/client-portal/payment-dialog";
+import { AttachedImages } from "../../../components/client-portal/attached-images";
 
 export default function InvoicePage() {
   const router = useRouter();

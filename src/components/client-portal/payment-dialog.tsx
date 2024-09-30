@@ -17,7 +17,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Body } from "@/components/ui/text";
-import { Invoice } from "./invoices";
+import { Invoice } from "../../pages/client-portal/invoices";
 import CardDetails, { CardDetailsPayload } from "./card-details";
 
 const ACCOUNT_BALANCE = 300.0;

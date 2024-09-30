@@ -19,7 +19,7 @@ import { DataTable } from "@/components/ui/data-table";
 
 // icons
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { Asset } from "../attached-images";
+import { Asset } from "../../../components/client-portal/attached-images";
 
 // mocks
 import { INVOICES_MOCKED_DATA } from "@/mocks/invoices.mock";
