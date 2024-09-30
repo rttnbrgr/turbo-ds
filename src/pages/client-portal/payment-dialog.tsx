@@ -230,62 +230,64 @@ export function PaymentDialog({
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="tipPercentage"
-          render={({ field }) => (
-            <FormItem className="flex flex-col gap-2">
-              <FormLabel>
-                <Body size="md" className="font-semibold">
-                  Add a Tip
-                </Body>
-              </FormLabel>
-              <div className="flex gap-2">
-                <FormControl className="justify-start">
-                  <ToggleGroup
-                    type="single"
-                    onValueChange={field.onChange}
-                    value={field.value}
-                  >
-                    <ToggleGroupItem value="0">
-                      <div className="whitespace-nowrap">No Tip</div>
-                    </ToggleGroupItem>
-                    <ToggleGroupItem value="10">10%</ToggleGroupItem>
-                    <ToggleGroupItem value="15">15%</ToggleGroupItem>
-                    <ToggleGroupItem value="20">20%</ToggleGroupItem>
-                    <ToggleGroupItem value="custom">Custom</ToggleGroupItem>
-                  </ToggleGroup>
-                </FormControl>
-                {tipPercentage === "custom" && (
-                  <FormField
-                    control={form.control}
-                    name="customTip"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <div className="flex items-center space-x-2">
-                            <span className="text-sm">$</span>
-                            <Input
-                              type="number"
-                              {...field}
-                              className="text-md"
-                            />
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                )}
-                <FormMessage />
-              </div>
-            </FormItem>
-          )}
-        />
+        <div className="flex flex-col gap-2">
+          <FormField
+            control={form.control}
+            name="tipPercentage"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-1">
+                <FormLabel>
+                  <Body size="md" className="font-semibold">
+                    Add a Tip
+                  </Body>
+                </FormLabel>
+                <div className="flex gap-2">
+                  <FormControl className="justify-start">
+                    <ToggleGroup
+                      type="single"
+                      onValueChange={field.onChange}
+                      value={field.value}
+                    >
+                      <ToggleGroupItem value="0">
+                        <div className="whitespace-nowrap">No Tip</div>
+                      </ToggleGroupItem>
+                      <ToggleGroupItem value="10">10%</ToggleGroupItem>
+                      <ToggleGroupItem value="15">15%</ToggleGroupItem>
+                      <ToggleGroupItem value="20">20%</ToggleGroupItem>
+                      <ToggleGroupItem value="custom">Custom</ToggleGroupItem>
+                    </ToggleGroup>
+                  </FormControl>
+                  {tipPercentage === "custom" && (
+                    <FormField
+                      control={form.control}
+                      name="customTip"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <div className="flex items-center space-x-2">
+                              <span className="text-sm">$</span>
+                              <Input
+                                type="number"
+                                {...field}
+                                className="text-md"
+                              />
+                            </div>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  )}
+                  <FormMessage />
+                </div>
+              </FormItem>
+            )}
+          />
 
-        <p className="text-gray-400 text-xs">
-          Tip based on invoice amount before taxes.
-        </p>
+          <p className="text-gray-400 text-xs">
+            Tip based on invoice amount before taxes.
+          </p>
+        </div>
 
         {paymentMethod === "other" && (
           <CardDetails onCardDetails={handleCardDetails} />
