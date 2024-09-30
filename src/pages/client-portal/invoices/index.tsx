@@ -135,12 +135,12 @@ const columns: ColumnDef<Invoice>[] = [
     ),
   },
   {
-    accessorKey: "invoice_total",
+    accessorKey: "total",
     header: ({ column }) => (
       <HeaderCell column={column}>Invoice Total</HeaderCell>
     ),
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("invoice_total"));
+      const amount = parseFloat(row.getValue("total"));
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
