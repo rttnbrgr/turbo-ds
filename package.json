@@ -9,6 +9,7 @@
     "lint": "eslint --ext .ts,.tsx --fix .",
     "format": "prettier --write .",
     "msw:init": "msw init public/ --save"
+    "test": "vitest"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -43,21 +44,27 @@
   },
   "devDependencies": {
     "@tanstack/react-query": "^5.56.2",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.0.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@typescript-eslint/eslint-plugin": "^8.6.0",
     "@typescript-eslint/parser": "^8.6.0",
+    "@vitejs/plugin-react": "^4.3.2",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.5",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.36.1",
     "eslint-plugin-react-hooks": "^4.6.2",
+    "jsdom": "^25.0.1",
     "postcss": "^8",
     "prettier": "^3.3.3",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^2.1.1"
   },
   "msw": {
     "workerDirectory": [
