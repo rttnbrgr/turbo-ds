@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { formatDate } from "../utils";
+import { formatDate } from "../lib/utils";
 
 describe("formatDate", () => {
   it("formats a date correctly", () => {
