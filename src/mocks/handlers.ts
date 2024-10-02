@@ -12,6 +12,15 @@ export const handlers = [
     const { id } = params;
     return HttpResponse.json(USERS.find(user => user.id === id));
   }),
+  // update user by id
+  http.put("https://api.example.com/users/:id", async ({ params, request }) => {
+    const { id } = params;
+    const requestBody = await request.json();
+    // spread the request body to the user object
+    return HttpResponse.json(
+      USERS.map(user => (user.id === id ? { ...user, requestBody } : user))
+    );
+  }),
   // get all estimates
   http.get("https://api.example.com/estimates", () => {
     return HttpResponse.json(ESTIMATES_FIXTURE);
