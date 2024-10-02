@@ -54,8 +54,8 @@ const statusChipVariants = cva([_base, _typography, _border], {
     intent: {
       neutral: "bg-gray-100 border-gray-200",
       success: "bg-green-100 border-green-200",
-      warn: "bg-yellow-100 border-yellow-200",
-      danger: "bg-red-100 border-red-200",
+      warn: "bg-yellow-100/50 border-yellow-200",
+      danger: "bg-red-100/70 border-red-200",
       action: "bg-blue-100 border-blue-200",
     },
   },
