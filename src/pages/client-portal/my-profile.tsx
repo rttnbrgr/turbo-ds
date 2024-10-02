@@ -1,92 +1,58 @@
+import { LoginInfoForm } from "@/components/client-portal/login-info-form";
+import { PaymentInfoForm } from "@/components/client-portal/payment-info-form";
+import { ProfileForm } from "@/components/client-portal/profile-form";
 import { Card, CardBody, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import * as Text from "@/components/ui/text";
 import { Layout } from "@client-portal/layout";
-
-const fields = [
-  {
-    title: "Full Name",
-    id: "name",
-    type: "text",
-    placeholder: "",
-  },
-  {
-    title: "Email Address",
-    id: "email",
-    type: "text",
-  },
-  {
-    title: "Mobile Number",
-    id: "mobile_number",
-    type: "text",
-  },
-  {
-    title: "Business Number",
-    id: "business_number",
-    type: "text",
-  },
-  {
-    title: "Fax Number",
-    id: "fax_number",
-    type: "text",
-  },
-  {
-    title: "Country",
-    id: "country",
-    type: "text",
-  },
-  {
-    title: "Street Address Line 1",
-    id: "address_1",
-    type: "text",
-  },
-  {
-    title: "Street Address Line 2",
-    id: "address_2",
-    type: "text",
-  },
-  {
-    title: "City",
-    id: "city",
-    type: "text",
-  },
-  {
-    title: "State",
-    id: "state",
-    type: "text",
-  },
-  {
-    title: "ZIP Code",
-    id: "zip",
-    type: "text",
-  },
-];
+import { useQuery } from "@tanstack/react-query";
 
 export default function MyProfile() {
+  // get user from api
+  const { data: user, isLoading } = useQuery({
+    queryKey: ["user"],
+    queryFn: () =>
+      fetch("https://api.example.com/users/00123").then(res => res.json()),
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+
+  console.log(user);
   return (
     <Layout>
       <div className="flex flex-col gap-4">
         <Text.Heading size={"xl"}>My Profile</Text.Heading>
-        <div className="flex flex-row row-wrap gap-6">
-          <Card className="w-[572px]">
+        <div className="grid grid-cols-2 gap-6">
+          <Card>
             <CardHeader>
               <CardTitle>Profile Information</CardTitle>
             </CardHeader>
             <CardBody className="flex flex-col gap-5">
-              {fields.map((field, i) => (
-                <div
-                  key={i}
-                  className="grid w-full max-w-xl items-center gap-1.5"
-                >
-                  <Label htmlFor={field.id}>{field.title}</Label>
-                  <Input
-                    type="email"
-                    id={field.id}
-                    placeholder={field.placeholder || undefined}
-                  />
-                </div>
-              ))}
+              <ProfileForm user={user} />
+            </CardBody>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Payment Information</CardTitle>
+            </CardHeader>
+            <CardBody className="flex flex-col gap-5">
+              <PaymentInfoForm
+                userId={user.id}
+                paymentInfo={user.payment_info}
+              />
+            </CardBody>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Payment Information</CardTitle>
+            </CardHeader>
+            <CardBody className="flex flex-col gap-5">
+              <LoginInfoForm
+                userId={user.id}
+                username={user.username}
+                password={user.password}
+              />
             </CardBody>
           </Card>
         </div>
