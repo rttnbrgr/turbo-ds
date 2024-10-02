@@ -94,3 +94,7 @@ We use TanStack Query to fetch data from the API. The query client is configured
 ## Mocking API Requests with MSW
 
 Add a new handler to the `src/mocks/handlers.ts` file. The mock server will automatically reload with the new handler. The server starts up on `pnpm dev`.
+
+## Testing
+
+See [Testing](./src/test/README.md) for more information.
