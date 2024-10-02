@@ -1,10 +1,4 @@
-import {
-  ChangeEvent,
-  ChangeEventHandler,
-  PropsWithChildren,
-  useCallback,
-  useState,
-} from "react";
+import { ChangeEvent, PropsWithChildren, useCallback, useState } from "react";
 import * as Text from "@/components/ui/text";
 import { Layout } from "@client-portal/layout";
 import { Button } from "@/components/ui/button";
@@ -16,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Estimate, ESTIMATES_FIXTURE } from "@/mocks/estimates";
+import { Estimate } from "@/mocks/estimates";
 import { Column, ColumnDef, ColumnFiltersState } from "@tanstack/react-table";
 import { DataTable } from "@/components/ui/data-table";
 import router from "next/router";
@@ -24,6 +18,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { STATUS_VS_CHIP_INTENT } from "@/lib/constants";
 import { Body } from "@/components/ui/text";
 import { RequestEstimateDialog } from "@/components/client-portal/request-estimate";
+import { useQuery } from "@tanstack/react-query";
 
 function HeaderCell({
   children,
@@ -144,6 +139,13 @@ export const columns: ColumnDef<Estimate>[] = [
 
 export default function Estimates() {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+
+  const { data: estimates, isLoading } = useQuery<Estimate[]>({
+    queryKey: ["estimates"],
+    queryFn: () =>
+      fetch("https://api.example.com/estimates").then(res => res.json()),
+  });
+
   const handleSubmit = useCallback((args: any) => {
     console.log("submit", args);
   }, []);
@@ -188,18 +190,24 @@ export default function Estimates() {
             </form>
 
             <RequestEstimateDialog
-              userId="1"
+              userId="00124"
               onSubmit={handleSubmit}
               trigger={<Button intent="action">+ Request an Estimate</Button>}
             />
           </div>
         </div>
-        <DataTable
-          columns={columns}
-          data={ESTIMATES_FIXTURE}
-          columnFilters={columnFilters}
-          setColumnFilters={setColumnFilters}
-        />
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : estimates?.length ? (
+          <DataTable
+            columns={columns}
+            data={estimates}
+            columnFilters={columnFilters}
+            setColumnFilters={setColumnFilters}
+          />
+        ) : (
+          <div>No estimates found</div>
+        )}
       </div>
     </Layout>
   );

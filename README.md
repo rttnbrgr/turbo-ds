@@ -86,3 +86,11 @@ To create a local build:
 ```bash
 pnpm build
 ```
+
+## Data Loading
+
+We use TanStack Query to fetch data from the API. The query client is configured in loaded in the entry file and is available in all components via the `useQuery` hook.
+
+## Mocking API Requests with MSW
+
+Add a new handler to the `src/mocks/handlers.ts` file. The mock server will automatically reload with the new handler. The server starts up on `pnpm dev`.
