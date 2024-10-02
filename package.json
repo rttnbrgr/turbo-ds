@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint --ext .ts,.tsx --fix .",
     "format": "prettier --write .",
-    "msw:init": "msw init public/ --save"
+    "msw:init": "msw init public/ --save",
     "test": "vitest"
   },
   "dependencies": {
