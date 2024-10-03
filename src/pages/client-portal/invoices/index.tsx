@@ -1,6 +1,7 @@
 import { ChangeEvent, useCallback, useState } from "react";
 import router from "next/router";
 import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
 
 import { Layout } from "@client-portal/layout";
 
@@ -20,9 +21,6 @@ import { DataTable } from "@/components/ui/data-table";
 // icons
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Asset } from "../../../components/client-portal/attached-images";
-
-// mocks
-import { INVOICES_MOCKED_DATA } from "@/mocks/invoices.mock";
 
 // types
 import { Column, ColumnDef, ColumnFiltersState } from "@tanstack/react-table";
@@ -196,8 +194,13 @@ const columns: ColumnDef<Invoice>[] = [
 ];
 
 export default function Invoices() {
-  // LEGZ TODO - this might be nice to be query param controlled...
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+
+  const { data: invoices, isLoading } = useQuery<Invoice[]>({
+    queryKey: ["invoices"],
+    queryFn: () =>
+      fetch("https://api.example.com/invoices").then(res => res.json()),
+  });
 
   const handleFilterChange = useCallback((e: ChangeEvent<HTMLFormElement>) => {
     const value = e.target.value;
@@ -236,11 +239,17 @@ export default function Invoices() {
             </form>
           </div>
         </div>
-        <DataTable
-          columns={columns}
-          columnFilters={columnFilters}
-          data={INVOICES_MOCKED_DATA}
-        />
+        {isLoading ? (
+          <Text.Body>Loading invoices...</Text.Body>
+        ) : invoices?.length ? (
+          <DataTable
+            columns={columns}
+            columnFilters={columnFilters}
+            data={invoices}
+          />
+        ) : (
+          <Text.Body>No invoices found</Text.Body>
+        )}
       </div>
     </Layout>
   );

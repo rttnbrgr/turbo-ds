@@ -40,13 +40,17 @@ const formSchema = z.object({
   subTotal: z.number().min(0, "Subtotal must be a non-negative number"),
 });
 
+interface PaymentDialogProps {
+  onClose: () => void;
+  onPayment: (amount: number) => Promise<void>;
+  invoice: Invoice;
+}
+
 export function PaymentDialog({
   onClose,
+  onPayment,
   invoice,
-}: {
-  onClose?: () => void;
-  invoice: Invoice;
-}) {
+}: PaymentDialogProps) {
   const { paid, total } = invoice;
   const invoiceAmount = total - paid || 0;
 
@@ -105,6 +109,17 @@ export function PaymentDialog({
   const canCheckout =
     (paymentMethod === "other" && !cardDetailsPayload?.hasErrors) ||
     paymentMethod !== "other";
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    // Assuming you have a way to get the payment amount
+    const amount = parseFloat(subTotal.toFixed(2));
+    if (isNaN(amount) || amount <= 0) {
+      // Handle invalid amount
+      return;
+    }
+    await onPayment(amount);
+  };
 
   return (
     <Form {...form}>

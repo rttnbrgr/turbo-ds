@@ -1,6 +1,12 @@
-import React, { useCallback } from "react";
-import { Button } from "@/components/ui/button";
+import React, { useCallback, useState } from "react";
+import { useRouter } from "next/router";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import Image from "next/image";
+import Link from "next/link";
+import { ChevronsLeft } from "lucide-react";
+
 import { Layout } from "@/components/client-portal/layout";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -11,12 +17,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Body, Heading } from "@/components/ui/text";
-import Link from "next/link";
-import Image from "next/image";
-import { ChevronsLeft } from "lucide-react";
-import { useRouter } from "next/router";
-import { INVOICES_MOCKED_DATA } from "@/mocks/invoices.mock";
-import { Invoice, STATUS_VS_CHIP_INTENT } from "@/pages/client-portal/invoices";
 import { StatusChip } from "@/components/ui/status-chip";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import {
@@ -29,14 +29,77 @@ import {
 } from "@/components/ui/dialog";
 import { PaymentDialog } from "../../../components/client-portal/payment-dialog";
 import { AttachedImages } from "../../../components/client-portal/attached-images";
+import { useToast } from "@/components/hooks/use-toast";
+
+import { Invoice, STATUS_VS_CHIP_INTENT } from "@/pages/client-portal/invoices";
 
 export default function InvoicePage() {
   const router = useRouter();
   const { invoiceId } = router.query;
+  const [isPaymentDialogOpen, setIsPaymentDialogOpen] = useState(false);
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
 
-  const invoice = INVOICES_MOCKED_DATA.find(
-    invoice => invoice.id === invoiceId
+  const { data: invoice, isLoading } = useQuery<Invoice>({
+    queryKey: ["invoice", invoiceId],
+    queryFn: async () => {
+      const response = await fetch(
+        `https://api.example.com/invoice/${invoiceId}`
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    },
+    enabled: !!invoiceId,
+  });
+
+  const payInvoiceMutation = useMutation({
+    mutationFn: async (amount: number) => {
+      const response = await fetch(
+        `https://api.example.com/invoice/${invoiceId}/payment`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ amount }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Payment failed");
+      }
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["invoice", invoiceId] });
+      toast({
+        title: "Payment Successful",
+        description: "Your payment has been processed successfully.",
+      });
+      setIsPaymentDialogOpen(false);
+    },
+    onError: error => {
+      console.error("Error processing payment:", error);
+      toast({
+        title: "Payment Failed",
+        description:
+          "There was an error processing your payment. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handlePayInvoice = useCallback(
+    (amount: number) => {
+      payInvoiceMutation.mutate(amount);
+    },
+    [payInvoiceMutation]
   );
+
+  const handleClosePaymentDialog = useCallback(() => {
+    setIsPaymentDialogOpen(false);
+  }, []);
 
   const formatDate = useCallback((date: string) => {
     return new Date(date).toLocaleDateString("en-US", {
@@ -46,10 +109,13 @@ export default function InvoicePage() {
     });
   }, []);
 
-  const handleClosePaymentDialog = useCallback(() => {
-    // close the dialog here...
-    // LEGZ TODO: need to move dialog state to this component to do this
-  }, []);
+  if (isLoading) {
+    return (
+      <Layout>
+        <div>Loading invoice...</div>
+      </Layout>
+    );
+  }
 
   if (!invoice) {
     return (
@@ -80,7 +146,7 @@ export default function InvoicePage() {
     paid_date,
     issued_date,
     due_date,
-  } = invoice as Invoice;
+  } = invoice;
 
   const dueAmount = total - paid || 0;
 
@@ -113,13 +179,20 @@ export default function InvoicePage() {
               Back to All Invoices
             </Body>
           </Link>
-          <Dialog>
+          <Dialog
+            open={isPaymentDialogOpen}
+            onOpenChange={setIsPaymentDialogOpen}
+          >
             <div className="flex gap-3">
               <Button variant="outline">Print</Button>
 
               {status !== "Paid" ? (
-                <DialogTrigger>
-                  <Button variant="fill" intent="action">
+                <DialogTrigger asChild>
+                  <Button
+                    variant="fill"
+                    intent="action"
+                    onClick={() => setIsPaymentDialogOpen(true)}
+                  >
                     Pay Invoice
                   </Button>
                 </DialogTrigger>
@@ -132,6 +205,9 @@ export default function InvoicePage() {
                 <DialogDescription>
                   <PaymentDialog
                     onClose={handleClosePaymentDialog}
+                    onPayment={async (amount: number) =>
+                      await handlePayInvoice(amount)
+                    }
                     invoice={invoice}
                   />
                 </DialogDescription>
