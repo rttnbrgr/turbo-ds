@@ -28,9 +28,9 @@ import Link, { LinkProps } from "next/link";
 /**
  * Shared styles for both list items and nested list items
  */
-const _liBase = `inline-flex flex-row items-center flex-1 bg-transparent rounded`;
-const _liTypography = `text-sm/4 font-semibold text-white`; // #TODO: non-standard text style
-const _liHover = `cursor-pointer hover:bg-blue-500`;
+const _liBase = `group inline-flex flex-row items-center flex-1 bg-transparent rounded transition-colors duration-300`;
+const _liTypography = `text-sm/4 font-semibold text-blue-50`; // #TODO: non-standard text style
+const _liHover = `cursor-pointer hover:bg-blue-500 hover:text-white transition-colors duration-300`;
 
 export const navIconSize = 16;
 
@@ -110,7 +110,17 @@ export const SideNavItem = ({
       }}
     >
       {/* Icon */}
-      {icon && icon}
+      {icon && (
+        <span
+          className={
+            isExpanded
+              ? "text-blue-200 group-hover:text-blue-100"
+              : "text-blue-100 group-hover:text-blue-50"
+          }
+        >
+          {icon}
+        </span>
+      )}
       {isExpanded && (
         <>
           <span className="flex-1 text-left">{props.children}</span>
@@ -242,10 +252,10 @@ export const SideNavSublist = ({
   const expandedCn = expanded ? "pt-3" : "hidden";
   return (
     <CollapsibleContent
-      className={cn("flex flex-row gap-4", expandedCn, className)}
+      className={cn("flex flex-row gap-3", expandedCn, className)}
     >
       {/* Border */}
-      <div className="w-4 border-r border-solid border-white" />
+      <div className="w-5 border-r border-solid border-white/20" />
       {/* Stack for Sublist */}
       <div className="flex flex-col gap-1 fle-1">
         {/* comment to keep fold */}
@@ -428,7 +438,7 @@ export const NavHeader = ({
       </div>
       <button
         onClick={() => {
-          setExpanded(cv => !cv);
+          setExpanded((cv) => !cv);
         }}
         className={iconBtnCn}
       >
@@ -500,7 +510,7 @@ export const SideNav = ({ ...props }) => {
                 isNested={item.type === "nested"}
                 isActive={open === item.title}
                 isExpanded={expanded}
-                onClick={e => {
+                onClick={(e) => {
                   setOpen(item.title);
                   // e.preventDefault();
                 }}
