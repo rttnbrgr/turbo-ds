@@ -1,6 +1,6 @@
 // components
-import { Layout } from "./_components/layout";
-import { AutomationInfoCard } from "./_components/automation-info-card";
+import { Layout } from "../_components/layout";
+import { AutomationInfoCard } from "../_components/automation-info-card";
 
 // ui
 import { Button } from "@repo/ui/components/ui/button";
@@ -21,7 +21,7 @@ import {
   NestedCard,
   StopBlock,
   ThenBlock,
-} from "./_components/automation-components";
+} from "../_components/automation-components";
 
 import { AUTOMATION_MOCK_DATA } from "@repo/mocks/automation-builder";
 

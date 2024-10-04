@@ -13,9 +13,9 @@ import { useToast } from "@repo/ui/hooks/use-toast";
 import { ChevronsLeft } from "lucide-react";
 
 // components
-import { Layout } from "../_components/layout";
-import { PaymentDialog } from "../_components/payment-dialog";
-import { AttachedImages } from "../_components/attached-images";
+import { Layout } from "../../_components/layout";
+import { PaymentDialog } from "../../_components/payment-dialog";
+import { AttachedImages } from "../../_components/attached-images";
 
 // ui
 import { Button } from "@repo/ui/components/ui/button";

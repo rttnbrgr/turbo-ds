@@ -5,8 +5,8 @@ import { Column, ColumnDef, ColumnFiltersState } from "@tanstack/react-table";
 import { useQuery } from "@tanstack/react-query";
 
 // components
-import { Layout } from "../_components/layout";
-import { RequestEstimateDialog } from "../_components/request-estimate";
+import { Layout } from "../../_components/layout";
+import { RequestEstimateDialog } from "../../_components/request-estimate";
 
 // ui
 import * as Text from "@repo/ui/components/ui/text";

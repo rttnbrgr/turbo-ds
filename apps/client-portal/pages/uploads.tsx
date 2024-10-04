@@ -1,5 +1,5 @@
 import * as Text from "@repo/ui/components/ui/text";
-import { Layout } from "./_components/layout";
+import { Layout } from "../_components/layout";
 
 export default function Uploads() {
   return (

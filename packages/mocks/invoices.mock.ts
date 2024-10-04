@@ -1,4 +1,4 @@
-import { Invoice } from "../packages/types";
+import { Invoice } from "@repo/types";
 
 export const INVOICES_MOCKED_DATA: Invoice[] = [
   {

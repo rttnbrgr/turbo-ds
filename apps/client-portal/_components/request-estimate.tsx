@@ -2,7 +2,7 @@ import { cn } from "@repo/ui/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
-import { ARRIVAL_TIMES, SERVICE_TYPES, STATES_US } from "../../constants";
+import { ARRIVAL_TIMES, SERVICE_TYPES, STATES_US } from "@/constants";
 
 import { ChevronsUpDown, Check, CalendarIcon } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";

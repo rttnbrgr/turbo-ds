@@ -19,7 +19,7 @@ import * as Text from "@repo/ui/components/ui/text";
 import { Textarea } from "@repo/ui/components/ui/textarea";
 
 // components
-import { Layout } from "./_components/layout";
+import { Layout } from "../_components/layout";
 
 const formSchema = z.object({
   service: z.string(),

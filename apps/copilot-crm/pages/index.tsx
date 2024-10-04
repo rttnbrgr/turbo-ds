@@ -1,4 +1,4 @@
-import { Layout } from "./_components/layout";
+import { Layout } from "../_components/layout";
 
 import { Button } from "@repo/ui/components/ui/button";
 import * as Text from "@repo/ui/components/ui/text";

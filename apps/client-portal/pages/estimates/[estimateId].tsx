@@ -13,7 +13,7 @@ import * as Text from "@repo/ui/components/ui/text";
 import { Button } from "@repo/ui/components/ui/button";
 import { StatusChip } from "@repo/ui/components/ui/status-chip";
 import { Body, Heading } from "@repo/ui/components/ui/text";
-import { LineItems, Overview } from "@repo/ui/components/ui/estimate-variants";
+
 import {
   Alert,
   AlertDescription,
@@ -38,7 +38,8 @@ import {
 import { Textarea } from "@repo/ui/components/ui/textarea";
 
 // components
-import { Layout } from "../_components/layout";
+import { Layout } from "../../_components/layout";
+import { LineItems, Overview } from "../../_components/estimate-variants";
 
 // constants
 import { STATUS_VS_CHIP_INTENT } from "@/constants";
