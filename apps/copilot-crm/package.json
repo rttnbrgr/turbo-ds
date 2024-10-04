@@ -10,6 +10,7 @@
     "msw:init": "msw init public/ --save"
   },
   "dependencies": {
+    "@repo/mocks": "workspace:*",
     "@repo/ui": "workspace:*",
     "@tanstack/react-query": "^5.56.2",
     "lucide-react": "^0.417.0",

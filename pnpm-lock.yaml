@@ -44,6 +44,9 @@ importers:
 
   apps/client-portal:
     dependencies:
+      '@repo/mocks':
+        specifier: workspace:^
+        version: link:../../packages/mocks
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -232,6 +235,8 @@ importers:
       typescript:
         specifier: ^5
         version: 5.5.4
+
+  packages/mocks: {}
 
   packages/types:
     devDependencies:

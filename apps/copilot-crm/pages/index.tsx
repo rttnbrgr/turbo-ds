@@ -16,7 +16,7 @@ import {
 
 import { Breadcrumbs } from "@repo/ui/components/ui/breadcrumbs";
 
-import { AUTOMATION_MOCK_DATA } from "../../../mocks/automation-builder";
+import { AUTOMATION_MOCK_DATA } from "@repo/mocks/automation-builder";
 /**
  * Mock tab views
  */
