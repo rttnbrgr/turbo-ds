@@ -23,7 +23,7 @@ import {
   ThenBlock,
 } from "./_components/automation-components";
 
-import { AUTOMATION_MOCK_DATA } from "../../../mocks/automation-builder";
+import { AUTOMATION_MOCK_DATA } from "@repo/mocks/automation-builder";
 
 export default function AutomationBuilder() {
   const mockAutomation = AUTOMATION_MOCK_DATA[1];

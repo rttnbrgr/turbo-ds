@@ -24,7 +24,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     if (process.env.NODE_ENV === "development") {
-      import("../../../mocks/browser").then(({ worker }) => {
+      import("@repo/mocks/browser").then(({ worker }) => {
         worker.start();
       });
     }
