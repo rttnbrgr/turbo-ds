@@ -5,20 +5,26 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "outputs": [".next/**", "!.next/cache/**"],
+      "env": ["NODE_ENV"]
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": ["^lint"],
+      "env": ["NODE_ENV"]
     },
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "env": ["NODE_ENV"]
     },
     "analyze": {
-      "dependsOn": ["^analyze"]
+      "dependsOn": ["^analyze"],
+      "env": ["NODE_ENV", "ANALYZE"]
     },
     "bundlewatch": {
-      "dependsOn": ["^bundlewatch"]
+      "dependsOn": ["^bundlewatch"],
+      "env": ["NODE_ENV"]
     }
-  }
+  },
+  "globalDependencies": ["NODE_ENV", "ANALYZE"]
 }

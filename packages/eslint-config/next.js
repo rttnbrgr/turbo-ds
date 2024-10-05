@@ -5,13 +5,8 @@ const project = resolve(process.cwd(), "tsconfig.json");
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
   extends: [
-    "eslint:recommended",
+    "@repo/eslint-config/react-internal.js",
     require.resolve("@vercel/style-guide/eslint/next"),
-    "turbo",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
   ],
   globals: {
     React: true,

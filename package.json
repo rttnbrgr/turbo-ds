@@ -15,6 +15,9 @@
     "analyze": "turbo analyze",
     "bundlewatch": "turbo bundlewatch"
   },
+  "dependencies": {
+    "react": "^18"
+  },
   "devDependencies": {
     "@next/bundle-analyzer": "^14.2.14",
     "@repo/eslint-config": "workspace:*",

@@ -1,2 +1,7 @@
+node_modules/
+.next/
+out/
+pnpm-lock.yaml
 tailwind.config.js
 postcss.config.js
+next.config.mjs

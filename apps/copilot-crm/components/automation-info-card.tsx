@@ -18,7 +18,7 @@ export const AutomationInfoCard = ({
   isLocked,
   isVisible,
   ...props
-}: AutomationCardProps & {}) => {
+}: AutomationCardProps) => {
   return (
     <Card className="basis-[320px] grow gap-6 max-w-[400px]">
       <CardHeader>
