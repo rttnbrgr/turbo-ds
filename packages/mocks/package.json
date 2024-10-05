@@ -7,6 +7,6 @@
     "access": "public"
   },
   "dependencies": {
-    "msw": "^2.4.9"
+    "msw": "*"
   }
 }

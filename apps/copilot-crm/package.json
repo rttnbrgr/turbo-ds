@@ -14,28 +14,27 @@
   "dependencies": {
     "@repo/mocks": "workspace:*",
     "@repo/ui": "workspace:*",
-    "@tanstack/react-query": "^5.56.2",
-    "lucide-react": "^0.417.0",
-    "msw": "^2.4.9",
-    "next": "14.2.8",
-    "react-hook-form": "^7.53.0",
-    "react-dom": "^18",
-    "zod": "^3.23.8"
+    "@tanstack/react-query": "*",
+    "lucide-react": "*",
+    "msw": "*",
+    "next": "*",
+    "react-hook-form": "*",
+    "react-dom": "*",
+    "zod": "*"
   },
   "devDependencies": {
-    "@hookform/resolvers": "^3.9.0",
-    "@next/eslint-plugin-next": "14.2.8",
+    "@hookform/resolvers": "*",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@types/eslint": "^8",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "autoprefixer": "^10",
-    "eslint": "^8",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.10",
-    "typescript": "^5"
+    "@types/eslint": "*",
+    "@types/node": "*",
+    "@types/react": "*",
+    "@types/react-dom": "*",
+    "autoprefixer": "*",
+    "eslint": "*",
+    "postcss": "*",
+    "tailwindcss": "*",
+    "typescript": "*"
   },
   "msw": {
     "workerDirectory": [
