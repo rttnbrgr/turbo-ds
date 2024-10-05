@@ -172,9 +172,6 @@ importers:
       '@hookform/resolvers':
         specifier: '*'
         version: 3.9.0(react-hook-form@7.53.0(react@18.2.0))
-      '@next/eslint-plugin-next':
-        specifier: 14.2.8
-        version: 14.2.8
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../../packages/eslint-config
@@ -223,67 +220,13 @@ importers:
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui
-      '@tanstack/react-query':
-        specifier: '*'
-        version: 5.59.0(react@18.2.0)
-      lucide-react:
-        specifier: '*'
-        version: 0.417.0(react@18.2.0)
-      msw:
-        specifier: '*'
-        version: 2.4.9(typescript@5.5.4)
-      next:
-        specifier: '*'
-        version: 14.2.8(@babel/core@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      react-dom:
-        specifier: '*'
-        version: 18.2.0(react@18.2.0)
-      react-hook-form:
-        specifier: '*'
-        version: 7.53.0(react@18.2.0)
-      zod:
-        specifier: '*'
-        version: 3.23.8
     devDependencies:
-      '@hookform/resolvers':
-        specifier: '*'
-        version: 3.9.0(react-hook-form@7.53.0(react@18.2.0))
-      '@next/eslint-plugin-next':
-        specifier: 14.2.8
-        version: 14.2.8
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../../packages/eslint-config
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
-      '@types/eslint':
-        specifier: '*'
-        version: 8.56.2
-      '@types/node':
-        specifier: '*'
-        version: 20.11.6
-      '@types/react':
-        specifier: '*'
-        version: 18.2.48
-      '@types/react-dom':
-        specifier: '*'
-        version: 18.2.18
-      autoprefixer:
-        specifier: '*'
-        version: 10.4.19(postcss@8.4.47)
-      eslint:
-        specifier: '*'
-        version: 8.57.0
-      postcss:
-        specifier: '*'
-        version: 8.4.47
-      tailwindcss:
-        specifier: '*'
-        version: 3.4.13
-      typescript:
-        specifier: '*'
-        version: 5.5.4
 
   packages/eslint-config:
     devDependencies:

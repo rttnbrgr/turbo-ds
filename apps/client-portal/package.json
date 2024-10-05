@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --port 3000",
+    "analyze": "ANALYZE=true next build",
     "build": "next build",
-    "start": "next start",
+    "bundlewatch": "bundlewatch",
+    "dev": "next dev --port 3000",
     "lint": "eslint . --max-warnings 0",
     "msw:init": "msw init public/ --save",
-    "analyze": "ANALYZE=true next build",
-    "bundlewatch": "bundlewatch"
+    "start": "next start"
   },
   "dependencies": {
     "@repo/mocks": "workspace:*",
@@ -42,18 +42,18 @@
     "tailwindcss": "*",
     "typescript": "*"
   },
-  "msw": {
-    "workerDirectory": [
-      "./public",
-      "public"
-    ]
-  },
   "bundlewatch": {
     "files": [
       {
         "path": "./.next/static/**/*.js",
         "maxSize": "250kB"
       }
+    ]
+  },
+  "msw": {
+    "workerDirectory": [
+      "./public",
+      "public"
     ]
   }
 }
