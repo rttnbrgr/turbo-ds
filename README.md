@@ -64,26 +64,6 @@ Turborepo allows you to filter which apps and packages the command should apply 
 pnpm build --filter=@repo/client-portal
 ```
 
-## Adding UI Components
-
-Use the pre-made script to add UI components:
-
-```sh
-pnpm ui add <component-name>
-```
-
-This works similarly to the `shadcn/ui` CLI, but will ensure the component is installed at the correct location and you can run it directly from the root of the monorepo
-
-```js
-// ✅ Preferred
-pnpm ui add toast
-
-// ❌ Not Recommended
-npx shadcn@latest add toast
-```
-
-> The `npx shadcn@latest` command can be used if run from inside the component library package, but the `pnpm ui add` streamlines this and prevents user error.
-
 ## What's Inside?
 
 This Turborepo includes the following apps and packages:
@@ -96,6 +76,7 @@ This Turborepo includes the following apps and packages:
 ### Packages
 
 - `@repo/ui`: React component library powered by **shadcn/ui**
+  [See Docs here on how to use and customize the ui package](./packages/ui/README.md).
 - `@repo/eslint-config`: ESLint configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `@repo/typescript-config`: `tsconfig.json` files used throughout the monorepo
 
@@ -181,7 +162,7 @@ We use **TanStack Query** for fetching API data. The query client is configured 
 
 ## Mocking API Requests with MSW
 
-To add a new handler for mocking API requests, modify the `src/mocks/handlers.ts` file. The mock server will automatically reload. It starts on `pnpm dev`.
+To add a new handler for mocking API requests, modify the `src/packages/mocks/handlers.ts` file. The mock server will automatically reload. It starts on `pnpm dev`.
 
 ## Testing
 
