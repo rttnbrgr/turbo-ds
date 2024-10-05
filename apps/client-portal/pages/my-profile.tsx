@@ -26,7 +26,6 @@ export default function MyProfile() {
 
   if (isLoading) return <div>Loading...</div>;
 
-  console.log(user);
   return (
     <Layout>
       <div className="flex flex-col gap-4">

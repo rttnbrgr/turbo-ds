@@ -1,3 +1,4 @@
+import React from "react";
 import { Layout } from "@/components/layout";
 
 import { Button } from "@repo/ui/components/ui/button";
@@ -102,19 +103,13 @@ export default function Home() {
                           }
 
                           // Probably need a cleaner recursive setup here
-                          {
-                            console.log(child);
-                          }
 
                           return (
                             <ConditionBlock block={child.block} key={j}>
-                              {child.children.map((x, k) => {
+                              {child.children.map((x, _k) => {
                                 if (typeof x === "string") {
                                   return x;
                                 }
-                                console.log(
-                                  "something didnt make it to the render",
-                                );
                               })}
                             </ConditionBlock>
                           );
