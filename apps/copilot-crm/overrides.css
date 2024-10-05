@@ -1,7 +1,8 @@
-/* @tailwind base; */
+@tailwind base;
 
-/* @layer base {
+@layer base {
   :root {
-    --primary: 51, 100%, 50%;
+    /* --primary: 51, 100%, 50%; */
+    --custom: magenta;
   }
-} */
+}
