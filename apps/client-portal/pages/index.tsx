@@ -1,5 +1,5 @@
 import * as Text from "@repo/ui/components/ui/text";
-import { Layout } from "../_components/layout";
+import { Layout } from "@/components/layout";
 
 export default function ClientPortalIndex() {
   return (

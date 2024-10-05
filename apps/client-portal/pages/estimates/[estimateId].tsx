@@ -38,8 +38,8 @@ import {
 import { Textarea } from "@repo/ui/components/ui/textarea";
 
 // components
-import { Layout } from "../../_components/layout";
-import { LineItems, Overview } from "../../_components/estimate-variants";
+import { Layout } from "@/components/layout";
+import { LineItems, Overview } from "../../components/estimate-variants";
 
 // constants
 import { STATUS_VS_CHIP_INTENT } from "@/constants";

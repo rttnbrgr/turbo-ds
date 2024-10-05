@@ -2,10 +2,10 @@
 import { useQuery } from "@tanstack/react-query";
 
 // components
-import { LoginInfoForm } from "../_components/login-info-form";
-import { PaymentInfoForm } from "../_components/payment-info-form";
-import { ProfileForm } from "../_components/profile-form";
-import { Layout } from "../_components/layout";
+import { LoginInfoForm } from "../components/login-info-form";
+import { PaymentInfoForm } from "../components/payment-info-form";
+import { ProfileForm } from "../components/profile-form";
+import { Layout } from "@/components/layout";
 
 // ui
 import {

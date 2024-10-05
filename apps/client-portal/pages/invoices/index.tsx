@@ -20,7 +20,7 @@ import {
 import { DataTable } from "@repo/ui/components/ui/data-table";
 
 // components
-import { Layout } from "../../_components/layout";
+import { Layout } from "@/components/layout";
 
 // icons
 import { ChevronDown, ChevronUp } from "lucide-react";
