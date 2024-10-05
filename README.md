@@ -1,32 +1,40 @@
-## Development
+# Development Guide
 
-Install dependencies:
+## Install Dependencies
+
+To install the necessary dependencies, run:
 
 ```sh
 pnpm install
 ```
 
-To start the development server for all apps
+## Starting Development Servers
+
+### Start the Development Server for All Apps
+
+To start the development server for all apps:
 
 ```bash
 pnpm dev
 ```
 
-To start the dev development for the copilot-crm app
+### Start Development for Specific Apps
 
-```bash
-pnpm dev:crm
-```
+- **Copilot-CRM app**:
 
-To start the dev development for the client-portal app
+  ```bash
+  pnpm dev:crm
+  ```
 
-```bash
-pnpm dev:portal
-```
+- **Client-Portal app**:
 
-## Formatting with Prettier
+  ```bash
+  pnpm dev:portal
+  ```
 
-To manually format the codebase with Prettier:
+## Code Formatting with Prettier
+
+To manually format the entire codebase with Prettier:
 
 ```bash
 pnpm format
@@ -40,179 +48,163 @@ To manually run ESLint across the codebase:
 pnpm lint
 ```
 
-## Build all apps
+## Building All Apps
+
+To build all applications and packages:
 
 ```sh
 pnpm build
 ```
 
-## Filtering
+## Filtering Commands in Turborepo
 
-Turborepo allows you to filter which apps and packages the command should be run for,
-
-For example here were are running the build command just on the `copilot-portal` app
+Turborepo allows you to filter which apps and packages the command should apply to. For example, to run the `build` command only on the `client-portal` app:
 
 ```sh
 pnpm build --filter=@repo/client-portal
 ```
 
-## build
+## Adding UI Components
 
-### Add ui components
-
-Use the pre-made script:
+Use the pre-made script to add UI components:
 
 ```sh
 pnpm ui add <component-name>
 ```
 
-> This works just like the `shadcn/ui` CLI.
+This works similarly to the `shadcn/ui` CLI, but will ensure the component is installed at the correct location and you can run it directly from the root of the monorepo
 
-### Add a new app
+```js
+// ✅ Preferred
+pnpm ui add toast
 
-Turborepo offer a simple command to add a new app:
-
-```sh
-pnpm turbo gen workspace --name <app-name>
+// ❌ Not Recommended
+npx shadcn@latest add toast
 ```
 
-This will create a new empty app in the `apps` directory.
+> The `npx shadcn@latest` command can be used if run from inside the component library package, but the `pnpm ui add` streamlines this and prevents user error.
 
-If you want, you can copy an existing app with:
+## What's Inside?
 
-```sh
-pnpm turbo gen workspace --name <app-name> --copy
-```
+This Turborepo includes the following apps and packages:
 
-> [!NOTE]
-> Remember to run `pnpm install` after copying an app.
-
-## What's inside?
-
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
+### Apps
 
 - `@repo/copilot-crm`: a [Next.js](https://nextjs.org/) app
 - `@repo/client-portal`: a [Next.js](https://nextjs.org/) app
-- `@repo/ui`: React component library (🚀 powered by **shadcn/ui**)
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
 
-### Build
+### Packages
 
-To build all apps and packages, run the following command:
+- `@repo/ui`: React component library powered by **shadcn/ui**
+- `@repo/eslint-config`: ESLint configurations (includes `eslint-config-next` and `eslint-config-prettier`)
+- `@repo/typescript-config`: `tsconfig.json` files used throughout the monorepo
+
+## Remote Caching with Turborepo
+
+Turborepo supports [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching), allowing you to share cache artifacts across machines for faster builds, including CI/CD pipelines.
+
+By default, Turborepo caches locally. To enable remote caching, you'll need a Vercel account. If you don't have one, [create an account](https://vercel.com/signup), then authenticate with Turborepo:
 
 ```sh
-pnpm build
-```
-
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
 npx turbo login
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+To link your Turborepo to your remote cache, run:
 
 ```sh
 npx turbo link
 ```
 
-## Useful Links
+## Useful Resources
 
-Learn more about the power of Turborepo:
+Learn more about Turborepo:
 
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
+- [Running Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
 - [Caching](https://turbo.build/repo/docs/core-concepts/caching)
 - [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
 - [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
+- [Configuration](https://turbo.build/repo/docs/reference/configuration)
 - [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
 
-Learn more about shadcn/ui:
+Learn more about **shadcn/ui**:
 
 - [Documentation](https://ui.shadcn.com/docs)
 
-## Contributors Guide
+## Contributor's Guide
 
 ### 1. **Identify or Create a GitHub Issue**
 
-Before starting work, be sure you have an issue with relevant details identifying the work to be done. Ideally, the issue should provide clear acceptance criteria and as much additional context as feasible. If you're not already assigned, assign yourself to the issue to indicate ownership.
+Before starting any work, ensure that a GitHub issue exists outlining the task. If not, create one with relevant details, including acceptance criteria. Assign the issue to yourself for ownership.
 
 ### 2. **Create a Branch**
 
-Follow the branch naming convention to include the issue number and a brief description.
+Use the following branch naming convention:
 
 **Format:** `<issue-number>-<short-description>`
 
-- **Issue Number**: Each branch must include the corresponding issue number to link it to the issue in GitHub.
-- **Short Description**: Use a concise description of the branch purpose in kebab-case (e.g., `setup-storybook`).
+- **Issue Number**: Include the corresponding issue number.
+- **Short Description**: Use a concise description in kebab-case.
 
-  _Example:_ `43-setup-storybook`
+Example: `43-setup-storybook`
 
-_Alternatively_, use the "Create a branch for this issue or link a pull request" option from the GitHub issue sidebar to automatically apply the issue number and issue title as the branch name. You can then clone and checkout the created branch to your local git repository.
+Alternatively, use GitHub's sidebar feature to auto-generate a branch name from the issue.
 
 ### 3. **Commit Guidelines**
 
-Commit your work frequently, using descriptive messages, optionally following the [Conventional Commits](https://www.conventionalcommits.org/) specification for adding clarity to the purpose of each commit.
+Use descriptive commit messages, ideally following [Conventional Commits](https://www.conventionalcommits.org/).
 
 #### Best Practices
 
-- **Be Concise**: Keep the description short and to the point, focusing on what the commit introduces or fixes.
-- **Use Imperative Mood**: Write as if you are giving commands, not describing past actions (e.g., "adds feature" rather than "added feature").
-- **Commit Often**: Commit regularly, with logical chunks of work.
+- **Be Concise**: Summarize the work in a few words.
+- **Use Imperative Mood**: Example: "add feature" instead of "added feature."
+- **Commit Regularly**: Make small, logical commits.
 
 ### 4. **Open a Pull Request (PR)**
 
-After completing your work, open a PR for the issue. This is a good time to do a final review of the code changes from the perspective of a code reviewer, looking for any unexpected changesets and ensuring there are no logs or stray code not intended to be merged.
+After completing your work, open a PR. Be sure to link the associated issue by referencing its number (e.g., `Closes #123`).
 
-When creating a Pull Request, **include the issue number** in the PR title or description (e.g., `Closes #123`). This ensures that the associated issue is automatically closed when the PR is merged.
-
-_TODO: Add additional guidance on a PR description template. (Should we include screenshots or a more detailed breakdown of the work for the reviewer?)_
+_TODO: Add a PR template, possibly with screenshots or a breakdown of changes._
 
 ### 5. **Merge the PR**
 
-Once approved by at least one peer and after confirming that all tests and checks (CI/CD pipeline, code quality checks, etc.) have passed, use the "Squash and Merge" option to combine your commits. (_TODO: Need to check if this can be turned on by default._)
-
-> At some point, we will include a Design/QA/Product sign-off flow here as well.
+Once approved and all checks have passed, use "Squash and Merge" to combine your commits into one.  
+_TODO: Confirm if this can be the default._
 
 ### 6. **Delete the Branch**
 
-Optionally, delete the branch after merging to keep the repository clean. _(TODO: Confirm branch deletion policy with the team.)_
+Optionally delete the branch post-merge to keep the repository clean.  
+_TODO: Confirm the branch deletion policy with the team._
 
 ## Data Loading
 
-We use TanStack Query to fetch data from the API. The query client is configured in loaded in the entry file and is available in all components via the `useQuery` hook.
+We use **TanStack Query** for fetching API data. The query client is configured in the entry file and accessible via the `useQuery` hook.
 
 ## Mocking API Requests with MSW
 
-Add a new handler to the `src/mocks/handlers.ts` file. The mock server will automatically reload with the new handler. The server starts up on `pnpm dev`.
+To add a new handler for mocking API requests, modify the `src/mocks/handlers.ts` file. The mock server will automatically reload. It starts on `pnpm dev`.
 
 ## Testing
 
-See [Testing](./src/test/README.md) for more information.
+For testing guidelines, see the [Testing Documentation](./src/test/README.md).
 
-## Analysis
+## Bundle Analysis
 
-### Run bundle-analyzer on all apps
+### Run Bundle Analyzer
+
+To analyze all apps:
 
 ```sh
 pnpm analyze
 ```
 
-This will open the multiple bundle analyzer windows in a web browser
+This will open multiple bundle analyzer windows in your browser.
 
-### Run bundlewatch on all apps
+### Run Bundlewatch
+
+To monitor bundle size changes over time, use `bundlewatch`. Run a build first, then:
 
 ```sh
 pnpm bundlewatch
 ```
 
-When hooked up to CI/CD This tracks changes in the bundle overtime. Also we can set thresholds to prevent unexpected bundle changes. For now you will need to run a build first in order for to generate a bundle size output from bundle watch locally. It will output the analysis in the command line.
+Bundlewatch tracks bundle sizes in the CI/CD pipeline, and you can set thresholds to catch unexpected changes.
