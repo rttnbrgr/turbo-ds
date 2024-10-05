@@ -9,7 +9,7 @@
     "paths": {
       "@/*": ["./*"]
     },
-    "strictNullChecks": true
+    "jsx": "preserve"
   },
   "include": [
     "next-env.d.ts",

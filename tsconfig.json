@@ -9,7 +9,8 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "types": ["vitest/globals", "node"]
+    "types": ["vitest/globals", "node"],
+    "jsx": "react-jsx"
   },
   "include": ["vitest.config.mts"],
   "exclude": ["node_modules"]
