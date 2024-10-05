@@ -1,10 +1,10 @@
+## Development
+
 Install dependencies:
 
 ```sh
 pnpm install
 ```
-
-## Development
 
 To start the development server for all apps
 
@@ -40,6 +40,16 @@ To manually run ESLint across the codebase:
 
 ```bash
 pnpm lint
+```
+
+## Filtering
+
+Turborepo allows you to filter which apps and packages the command should be run for,
+
+For example here were are running the build command just on the `copilot-portal` app
+
+```sh
+pnpm build --filter=@repo/client-portal
 ```
 
 ### Add ui components
