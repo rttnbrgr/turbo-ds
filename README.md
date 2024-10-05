@@ -32,14 +32,18 @@ To manually format the codebase with Prettier:
 pnpm format
 ```
 
----
-
 ## Linting
 
 To manually run ESLint across the codebase:
 
 ```bash
 pnpm lint
+```
+
+## Build all apps
+
+```sh
+pnpm build
 ```
 
 ## Filtering
@@ -51,6 +55,8 @@ For example here were are running the build command just on the `copilot-portal`
 ```sh
 pnpm build --filter=@repo/client-portal
 ```
+
+## build
 
 ### Add ui components
 
@@ -93,30 +99,12 @@ This Turborepo includes the following packages/apps:
 - `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
 ### Build
 
 To build all apps and packages, run the following command:
 
 ```sh
 pnpm build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```sh
-pnpm dev
 ```
 
 ### Remote Caching
@@ -210,3 +198,21 @@ Add a new handler to the `src/mocks/handlers.ts` file. The mock server will auto
 ## Testing
 
 See [Testing](./src/test/README.md) for more information.
+
+## Analysis
+
+### Run bundle-analyzer on all apps
+
+```sh
+pnpm analyze
+```
+
+This will open the multiple bundle analyzer windows in a web browser
+
+### Run bundlewatch on all apps
+
+```sh
+pnpm bundlewatch
+```
+
+When hooked up to CI/CD This tracks changes in the bundle overtime. Also we can set thresholds to prevent unexpected bundle changes. For now you will need to run a build first in order for to generate a bundle size output from bundle watch locally. It will output the analysis in the command line.
