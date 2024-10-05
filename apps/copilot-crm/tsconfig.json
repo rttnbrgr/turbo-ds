@@ -9,7 +9,7 @@
     ],
     "paths": {
       "@/*": ["./*"],
-      "@repo/mocks": ["../../mocks/src"]
+        "./*"
     },
     "strictNullChecks": true
   },
