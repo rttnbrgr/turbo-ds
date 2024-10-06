@@ -64,16 +64,17 @@
     "@types/node": "*",
     "@types/react": "*",
     "autoprefixer": "*",
-    "eslint-plugin-storybook": "^0.9.0",
-    "style-loader": "^3.3.4",
+    "concurrently": "^8.2.0",
     "css-loader": "^6.10.0",
-    "postcss-loader": "^8.1.1",
+    "eslint-plugin-storybook": "^0.9.0",
     "postcss": "*",
     "postcss-load-config": "*",
+    "postcss-loader": "^8.1.1",
     "storybook": "^8.3.5",
+    "storybook-addon-pseudo-states": "^4.0.2",
+    "style-loader": "^3.3.4",
     "tailwindcss": "*",
-    "typescript": "*",
-    "concurrently": "^8.2.0"
+    "typescript": "*"
   },
   "peerDependencies": {
     "react": "^18"

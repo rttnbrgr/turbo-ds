@@ -139,3 +139,32 @@ export const LargeSize: Story = {
     </ToggleGroup>
   ),
 };
+
+export const Hover: Story = {
+  parameters: {
+    pseudo: { hover: true },
+  },
+  render: () => (
+    <ToggleGroup type="multiple" variant="outline">
+      <ToggleGroupItem value="bold" aria-label="Toggle bold">
+        <Bold className="h-4 w-4" />
+      </ToggleGroupItem>
+    </ToggleGroup>
+  ),
+};
+
+export const Focus: Story = {
+  parameters: {
+    pseudo: {
+      focusVisible: true,
+      focus: true,
+    },
+  },
+  render: () => (
+    <ToggleGroup type="multiple" variant="outline">
+      <ToggleGroupItem value="bold" aria-label="Toggle bold">
+        <Bold className="h-4 w-4" />
+      </ToggleGroupItem>
+    </ToggleGroup>
+  ),
+};

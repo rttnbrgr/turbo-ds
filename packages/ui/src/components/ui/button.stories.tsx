@@ -167,3 +167,21 @@ export const IconOnly: Story = {
     "aria-label": "Add item",
   },
 };
+
+export const Focus: Story = {
+  args: {
+    children: "Button",
+  },
+  parameters: {
+    pseudo: { focusVisible: true, focus: true },
+  },
+};
+
+export const Hover: Story = {
+  args: {
+    children: "Button",
+  },
+  parameters: {
+    pseudo: { hover: true },
+  },
+};

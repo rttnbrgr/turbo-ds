@@ -494,6 +494,9 @@ importers:
       storybook:
         specifier: ^8.3.5
         version: 8.3.5
+      storybook-addon-pseudo-states:
+        specifier: ^4.0.2
+        version: 4.0.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.3.5)
       style-loader:
         specifier: ^3.3.4
         version: 3.3.4(webpack@5.95.0(esbuild@0.21.5))
@@ -6171,6 +6174,11 @@ packages:
 
   std-env@3.7.0:
     resolution: {integrity: sha512-JPbdCEQLj1w5GilpiHAx3qJvFndqybBysA3qUOnznweH4QbNYUsW/ea8QzSrnh0vNsezMMw5bcVool8lM0gwzg==}
+
+  storybook-addon-pseudo-states@4.0.2:
+    resolution: {integrity: sha512-dTHkeq4VzqIrJfR8k2BHkX190cQ+aYBZUktWNZpDw3N5tJ8IwaRLzf6ZjHDHY6xwDshaNiTO5UkziRE0Ytukkw==}
+    peerDependencies:
+      storybook: ^8.2.0
 
   storybook@8.3.5:
     resolution: {integrity: sha512-hYQVtP2l+3kO8oKDn4fjXXQYxgTRsj/LaV6lUMJH0zt+OhVmDXKJLxmdUP4ieTm0T8wEbSYosFavgPcQZlxRfw==}
@@ -13621,6 +13629,14 @@ snapshots:
   statuses@2.0.1: {}
 
   std-env@3.7.0: {}
+
+  storybook-addon-pseudo-states@4.0.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.3.5):
+    dependencies:
+      '@storybook/icons': 1.2.12(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      storybook: 8.3.5
+    transitivePeerDependencies:
+      - react
+      - react-dom
 
   storybook@8.3.5:
     dependencies:
