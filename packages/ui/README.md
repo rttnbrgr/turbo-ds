@@ -96,3 +96,23 @@ npx shadcn@latest add toast
 ```
 
 > The `npx shadcn@latest` command can be used if run from inside the component library package, but the `pnpm ui add` streamlines this and prevents user error.
+
+## Development with Storybook
+
+This package includes several npm scripts to aid in development, testing, and building. Here's an overview of the available scripts:
+
+### Development
+
+Starts the development server for Storybook (For local development)
+
+```
+pnpm storybook
+```
+
+This is a custom storybook command that will watch the `tailwind.config.ts`, `globals.css` file as well as the components directory automatically rebuilding the output tailwind css as you work. It does this by running the `storybook:watch` and `tailwind:watch` commands concurrently.
+
+`build-storybook`: Builds a static version of Storybook for deployment.
+
+```
+pnpm build-storybook
+```

@@ -24,6 +24,12 @@
     "bundlewatch": {
       "dependsOn": ["^bundlewatch"],
       "env": ["NODE_ENV"]
+    },
+    "storybook": {
+      "cache": false
+    },
+    "build-storybook": {
+      "outputs": ["storybook-static/**"]
     }
   },
   "globalDependencies": ["NODE_ENV", "ANALYZE"]

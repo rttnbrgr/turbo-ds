@@ -12,7 +12,12 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "ui": "pnpm dlx shadcn@latest"
+    "watch:tailwind": "npx tailwindcss -i ./src/globals.css -o ./dist/output.css --watch",
+    "storybook": "concurrently \"pnpm run watch:tailwind\" \"pnpm run watch:storybook\"",
+    "watch:storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "build:tailwind": "npx tailwindcss -i ./src/globals.css -o ./dist/output.css --minify",
+    "build": "pnpm run build:tailwind && pnpm run build-storybook"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.1",
@@ -44,16 +49,31 @@
     "zod": "*"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^1.9.0",
     "@hookform/resolvers": "*",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@storybook/addon-essentials": "^8.3.5",
+    "@storybook/addon-interactions": "^8.3.5",
+    "@storybook/addon-links": "^8.3.5",
+    "@storybook/addon-onboarding": "^8.3.5",
+    "@storybook/blocks": "^8.3.5",
+    "@storybook/nextjs": "^8.3.5",
+    "@storybook/react": "^8.3.5",
+    "@storybook/test": "^8.3.5",
     "@types/node": "*",
     "@types/react": "*",
     "autoprefixer": "*",
+    "eslint-plugin-storybook": "^0.9.0",
+    "style-loader": "^3.3.4",
+    "css-loader": "^6.10.0",
+    "postcss-loader": "^8.1.1",
     "postcss": "*",
     "postcss-load-config": "*",
+    "storybook": "^8.3.5",
     "tailwindcss": "*",
-    "typescript": "*"
+    "typescript": "*",
+    "concurrently": "^8.2.0"
   },
   "peerDependencies": {
     "react": "^18"

@@ -13,7 +13,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo lint",
     "test": "vitest",
-    "ui": "pnpm --filter @repo/ui ui"
+    "ui": "pnpm --filter @repo/ui ui",
+    "storybook": "pnpm --filter @repo/ui storybook"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.56.2",
