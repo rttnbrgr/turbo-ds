@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "copilot-crm": {
+      "src": "apps/copilot-crm",
+      "buildCommand": "npm run build",
+      "outputDirectory": "apps/copilot-crm/.next"
+    },
+    "client-portal": {
+      "src": "apps/client-portal",
+      "buildCommand": "npm run build",
+      "outputDirectory": "apps/client-portal/.next"
+    }
+  }
+}
