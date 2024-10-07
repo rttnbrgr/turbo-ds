@@ -7,68 +7,7 @@ settings:
 importers:
 
   .:
-    dependencies:
-      '@tanstack/react-query':
-        specifier: ^5.56.2
-        version: 5.59.0(react@18.2.0)
-      '@tanstack/react-table':
-        specifier: ^8.20.5
-        version: 8.20.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      autoprefixer:
-        specifier: ^10
-        version: 10.4.19(postcss@8.4.47)
-      class-variance-authority:
-        specifier: ^0.7.0
-        version: 0.7.0
-      clsx:
-        specifier: ^2.1.1
-        version: 2.1.1
-      cmdk:
-        specifier: 1.0.0
-        version: 1.0.0(@types/react-dom@18.2.18)(@types/react@18.2.48)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      date-fns:
-        specifier: ^4.1.0
-        version: 4.1.0
-      lucide-react:
-        specifier: ^0.417.0
-        version: 0.417.0(react@18.2.0)
-      msw:
-        specifier: ^2.4.9
-        version: 2.4.9(typescript@5.5.4)
-      next:
-        specifier: 14.2.14
-        version: 14.2.14(@babel/core@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      postcss:
-        specifier: ^8
-        version: 8.4.47
-      postcss-load-config:
-        specifier: ^6
-        version: 6.0.1(jiti@1.21.0)(postcss@8.4.47)
-      react:
-        specifier: ^18
-        version: 18.2.0
-      react-dom:
-        specifier: ^18
-        version: 18.2.0(react@18.2.0)
-      react-hook-form:
-        specifier: ^7.53.0
-        version: 7.53.0(react@18.2.0)
-      tailwind-merge:
-        specifier: ^2.3.0
-        version: 2.3.0
-      tailwindcss:
-        specifier: ^3.4.10
-        version: 3.4.13
-      tailwindcss-animate:
-        specifier: ^1.0.7
-        version: 1.0.7(tailwindcss@3.4.13)
-      zod:
-        specifier: ^3.23.8
-        version: 3.23.8
     devDependencies:
-      '@hookform/resolvers':
-        specifier: ^3.9.0
-        version: 3.9.0(react-hook-form@7.53.0(react@18.2.0))
       '@next/bundle-analyzer':
         specifier: ^14.2.14
         version: 14.2.14
@@ -136,41 +75,44 @@ importers:
         specifier: workspace:*
         version: link:../../packages/ui
       '@tanstack/react-query':
-        specifier: '*'
+        specifier: ^5.56.2
         version: 5.59.0(react@18.2.0)
       '@tanstack/react-table':
-        specifier: '*'
+        specifier: ^8.20.5
         version: 8.20.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      class-variance-authority:
+        specifier: ^0.7.0
+        version: 0.7.0
       country-list:
         specifier: ^2.3.0
         version: 2.3.0
       date-fns:
-        specifier: '*'
+        specifier: ^4.1.0
         version: 4.1.0
       lucide-react:
-        specifier: '*'
+        specifier: ^0.417.0
         version: 0.417.0(react@18.2.0)
       msw:
-        specifier: '*'
+        specifier: ^2.4.9
         version: 2.4.9(typescript@5.5.4)
       next:
         specifier: 14.2.14
         version: 14.2.14(@babel/core@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react:
-        specifier: '*'
+        specifier: ^18
         version: 18.2.0
       react-dom:
-        specifier: '*'
+        specifier: ^18
         version: 18.2.0(react@18.2.0)
       react-hook-form:
-        specifier: '*'
+        specifier: ^7.53.0
         version: 7.53.0(react@18.2.0)
       zod:
-        specifier: '*'
+        specifier: ^3.23.8
         version: 3.23.8
     devDependencies:
       '@hookform/resolvers':
-        specifier: '*'
+        specifier: ^3.9.0
         version: 3.9.0(react-hook-form@7.53.0(react@18.2.0))
       '@repo/eslint-config':
         specifier: workspace:*
@@ -184,32 +126,32 @@ importers:
       '@types/country-list':
         specifier: ^2.1.4
         version: 2.1.4
-      '@types/eslint':
-        specifier: '*'
-        version: 8.56.2
       '@types/node':
-        specifier: '*'
+        specifier: ^20
         version: 20.11.6
       '@types/react':
-        specifier: '*'
+        specifier: ^18
         version: 18.2.48
       '@types/react-dom':
-        specifier: '*'
+        specifier: ^18
         version: 18.2.18
       autoprefixer:
-        specifier: '*'
+        specifier: ^10
         version: 10.4.19(postcss@8.4.47)
       eslint:
-        specifier: '*'
-        version: 8.57.0
+        specifier: ^8
+        version: 8.57.1
       postcss:
-        specifier: '*'
+        specifier: ^8
         version: 8.4.47
       tailwindcss:
-        specifier: '*'
+        specifier: ^3.4.10
         version: 3.4.13
+      tailwindcss-animate:
+        specifier: ^1.0.7
+        version: 1.0.7(tailwindcss@3.4.13)
       typescript:
-        specifier: '*'
+        specifier: ^5
         version: 5.5.4
 
   apps/copilot-crm:
@@ -221,29 +163,38 @@ importers:
         specifier: workspace:*
         version: link:../../packages/ui
       '@tanstack/react-query':
-        specifier: '*'
+        specifier: ^5.56.2
         version: 5.59.0(react@18.2.0)
+      '@tanstack/react-table':
+        specifier: ^8.20.5
+        version: 8.20.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      class-variance-authority:
+        specifier: ^0.7.0
+        version: 0.7.0
       lucide-react:
-        specifier: '*'
+        specifier: ^0.417.0
         version: 0.417.0(react@18.2.0)
       msw:
-        specifier: '*'
+        specifier: ^2.4.9
         version: 2.4.9(typescript@5.5.4)
       next:
         specifier: 14.2.14
         version: 14.2.14(@babel/core@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      react:
+        specifier: ^18
+        version: 18.2.0
       react-dom:
-        specifier: '*'
+        specifier: ^18
         version: 18.2.0(react@18.2.0)
       react-hook-form:
-        specifier: '*'
+        specifier: ^7.53.0
         version: 7.53.0(react@18.2.0)
       zod:
-        specifier: '*'
+        specifier: ^3.23.8
         version: 3.23.8
     devDependencies:
       '@hookform/resolvers':
-        specifier: '*'
+        specifier: ^3.9.0
         version: 3.9.0(react-hook-form@7.53.0(react@18.2.0))
       '@repo/eslint-config':
         specifier: workspace:*
@@ -254,32 +205,32 @@ importers:
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
-      '@types/eslint':
-        specifier: '*'
-        version: 8.56.2
       '@types/node':
-        specifier: '*'
+        specifier: ^20
         version: 20.11.6
       '@types/react':
-        specifier: '*'
+        specifier: ^18
         version: 18.2.48
       '@types/react-dom':
-        specifier: '*'
+        specifier: ^18
         version: 18.2.18
       autoprefixer:
-        specifier: '*'
+        specifier: ^10
         version: 10.4.19(postcss@8.4.47)
       eslint:
-        specifier: '*'
-        version: 8.57.0
+        specifier: ^8
+        version: 8.57.1
       postcss:
-        specifier: '*'
+        specifier: ^8
         version: 8.4.47
       tailwindcss:
-        specifier: '*'
+        specifier: ^3.4.10
         version: 3.4.13
+      tailwindcss-animate:
+        specifier: ^1.0.7
+        version: 1.0.7(tailwindcss@3.4.13)
       typescript:
-        specifier: '*'
+        specifier: ^5
         version: 5.5.4
 
   packages/eslint-config:
@@ -296,6 +247,9 @@ importers:
       '@vercel/style-guide':
         specifier: ^6.0.0
         version: 6.0.0(@next/eslint-plugin-next@14.2.8)(eslint@8.57.1)(prettier@3.3.3)(typescript@5.5.4)(vitest@2.1.2(@types/node@22.7.4)(jsdom@25.0.1)(msw@2.4.9(typescript@5.5.4))(terser@5.34.1))
+      eslint:
+        specifier: ^8
+        version: 8.57.1
       eslint-config-next:
         specifier: 14.2.5
         version: 14.2.5(eslint@8.57.1)(typescript@5.5.4)
@@ -318,16 +272,16 @@ importers:
         specifier: ^4.6.2
         version: 4.6.2(eslint@8.57.1)
       react:
-        specifier: '*'
+        specifier: ^18
         version: 18.2.0
       typescript:
-        specifier: '*'
+        specifier: ^5
         version: 5.5.4
 
   packages/mocks:
     dependencies:
       msw:
-        specifier: '*'
+        specifier: ^2.4.9
         version: 2.4.9(typescript@5.5.4)
 
   packages/types:
@@ -388,54 +342,57 @@ importers:
       '@radix-ui/react-toggle-group':
         specifier: ^1.1.0
         version: 1.1.0(@types/react-dom@18.2.18)(@types/react@18.2.48)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@storybook/nextjs':
+        specifier: ^8.3.5
+        version: 8.3.5(esbuild@0.21.5)(next@14.2.14(@babel/core@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.3.5)(type-fest@4.26.1)(typescript@5.5.4)(webpack-hot-middleware@2.26.1)(webpack@5.95.0(esbuild@0.21.5))
       '@tanstack/react-table':
-        specifier: '*'
+        specifier: ^8.20.5
         version: 8.20.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       class-variance-authority:
-        specifier: '*'
+        specifier: ^0.7.0
         version: 0.7.0
       clsx:
-        specifier: '*'
+        specifier: ^2.1.1
         version: 2.1.1
       cmdk:
-        specifier: '*'
+        specifier: 1.0.0
         version: 1.0.0(@types/react-dom@18.2.18)(@types/react@18.2.48)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       date-fns:
-        specifier: '*'
+        specifier: ^4.1.0
         version: 4.1.0
       embla-carousel-react:
         specifier: ^8.3.0
         version: 8.3.0(react@18.2.0)
       lucide-react:
-        specifier: '*'
+        specifier: ^0.417.0
         version: 0.417.0(react@18.2.0)
       next:
-        specifier: '*'
-        version: 14.2.8(@babel/core@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: 14.2.14
+        version: 14.2.14(@babel/core@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react:
         specifier: ^18
         version: 18.2.0
       react-day-picker:
         specifier: ^9.1.0
         version: 9.1.3(react@18.2.0)
+      react-dom:
+        specifier: ^18
+        version: 18.2.0(react@18.2.0)
       react-hook-form:
-        specifier: '*'
+        specifier: ^7.53.0
         version: 7.53.0(react@18.2.0)
       tailwind-merge:
-        specifier: '*'
+        specifier: ^2.3.0
         version: 2.3.0
-      tailwindcss-animate:
-        specifier: '*'
-        version: 1.0.7(tailwindcss@3.4.13)
       zod:
-        specifier: '*'
+        specifier: ^3.23.8
         version: 3.23.8
     devDependencies:
       '@chromatic-com/storybook':
         specifier: ^1.9.0
         version: 1.9.0(react@18.2.0)
       '@hookform/resolvers':
-        specifier: '*'
+        specifier: ^3.9.0
         version: 3.9.0(react-hook-form@7.53.0(react@18.2.0))
       '@repo/eslint-config':
         specifier: workspace:*
@@ -458,9 +415,6 @@ importers:
       '@storybook/blocks':
         specifier: ^8.3.5
         version: 8.3.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.3.5)
-      '@storybook/nextjs':
-        specifier: ^8.3.5
-        version: 8.3.5(esbuild@0.21.5)(next@14.2.8(@babel/core@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.3.5)(type-fest@4.26.1)(typescript@5.5.4)(webpack-hot-middleware@2.26.1)(webpack@5.95.0(esbuild@0.21.5))
       '@storybook/react':
         specifier: ^8.3.5
         version: 8.3.5(@storybook/test@8.3.5(storybook@8.3.5))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.3.5)(typescript@5.5.4)
@@ -468,13 +422,16 @@ importers:
         specifier: ^8.3.5
         version: 8.3.5(storybook@8.3.5)
       '@types/node':
-        specifier: '*'
+        specifier: ^20
         version: 20.11.6
       '@types/react':
-        specifier: '*'
+        specifier: ^18
         version: 18.2.48
+      '@types/react-dom':
+        specifier: ^18
+        version: 18.2.18
       autoprefixer:
-        specifier: '*'
+        specifier: ^10
         version: 10.4.19(postcss@8.4.47)
       concurrently:
         specifier: ^8.2.0
@@ -482,14 +439,17 @@ importers:
       css-loader:
         specifier: ^6.10.0
         version: 6.11.0(webpack@5.95.0(esbuild@0.21.5))
+      eslint:
+        specifier: ^8
+        version: 8.57.1
       eslint-plugin-storybook:
         specifier: ^0.9.0
         version: 0.9.0(eslint@8.57.1)(typescript@5.5.4)
       postcss:
-        specifier: '*'
+        specifier: ^8
         version: 8.4.47
       postcss-load-config:
-        specifier: '*'
+        specifier: ^6
         version: 6.0.1(jiti@1.21.0)(postcss@8.4.47)
       postcss-loader:
         specifier: ^8.1.1
@@ -504,10 +464,13 @@ importers:
         specifier: ^3.3.4
         version: 3.3.4(webpack@5.95.0(esbuild@0.21.5))
       tailwindcss:
-        specifier: '*'
+        specifier: ^3.4.10
         version: 3.4.13
+      tailwindcss-animate:
+        specifier: ^1.0.7
+        version: 1.0.7(tailwindcss@3.4.13)
       typescript:
-        specifier: '*'
+        specifier: ^5
         version: 5.5.4
 
 packages:
@@ -1437,10 +1400,6 @@ packages:
     resolution: {integrity: sha512-269Z39MS6wVJtsoUl10L60WdkhJVdPG24Q4eZTH3nnF6lpvSShEK3wQjDX9JRWAUPvPh7COouPpU9IrqaZFvtQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  '@eslint/js@8.57.0':
-    resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
-    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
-
   '@eslint/js@8.57.1':
     resolution: {integrity: sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
@@ -1465,11 +1424,6 @@ packages:
     peerDependencies:
       react-hook-form: ^7.0.0
 
-  '@humanwhocodes/config-array@0.11.14':
-    resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
-    engines: {node: '>=10.10.0'}
-    deprecated: Use @eslint/config-array instead
-
   '@humanwhocodes/config-array@0.13.0':
     resolution: {integrity: sha512-DZLEEqFWQFiyK6h5YIeynKx7JlvCYWL0cImfSRXZ9l4Sg2efkFGTuFf6vzXjK1cq6IYkU+Eg/JizXw+TD2vRNw==}
     engines: {node: '>=10.10.0'}
@@ -1478,10 +1432,6 @@ packages:
   '@humanwhocodes/module-importer@1.0.1':
     resolution: {integrity: sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA==}
     engines: {node: '>=12.22'}
-
-  '@humanwhocodes/object-schema@2.0.2':
-    resolution: {integrity: sha512-6EwiSjwWYP7pTckG6I5eyFANjPhmPjUX9JRLUSfNPC7FX7zK9gyZAfUEaECL6ALTpGX5AjnBq3C9XmVWPitNpw==}
-    deprecated: Use @eslint/object-schema instead
 
   '@humanwhocodes/object-schema@2.0.3':
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
@@ -1662,9 +1612,6 @@ packages:
   '@next/env@14.2.14':
     resolution: {integrity: sha512-/0hWQfiaD5//LvGNgc8PjvyqV50vGK0cADYzaoOOGN8fxzBn3iAiaq3S0tCRnFBldq0LVveLcxCTi41ZoYgAgg==}
 
-  '@next/env@14.2.8':
-    resolution: {integrity: sha512-L44a+ynqkolyNBnYfF8VoCiSrjSZWgEHYKkKLGcs/a80qh7AkfVUD/MduVPgdsWZ31tgROR+yJRA0PZjSVBXWQ==}
-
   '@next/eslint-plugin-next@14.2.5':
     resolution: {integrity: sha512-LY3btOpPh+OTIpviNojDpUdIbHW9j0JBYBjsIp8IxtDFfYFyORvw3yNq6N231FVqQA7n7lwaf7xHbVJlA1ED7g==}
 
@@ -1677,20 +1624,8 @@ packages:
     cpu: [arm64]
     os: [darwin]
 
-  '@next/swc-darwin-arm64@14.2.8':
-    resolution: {integrity: sha512-1VrQlG8OzdyvvGZhGJFnaNE2P10Jjy/2FopnqbY0nSa/gr8If3iINxvOEW3cmVeoAYkmW0RsBazQecA2dBFOSw==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [darwin]
-
   '@next/swc-darwin-x64@14.2.14':
     resolution: {integrity: sha512-cC9/I+0+SK5L1k9J8CInahduTVWGMXhQoXFeNvF0uNs3Bt1Ub0Azb8JzTU9vNCr0hnaMqiWu/Z0S1hfKc3+dww==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [darwin]
-
-  '@next/swc-darwin-x64@14.2.8':
-    resolution: {integrity: sha512-87t3I86rNRSOJB1gXIUzaQWWSWrkWPDyZGsR0Z7JAPtLeX3uUOW2fHxl7dNWD2BZvbvftctTQjgtfpp7nMtmWg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
@@ -1701,20 +1636,8 @@ packages:
     cpu: [arm64]
     os: [linux]
 
-  '@next/swc-linux-arm64-gnu@14.2.8':
-    resolution: {integrity: sha512-ta2sfVzbOpTbgBrF9HM5m+U58dv6QPuwU4n5EX4LLyCJGKc433Z0D9h9gay/HSOjLEXJ2fJYrMP5JYYbHdxhtw==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [linux]
-
   '@next/swc-linux-arm64-musl@14.2.14':
     resolution: {integrity: sha512-WgLOA4hT9EIP7jhlkPnvz49iSOMdZgDJVvbpb8WWzJv5wBD07M2wdJXLkDYIpZmCFfo/wPqFsFR4JS4V9KkQ2A==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [linux]
-
-  '@next/swc-linux-arm64-musl@14.2.8':
-    resolution: {integrity: sha512-+IoLTPK6Z5uIgDhgeWnQF5/o5GBN7+zyUNrs4Bes1W3g9++YELb8y0unFybS8s87ntAKMDl6jeQ+mD7oNwp/Ng==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
@@ -1725,20 +1648,8 @@ packages:
     cpu: [x64]
     os: [linux]
 
-  '@next/swc-linux-x64-gnu@14.2.8':
-    resolution: {integrity: sha512-pO+hVXC+mvzUOQJJRG4RX4wJsRJ5BkURSf6dD6EjUXAX4Ml9es1WsEfkaZ4lcpmFzFvY47IkDaffks/GdCn9ag==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [linux]
-
   '@next/swc-linux-x64-musl@14.2.14':
     resolution: {integrity: sha512-7TcQCvLQ/hKfQRgjxMN4TZ2BRB0P7HwrGAYL+p+m3u3XcKTraUFerVbV3jkNZNwDeQDa8zdxkKkw2els/S5onQ==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [linux]
-
-  '@next/swc-linux-x64-musl@14.2.8':
-    resolution: {integrity: sha512-bCat9izctychCtf3uL1nqHq31N5e1VxvdyNcBQflkudPMLbxVnlrw45Vi87K+lt1CwrtVayHqzo4ie0Szcpwzg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -1749,32 +1660,14 @@ packages:
     cpu: [arm64]
     os: [win32]
 
-  '@next/swc-win32-arm64-msvc@14.2.8':
-    resolution: {integrity: sha512-gbxfUaSPV7EyUobpavida2Hwi62GhSJaSg7iBjmBWoxkxlmETOD7U4tWt763cGIsyE6jM7IoNavq0BXqwdW2QA==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [win32]
-
   '@next/swc-win32-ia32-msvc@14.2.14':
     resolution: {integrity: sha512-2u2XcSaDEOj+96eXpyjHjtVPLhkAFw2nlaz83EPeuK4obF+HmtDJHqgR1dZB7Gb6V/d55FL26/lYVd0TwMgcOQ==}
     engines: {node: '>= 10'}
     cpu: [ia32]
     os: [win32]
 
-  '@next/swc-win32-ia32-msvc@14.2.8':
-    resolution: {integrity: sha512-PUXzEzjTTlUh3b5VAn1nlpwvujTnuCMMwbiCnaTazoVlN1nA3kWjlmp42IfURA2N/nyrlVEw7pURa/o4Qxj1cw==}
-    engines: {node: '>= 10'}
-    cpu: [ia32]
-    os: [win32]
-
   '@next/swc-win32-x64-msvc@14.2.14':
     resolution: {integrity: sha512-MZom+OvZ1NZxuRovKt1ApevjiUJTcU2PmdJKL66xUPaJeRywnbGGRWUlaAOwunD6dX+pm83vj979NTC8QXjGWg==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [win32]
-
-  '@next/swc-win32-x64-msvc@14.2.8':
-    resolution: {integrity: sha512-EnPKv0ttq02E9/1KZ/8Dn7kuutv6hy1CKc0HlNcvzOQcm4/SQtvfws5gY0zrG9tuupd3HfC2L/zcTrnBhpjTuQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
@@ -4337,12 +4230,6 @@ packages:
     resolution: {integrity: sha512-wpc+LXeiyiisxPlEkUzU6svyS1frIO3Mgxj1fdy7Pm8Ygzguax2N3Fa/D/ag1WqbOprdI+uY6wMUl8/a2G+iag==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  eslint@8.57.0:
-    resolution: {integrity: sha512-dZ6+mexnaTIbSBZWgou51U6OmzIhYM2VcNdtiTtI7qPNZm35Akpr0f6vtw3w1Kmn5PYo+tZVfh13WrhpS6oLqQ==}
-    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
-    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
-    hasBin: true
-
   eslint@8.57.1:
     resolution: {integrity: sha512-ypowyDxpVSYpkXr9WPv2PAZCtNip1Mv5KTW0SCurXv/9iOpcrH9PaqUElksqEB6pChqHGDRCFTyrZlGhnLNGiA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
@@ -5320,24 +5207,6 @@ packages:
       sass:
         optional: true
 
-  next@14.2.8:
-    resolution: {integrity: sha512-EyEyJZ89r8C5FPlS/401AiF3O8jeMtHIE+bLom9MwcdWJJFBgRl+MR/2VgO0v5bI6tQORNY0a0DR5sjpFNrjbg==}
-    engines: {node: '>=18.17.0'}
-    hasBin: true
-    peerDependencies:
-      '@opentelemetry/api': ^1.1.0
-      '@playwright/test': ^1.41.2
-      react: ^18.2.0
-      react-dom: ^18.2.0
-      sass: ^1.3.0
-    peerDependenciesMeta:
-      '@opentelemetry/api':
-        optional: true
-      '@playwright/test':
-        optional: true
-      sass:
-        optional: true
-
   no-case@3.0.4:
     resolution: {integrity: sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg==}
 
@@ -5553,9 +5422,6 @@ packages:
   pbkdf2@3.1.2:
     resolution: {integrity: sha512-iuh7L6jA7JEGu2WxDwtQP1ddOpaJNC4KlDEFfdQajSGgGPNi4OyDc2R7QnbY2bR9QjBVGwgvTdNJZoE7RaxUMA==}
     engines: {node: '>=0.12'}
-
-  picocolors@1.0.1:
-    resolution: {integrity: sha512-anP1Z8qwhkbmu7MFP5iTt+wQKXgwzf7zTyGlcdzabySa9vd0Xt392U0rVmz9poOaBj0uHJKyyo9/upk0HrEQew==}
 
   picocolors@1.1.0:
     resolution: {integrity: sha512-TQ92mBOW0l3LeMeyLV6mzy/kWr8lkd/hp3mTg7wYK7zJhuBStmGMBG0BdeDZS/dZx1IukaX6Bk11zcln25o1Aw==}
@@ -7044,7 +6910,7 @@ snapshots:
   '@babel/code-frame@7.24.7':
     dependencies:
       '@babel/highlight': 7.24.7
-      picocolors: 1.0.1
+      picocolors: 1.1.0
 
   '@babel/code-frame@7.25.7':
     dependencies:
@@ -8137,11 +8003,6 @@ snapshots:
   '@esbuild/win32-x64@0.21.5':
     optional: true
 
-  '@eslint-community/eslint-utils@4.4.0(eslint@8.57.0)':
-    dependencies:
-      eslint: 8.57.0
-      eslint-visitor-keys: 3.4.3
-
   '@eslint-community/eslint-utils@4.4.0(eslint@8.57.1)':
     dependencies:
       eslint: 8.57.1
@@ -8162,8 +8023,6 @@ snapshots:
       strip-json-comments: 3.1.1
     transitivePeerDependencies:
       - supports-color
-
-  '@eslint/js@8.57.0': {}
 
   '@eslint/js@8.57.1': {}
 
@@ -8188,14 +8047,6 @@ snapshots:
     dependencies:
       react-hook-form: 7.53.0(react@18.2.0)
 
-  '@humanwhocodes/config-array@0.11.14':
-    dependencies:
-      '@humanwhocodes/object-schema': 2.0.2
-      debug: 4.3.7
-      minimatch: 3.1.2
-    transitivePeerDependencies:
-      - supports-color
-
   '@humanwhocodes/config-array@0.13.0':
     dependencies:
       '@humanwhocodes/object-schema': 2.0.3
@@ -8205,8 +8056,6 @@ snapshots:
       - supports-color
 
   '@humanwhocodes/module-importer@1.0.1': {}
-
-  '@humanwhocodes/object-schema@2.0.2': {}
 
   '@humanwhocodes/object-schema@2.0.3': {}
 
@@ -8381,8 +8230,6 @@ snapshots:
 
   '@next/env@14.2.14': {}
 
-  '@next/env@14.2.8': {}
-
   '@next/eslint-plugin-next@14.2.5':
     dependencies:
       glob: 10.3.10
@@ -8394,55 +8241,28 @@ snapshots:
   '@next/swc-darwin-arm64@14.2.14':
     optional: true
 
-  '@next/swc-darwin-arm64@14.2.8':
-    optional: true
-
   '@next/swc-darwin-x64@14.2.14':
-    optional: true
-
-  '@next/swc-darwin-x64@14.2.8':
     optional: true
 
   '@next/swc-linux-arm64-gnu@14.2.14':
     optional: true
 
-  '@next/swc-linux-arm64-gnu@14.2.8':
-    optional: true
-
   '@next/swc-linux-arm64-musl@14.2.14':
-    optional: true
-
-  '@next/swc-linux-arm64-musl@14.2.8':
     optional: true
 
   '@next/swc-linux-x64-gnu@14.2.14':
     optional: true
 
-  '@next/swc-linux-x64-gnu@14.2.8':
-    optional: true
-
   '@next/swc-linux-x64-musl@14.2.14':
-    optional: true
-
-  '@next/swc-linux-x64-musl@14.2.8':
     optional: true
 
   '@next/swc-win32-arm64-msvc@14.2.14':
     optional: true
 
-  '@next/swc-win32-arm64-msvc@14.2.8':
-    optional: true
-
   '@next/swc-win32-ia32-msvc@14.2.14':
     optional: true
 
-  '@next/swc-win32-ia32-msvc@14.2.8':
-    optional: true
-
   '@next/swc-win32-x64-msvc@14.2.14':
-    optional: true
-
-  '@next/swc-win32-x64-msvc@14.2.8':
     optional: true
 
   '@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1':
@@ -9361,7 +9181,7 @@ snapshots:
     dependencies:
       storybook: 8.3.5
 
-  '@storybook/nextjs@8.3.5(esbuild@0.21.5)(next@14.2.8(@babel/core@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.3.5)(type-fest@4.26.1)(typescript@5.5.4)(webpack-hot-middleware@2.26.1)(webpack@5.95.0(esbuild@0.21.5))':
+  '@storybook/nextjs@8.3.5(esbuild@0.21.5)(next@14.2.14(@babel/core@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.3.5)(type-fest@4.26.1)(typescript@5.5.4)(webpack-hot-middleware@2.26.1)(webpack@5.95.0(esbuild@0.21.5))':
     dependencies:
       '@babel/core': 7.25.7
       '@babel/plugin-syntax-bigint': 7.8.3(@babel/core@7.25.7)
@@ -9389,7 +9209,7 @@ snapshots:
       fs-extra: 11.2.0
       image-size: 1.1.1
       loader-utils: 3.3.1
-      next: 14.2.8(@babel/core@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      next: 14.2.14(@babel/core@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       node-polyfill-webpack-plugin: 2.0.1(webpack@5.95.0(esbuild@0.21.5))
       pnp-webpack-plugin: 1.7.0(typescript@5.5.4)
       postcss: 8.4.47
@@ -9399,7 +9219,7 @@ snapshots:
       react-refresh: 0.14.2
       resolve-url-loader: 5.0.0
       sass-loader: 13.3.3(webpack@5.95.0(esbuild@0.21.5))
-      semver: 7.6.2
+      semver: 7.6.3
       storybook: 8.3.5
       style-loader: 3.3.4(webpack@5.95.0(esbuild@0.21.5))
       styled-jsx: 5.1.6(@babel/core@7.25.7)(react@18.2.0)
@@ -11619,49 +11439,6 @@ snapshots:
 
   eslint-visitor-keys@3.4.3: {}
 
-  eslint@8.57.0:
-    dependencies:
-      '@eslint-community/eslint-utils': 4.4.0(eslint@8.57.0)
-      '@eslint-community/regexpp': 4.10.0
-      '@eslint/eslintrc': 2.1.4
-      '@eslint/js': 8.57.0
-      '@humanwhocodes/config-array': 0.11.14
-      '@humanwhocodes/module-importer': 1.0.1
-      '@nodelib/fs.walk': 1.2.8
-      '@ungap/structured-clone': 1.2.0
-      ajv: 6.12.6
-      chalk: 4.1.2
-      cross-spawn: 7.0.3
-      debug: 4.3.7
-      doctrine: 3.0.0
-      escape-string-regexp: 4.0.0
-      eslint-scope: 7.2.2
-      eslint-visitor-keys: 3.4.3
-      espree: 9.6.1
-      esquery: 1.5.0
-      esutils: 2.0.3
-      fast-deep-equal: 3.1.3
-      file-entry-cache: 6.0.1
-      find-up: 5.0.0
-      glob-parent: 6.0.2
-      globals: 13.24.0
-      graphemer: 1.4.0
-      ignore: 5.3.1
-      imurmurhash: 0.1.4
-      is-glob: 4.0.3
-      is-path-inside: 3.0.3
-      js-yaml: 4.1.0
-      json-stable-stringify-without-jsonify: 1.0.1
-      levn: 0.4.1
-      lodash.merge: 4.6.2
-      minimatch: 3.1.2
-      natural-compare: 1.4.0
-      optionator: 0.9.3
-      strip-ansi: 6.0.1
-      text-table: 0.2.0
-    transitivePeerDependencies:
-      - supports-color
-
   eslint@8.57.1:
     dependencies:
       '@eslint-community/eslint-utils': 4.4.0(eslint@8.57.1)
@@ -12703,31 +12480,6 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
-  next@14.2.8(@babel/core@7.25.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
-    dependencies:
-      '@next/env': 14.2.8
-      '@swc/helpers': 0.5.5
-      busboy: 1.6.0
-      caniuse-lite: 1.0.30001666
-      graceful-fs: 4.2.11
-      postcss: 8.4.31
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      styled-jsx: 5.1.1(@babel/core@7.25.7)(react@18.2.0)
-    optionalDependencies:
-      '@next/swc-darwin-arm64': 14.2.8
-      '@next/swc-darwin-x64': 14.2.8
-      '@next/swc-linux-arm64-gnu': 14.2.8
-      '@next/swc-linux-arm64-musl': 14.2.8
-      '@next/swc-linux-x64-gnu': 14.2.8
-      '@next/swc-linux-x64-musl': 14.2.8
-      '@next/swc-win32-arm64-msvc': 14.2.8
-      '@next/swc-win32-ia32-msvc': 14.2.8
-      '@next/swc-win32-x64-msvc': 14.2.8
-    transitivePeerDependencies:
-      - '@babel/core'
-      - babel-plugin-macros
-
   no-case@3.0.4:
     dependencies:
       lower-case: 2.0.2
@@ -12978,8 +12730,6 @@ snapshots:
       ripemd160: 2.0.2
       safe-buffer: 5.2.1
       sha.js: 2.4.11
-
-  picocolors@1.0.1: {}
 
   picocolors@1.1.0: {}
 
@@ -14078,7 +13828,7 @@ snapshots:
   tsconfig-paths-webpack-plugin@4.1.0:
     dependencies:
       chalk: 4.1.2
-      enhanced-resolve: 5.15.0
+      enhanced-resolve: 5.17.1
       tsconfig-paths: 4.2.0
 
   tsconfig-paths@3.15.0:

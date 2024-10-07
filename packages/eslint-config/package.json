@@ -12,6 +12,7 @@
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
     "@vercel/style-guide": "^6.0.0",
+    "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-turbo": "2.1.1",
@@ -19,7 +20,7 @@
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.36.1",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "react": "*",
-    "typescript": "*"
+    "react": "^18",
+    "typescript": "^5"
   }
 }
