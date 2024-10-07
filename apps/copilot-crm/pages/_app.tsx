@@ -23,11 +23,11 @@ export default function App({ Component, pageProps }: AppProps) {
   }, []);
 
   useEffect(() => {
-    if (process.env.NODE_ENV === "development") {
-      import("@repo/mocks/browser").then(({ worker }) => {
-        worker.start();
-      });
-    }
+    // if (process.env.NODE_ENV === "development") {
+    import("@repo/mocks/browser").then(({ worker }) => {
+      worker.start();
+    });
+    // }
   }, []);
 
   return (
