@@ -30,6 +30,10 @@
     },
     "build-storybook": {
       "outputs": ["storybook-static/**"]
+    },
+    "chromatic": {
+      "dependsOn": ["^chromatic"],
+      "env": ["NODE_ENV"]
     }
   },
   "globalDependencies": ["NODE_ENV", "ANALYZE"]

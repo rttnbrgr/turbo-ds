@@ -433,6 +433,9 @@ importers:
       autoprefixer:
         specifier: ^10
         version: 10.4.19(postcss@8.4.47)
+      chromatic:
+        specifier: ^11.11.0
+        version: 11.11.0
       concurrently:
         specifier: ^8.2.0
         version: 8.2.2

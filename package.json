@@ -14,7 +14,8 @@
     "lint": "turbo lint",
     "test": "vitest",
     "ui": "pnpm --filter @repo/ui ui",
-    "storybook": "pnpm --filter @repo/ui storybook"
+    "storybook": "pnpm --filter @repo/ui storybook",
+    "chromatic": "pnpm --filter @repo/ui chromatic"
   },
   "dependencies": {},
   "devDependencies": {
