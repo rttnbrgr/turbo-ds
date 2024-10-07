@@ -1,4 +1,6 @@
 node_modules/
+storybook-static/
+dist/
 .next/
 out/
 pnpm-lock.yaml
