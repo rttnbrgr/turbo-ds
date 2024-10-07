@@ -18,7 +18,7 @@
     "build-storybook": "storybook build",
     "build:tailwind": "npx tailwindcss -i ./src/globals.css -o ./dist/output.css --minify",
     "build": "pnpm run build:tailwind && pnpm run build-storybook",
-    "chromatic": "chromatic --exit-zero-on-changes"
+    "chromatic": "dotenv -e ../../.env -- npx chromatic --exit-zero-on-changes --token $CHROMATIC_PROJECT_TOKEN"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.1",
@@ -41,6 +41,8 @@
     "clsx": "^2.1.1",
     "cmdk": "1.0.0",
     "date-fns": "^4.1.0",
+    "dotenv": "^16.4.5",
+    "dotenv-cli": "^7.4.2",
     "embla-carousel-react": "^8.3.0",
     "lucide-react": "^0.417.0",
     "next": "14.2.14",

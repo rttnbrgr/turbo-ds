@@ -31,6 +31,10 @@ const fillDanger =
 // Outline
 const outline =
   "bg-slate-50 text-slate-950 border border-solid border-slate-400 hover:bg-slate-200 active:bg-slate-300";
+const outlineAction =
+  "bg-blue-50 text-blue-950 border border-solid border-blue-400 hover:bg-blue-200 active:bg-blue-300";
+const outlineDanger =
+  "bg-red-50 text-red-950 border border-solid border-red-400 hover:bg-red-200 active:bg-red-300";
 
 // Ghost
 const ghost =
@@ -79,6 +83,16 @@ const buttonVariants = cva(
         variant: "ghost",
         intent: "danger",
         className: ghostDanger,
+      },
+      {
+        variant: "outline",
+        intent: "action",
+        className: outlineAction,
+      },
+      {
+        variant: "outline",
+        intent: "danger",
+        className: outlineDanger,
       },
     ],
     defaultVariants: {

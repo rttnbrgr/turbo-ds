@@ -116,3 +116,39 @@ This is a custom storybook command that will watch the `tailwind.config.ts`, `gl
 ```
 pnpm build-storybook
 ```
+
+## Chromatic Integration
+
+This package is integrated with Chromatic for visual testing and review of UI components. Chromatic provides a platform for visual regression testing, component documentation, and collaboration.
+
+### Chromatic Setup
+
+1. **GitHub Action**: A GitHub Action is set up to automatically publish to Chromatic on every push. The configuration can be found in `.github/workflows/chromatic.yaml`.
+
+2. **Package Script**: There's a dedicated script in `package.json` for running Chromatic locally:
+
+   ```
+   pnpm chromatic
+   ```
+
+   This script runs Chromatic with the `--exit-zero-on-changes` flag, which allows the process to exit with a zero code even if changes are detected.
+
+### Using Chromatic
+
+- **Automatic Builds**: Every push to the repository triggers a Chromatic build via the GitHub Action.
+- **Manual Builds**: You can trigger a Chromatic build manually by running `pnpm chromatic` locally.
+- **Reviewing Changes**: Access the Chromatic dashboard to review visual changes, approve or reject them, and collaborate with your team.
+- **Storybook Build**: Chromatic also hosts the built storybook on their platform, so you can view the components in a real-world application.
+- [Chromatic Hosted Storybook](https://6701d6ee8c869f339a02e3cf-mfxkpxhvsn.chromatic.com/)
+
+### Chromatic Configuration
+
+The Chromatic setup depends on a project token that is stored in the GitHub repository secrets.
+
+1. **GitHub Action Workflow** (`.github/workflows/chromatic.yaml`):
+   - Triggers on every push
+   - Uses the `CHROMATIC_PROJECT_TOKEN` to authenticate with Chromatic
+   - Runs the `chromatic` script to build the storybook and upload the results to Chromatic
+   - The `chromatic` script is defined in the `package.json` file and runs `build-storybook` and then `chromatic`
+
+By integrating Chromatic, we ensure consistent visual quality across our UI components and facilitate easier review and collaboration on visual changes.
