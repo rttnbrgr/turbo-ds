@@ -11,7 +11,7 @@ import { Button } from "@repo/ui/components/ui/button";
 import router from "next/router";
 import { HeaderCell } from "@/components/header-cell";
 import { useQuery } from "@tanstack/react-query";
-import { Estimate, Invoice } from "@repo/types/index";
+import { Estimate, Invoice, PaymentInfo } from "@repo/types/index";
 import { Property } from "../../../packages/types/property";
 import {
   Alert,
@@ -221,6 +221,12 @@ export default function ClientPortalIndex() {
       fetch("https://api.example.com/invoices").then((res) => res.json()),
   });
 
+  const { data: payment } = useQuery<PaymentInfo[]>({
+    queryKey: ["payment"],
+    queryFn: () =>
+      fetch("https://api.example.com/payment/none").then((res) => res.json()),
+  });
+
   const upcomingVisits = useMemo(() => {
     return estimates?.map((estimate) => {
       const property = properties?.find((p) => p.id === estimate.propertyId);
@@ -239,23 +245,25 @@ export default function ClientPortalIndex() {
       <div className="flex flex-col gap-4">
         <Text.Heading size={"xl"}>Home</Text.Heading>
 
-        <Alert variant="warn">
-          <AlertTitle>Payment Information Not Added</AlertTitle>
-          <AlertDescription className="flex flex-col gap-2">
-            Want to save time and pay for visits with saved payment information?
-            Click below or go to My Profile to add this information. Note that
-            to save your payment information, you must secure your profile with
-            a username and password.
-            <div className="flex gap-2">
-              <Button variant="outline" size="sm">
-                Add Payment Information
-              </Button>
-              <Button variant="outline" size="sm">
-                Dismiss
-              </Button>
-            </div>
-          </AlertDescription>
-        </Alert>
+        {!payment && (
+          <Alert variant="warn">
+            <AlertTitle>Payment Information Not Added</AlertTitle>
+            <AlertDescription className="flex flex-col gap-2">
+              Want to save time and pay for visits with saved payment
+              information? Click below or go to My Profile to add this
+              information. Note that to save your payment information, you must
+              secure your profile with a username and password.
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm">
+                  Add Payment Information
+                </Button>
+                <Button variant="outline" size="sm">
+                  Dismiss
+                </Button>
+              </div>
+            </AlertDescription>
+          </Alert>
+        )}
 
         <div className="grid grid-cols-3 gap-4">
           {metrics.map((metric) => (
