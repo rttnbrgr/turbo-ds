@@ -1,0 +1,12 @@
+{
+  "name": "@repo/mocks",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "dependencies": {
+    "msw": "^2.4.9"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

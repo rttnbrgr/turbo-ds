@@ -1,0 +1,11 @@
+{
+  "extends": "@repo/typescript-config/base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@repo/types/*": ["./*"] // This allows importing from all exports in the barrel file
+    }
+  },
+  "include": ["."],
+  "exclude": ["node_modules", "dist"]
+}

@@ -1,73 +1,42 @@
-## Contributors Guide
+# Beacon Rock Development Guide
 
-### 1. **Identify or Create a GitHub Issue**
+## Install Dependencies
 
-Before starting work, be sure you have an issue with relevant details identifying the work to be done. Ideally, the issue should provide clear acceptance criteria and as much additional context as feasible. If you're not already assigned, assign yourself to the issue to indicate ownership.
+To install the necessary dependencies, run:
 
-### 2. **Create a Branch**
+```sh
+pnpm install
+```
 
-Follow the branch naming convention to include the issue number and a brief description.
+## Starting Development Servers
 
-**Format:** `<issue-number>-<short-description>`
-
-- **Issue Number**: Each branch must include the corresponding issue number to link it to the issue in GitHub.
-- **Short Description**: Use a concise description of the branch purpose in kebab-case (e.g., `setup-storybook`).
-
-  _Example:_ `43-setup-storybook`
-
-_Alternatively_, use the "Create a branch for this issue or link a pull request" option from the GitHub issue sidebar to automatically apply the issue number and issue title as the branch name. You can then clone and checkout the created branch to your local git repository.
-
-### 3. **Commit Guidelines**
-
-Commit your work frequently, using descriptive messages, optionally following the [Conventional Commits](https://www.conventionalcommits.org/) specification for adding clarity to the purpose of each commit.
-
-#### Best Practices
-
-- **Be Concise**: Keep the description short and to the point, focusing on what the commit introduces or fixes.
-- **Use Imperative Mood**: Write as if you are giving commands, not describing past actions (e.g., "adds feature" rather than "added feature").
-- **Commit Often**: Commit regularly, with logical chunks of work.
-
-### 4. **Open a Pull Request (PR)**
-
-After completing your work, open a PR for the issue. This is a good time to do a final review of the code changes from the perspective of a code reviewer, looking for any unexpected changesets and ensuring there are no logs or stray code not intended to be merged.
-
-When creating a Pull Request, **include the issue number** in the PR title or description (e.g., `Closes #123`). This ensures that the associated issue is automatically closed when the PR is merged.
-
-_TODO: Add additional guidance on a PR description template. (Should we include screenshots or a more detailed breakdown of the work for the reviewer?)_
-
-### 5. **Merge the PR**
-
-Once approved by at least one peer and after confirming that all tests and checks (CI/CD pipeline, code quality checks, etc.) have passed, use the "Squash and Merge" option to combine your commits. (_TODO: Need to check if this can be turned on by default._)
-
-> At some point, we will include a Design/QA/Product sign-off flow here as well.
-
-### 6. **Delete the Branch**
-
-Optionally, delete the branch after merging to keep the repository clean. _(TODO: Confirm branch deletion policy with the team.)_
-
----
-
-## Development
-
-To start the development server:
+Start the dev server for all apps, run:
 
 ```bash
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
+To start a specific app use the alias helper
 
----
+**Copilot-CRM** app:
 
-## Formatting with Prettier
+```bash
+pnpm dev:crm
+```
 
-To manually format the codebase with Prettier:
+**Client-Portal** app:
+
+```bash
+pnpm dev:portal
+```
+
+## Code Formatting with Prettier
+
+To manually format the entire codebase with Prettier:
 
 ```bash
 pnpm format
 ```
-
----
 
 ## Linting
 
@@ -77,24 +46,152 @@ To manually run ESLint across the codebase:
 pnpm lint
 ```
 
----
+## Building All Apps
 
-## Local Build
+To build all applications and packages:
 
-To create a local build:
-
-```bash
+```sh
 pnpm build
 ```
 
+## Testing
+
+Run tests for all packages and apps:
+
+```sh
+pnpm test
+```
+
+For additional details and testing guidelines, see the [Testing Documentation](./src/test/README.md)
+
+## Filtering Commands in Turborepo
+
+Turborepo allows you to filter which apps and packages the command should apply to. For example, to run the `build` command only on the `client-portal` app:
+
+```sh
+pnpm build --filter=@repo/client-portal
+```
+
+## Structure
+
+This Monorepo includes the following apps and packages:
+
+### Apps
+
+- `@repo/copilot-crm`: a [Next.js](https://nextjs.org/) app
+- `@repo/client-portal`: a [Next.js](https://nextjs.org/) app
+
+### Packages
+
+- `@repo/ui`: React component library powered by **shadcn/ui**
+  [See Docs here on how to use and customize the ui package](./packages/ui/README.md).
+
+- `@repo/eslint-config`: ESLint configurations (includes `eslint-config-next` and `eslint-config-prettier`)
+
+- `@repo/typescript-config`: `tsconfig.json` files used throughout the monorepo
+
+- `@repo/types`: Shared types
+
+- `@repo/mocks`: Mock API requests for testing and development using [MSW](https://mswjs.io/)
+
+## Remote Caching with Turborepo
+
+Turborepo supports [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching), allowing you to share cache artifacts across machines for faster builds, including CI/CD pipelines.
+
+By default, Turborepo caches locally. To enable remote caching, you'll need a Vercel account. If you don't have one, [create an account](https://vercel.com/signup), then authenticate with Turborepo:
+
+```sh
+npx turbo login
+```
+
+To link your Turborepo to your remote cache, run:
+
+```sh
+npx turbo link
+```
+
+## Useful Resources
+
+Learn more about Turborepo:
+
+- [Running Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
+- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
+- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
+- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
+- [Configuration](https://turbo.build/repo/docs/reference/configuration)
+- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+
+Learn more about **shadcn/ui**:
+
+- [Documentation](https://ui.shadcn.com/docs)
+
+## Contributor's Guide
+
+### 1. **Identify or Create a GitHub Issue**
+
+Before starting any work, ensure that a GitHub issue exists outlining the task. If not, create one with relevant details, including acceptance criteria. Assign the issue to yourself for ownership.
+
+### 2. **Create a Branch**
+
+Use the following branch naming convention:
+
+**Format:** `<issue-number>-<short-description>`
+
+- **Issue Number**: Include the corresponding issue number.
+- **Short Description**: Use a concise description in kebab-case.
+
+Example: `43-setup-storybook`
+
+Alternatively, use GitHub's sidebar feature to auto-generate a branch name from the issue.
+
+### 3. **Commit Guidelines**
+
+Use descriptive commit messages, ideally following [Conventional Commits](https://www.conventionalcommits.org/).
+
+#### Best Practices
+
+- **Be Concise**: Summarize the work in a few words.
+- **Use Imperative Mood**: Example: "adds feature" instead of "added feature."
+- **Commit Regularly**: Make small, logical commits.
+
+### 4. **Open a Pull Request (PR)**
+
+After completing your work, open a PR. Be sure to link the associated issue by referencing its number (e.g., `Closes #123`).
+
+_TODO: Add a PR template, possibly with screenshots or a breakdown of changes._
+
+### 5. **Merge the PR**
+
+Once approved and all checks have passed, use "Merge Pull Request", all commits will be added to the base branch via a merge commit.
+
+### 6. **Delete the Branch**
+
+Delete the branch post-merge to keep the repository clean.
+
 ## Data Loading
 
-We use TanStack Query to fetch data from the API. The query client is configured in loaded in the entry file and is available in all components via the `useQuery` hook.
+We use **TanStack Query** for fetching API data. The query client is configured in the entry file and accessible via the `useQuery` hook.
 
 ## Mocking API Requests with MSW
 
-Add a new handler to the `src/mocks/handlers.ts` file. The mock server will automatically reload with the new handler. The server starts up on `pnpm dev`.
+To add a new handler for mocking API requests, modify the `@repo/mocks/handlers.ts` file. The mock server will automatically reload. It starts on `pnpm dev`.
 
-## Testing
+## Bundle Analysis
 
-See [Testing](./src/test/README.md) for more information.
+Run The bundle analyzer To analyze all apps:
+
+```sh
+pnpm analyze
+```
+
+This will open multiple bundle analyzer windows in your browser.
+
+### Run Bundlewatch
+
+To monitor bundle size changes over time, use `bundlewatch`. Run a build first, then:
+
+```sh
+pnpm bundlewatch
+```
+
+Bundlewatch tracks bundle sizes in the CI/CD pipeline, and you can set thresholds to catch unexpected changes.

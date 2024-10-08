@@ -1,0 +1,40 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": [".next/**", "!.next/cache/**"],
+      "env": ["NODE_ENV"]
+    },
+    "lint": {
+      "dependsOn": ["^lint"],
+      "env": ["NODE_ENV"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true,
+      "env": ["NODE_ENV"]
+    },
+    "analyze": {
+      "dependsOn": ["^analyze"],
+      "env": ["NODE_ENV", "ANALYZE"]
+    },
+    "bundlewatch": {
+      "dependsOn": ["^bundlewatch"],
+      "env": ["NODE_ENV"]
+    },
+    "storybook": {
+      "cache": false
+    },
+    "build-storybook": {
+      "outputs": ["storybook-static/**"]
+    },
+    "chromatic": {
+      "dependsOn": ["^chromatic"],
+      "env": ["NODE_ENV"]
+    }
+  },
+  "globalDependencies": ["NODE_ENV", "ANALYZE"]
+}
