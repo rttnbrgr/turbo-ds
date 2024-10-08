@@ -63,7 +63,6 @@ const upcomingVisitColumns: ColumnDef<UpcomingVisit>[] = [
     ),
     cell: ({ row }) => {
       const lineItems = row.original.lineItems;
-      console.log("lineItems", lineItems);
       const title = lineItems?.[0]?.name;
       return title;
     },
@@ -178,7 +177,6 @@ const unpaidInvoicesColumns: ColumnDef<UnpaidInvoice>[] = [
       );
     },
     cell: ({ row }) => {
-      console.log("row", row);
       const invoiceId = row.getValue("id");
       return (
         <div className="flex gap-2">
