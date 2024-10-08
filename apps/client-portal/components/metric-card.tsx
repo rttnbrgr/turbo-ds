@@ -1,5 +1,5 @@
-import * as Text from "@/components/ui/text";
-import { Card, CardBody } from "../ui/card";
+import * as Text from "@repo/ui/components/ui/text";
+import { Card, CardBody } from "@repo/ui/components/ui/card";
 
 const TITLE_VS_COLORS: Record<string, string> = {
   "Outstanding Balance": "bg-blue-200",

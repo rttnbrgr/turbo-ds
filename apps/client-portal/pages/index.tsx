@@ -1,12 +1,23 @@
-import { MetricCard } from "@/components/client-portal/metric-card";
-import { Card, CardBody, CardTitle } from "@/components/ui/card";
-import { DataTable } from "@/components/ui/data-table";
-import { StatusChip } from "@/components/ui/status-chip";
-import * as Text from "@/components/ui/text";
-import { formatDate } from "@/lib/utils";
-import { Layout } from "@client-portal/layout";
+import { MetricCard } from "../components/metric-card";
+import { Card, CardBody, CardTitle } from "@repo/ui/components/ui/card";
+import { DataTable } from "@repo/ui/components/ui/data-table";
+import { StatusChip } from "@repo/ui/components/ui/status-chip";
+import * as Text from "@repo/ui/components/ui/text";
+import { formatDate } from "../utils/formatDate";
+import { Layout } from "../components/layout";
 import { ColumnDef, ColumnFiltersState } from "@tanstack/react-table";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { Button } from "@repo/ui/components/ui/button";
+import router from "next/router";
+import { HeaderCell } from "@/components/header-cell";
+import { useQuery } from "@tanstack/react-query";
+import { Estimate, Invoice } from "@repo/types/index";
+import { Property } from "../../../packages/types/property";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@repo/ui/components/ui/alert";
 
 const metrics = [
   {
@@ -23,57 +34,60 @@ const metrics = [
   },
 ];
 
-type UpcomingVisit = {
-  date: string;
-  type: "visit" | "invoice";
-  title: string;
-  propertyName: string;
-  propertyAddress: string;
+type UpcomingVisit = Pick<
+  Estimate,
+  "id" | "status" | "visitDate" | "lineItems"
+> & {
+  property?: Pick<Property, "name" | "address">;
 };
-
-const upcomingVisits: UpcomingVisit[] = [
-  {
-    date: "08/14/24",
-    type: "visit",
-    title: "Weekly Recurring Lawn Care",
-    propertyName: "Beier Residence",
-    propertyAddress: "7818 Big Sky Dr # 107, Madison, WI 53719",
-  },
-  {
-    date: "08/21/24",
-    type: "invoice",
-    title: "Weekly Recurring Lawn Care",
-    propertyName: "Beier Residence",
-    propertyAddress: "7818 Big Sky Dr # 107, Madison, WI 53719",
-  },
-];
 
 const upcomingVisitColumns: ColumnDef<UpcomingVisit>[] = [
   {
-    accessorKey: "date",
-    header: "Date",
+    accessorKey: "visitDate",
+    header: ({ column }) => (
+      <HeaderCell<UpcomingVisit> column={column}>Date</HeaderCell>
+    ),
     cell: ({ row }) => {
-      const date = row.original.date;
-      return <Text.Body size="md">{formatDate(new Date(date))}</Text.Body>;
+      const date = row.original.visitDate;
+      return (
+        <Text.Body size="md">
+          {date ? formatDate(new Date(date)) : "-"}
+        </Text.Body>
+      );
     },
   },
   {
     accessorKey: "title",
-    header: "Title",
+    header: ({ column }) => (
+      <HeaderCell<UpcomingVisit> column={column}>Title</HeaderCell>
+    ),
+    cell: ({ row }) => {
+      const lineItems = row.original.lineItems;
+      console.log("lineItems", lineItems);
+      const title = lineItems?.[0]?.name;
+      return title;
+    },
   },
   {
-    accessorKey: "propertyName",
-    header: "Property Name",
+    accessorKey: "property.name",
+    header: ({ column }) => (
+      <HeaderCell<UpcomingVisit> column={column}>Property Name</HeaderCell>
+    ),
   },
   {
-    accessorKey: "propertyAddress",
-    header: "Property Address",
+    accessorKey: "property.address",
+    header: ({ column }) => (
+      <HeaderCell<UpcomingVisit> column={column}>Property Address</HeaderCell>
+    ),
   },
   {
     accessorKey: "type",
-    header: "Type",
+    header: ({ column }) => (
+      <HeaderCell<UpcomingVisit> column={column}>Type</HeaderCell>
+    ),
     cell: ({ row }) => {
-      const type = row.original.type;
+      // TODO JT - what is type in terms of estimates?
+      const type = (row.original as any).type;
       return (
         <StatusChip intent={type === "visit" ? "neutral" : "action"}>
           {type === "visit" ? "Visit" : "Invoice"}
@@ -81,63 +95,105 @@ const upcomingVisitColumns: ColumnDef<UpcomingVisit>[] = [
       );
     },
   },
-];
-
-type UnpaidInvoice = {
-  date: string;
-  invoiceNumber: string;
-  total: number;
-  paidAmount: number;
-  status: "unpaid" | "paid" | "partial";
-};
-
-const unpaidInvoices: UnpaidInvoice[] = [
   {
-    date: "08/14/24",
-    invoiceNumber: "14",
-    total: 200,
-    paidAmount: 50,
-    status: "partial",
-  },
-  {
-    date: "08/21/24",
-    invoiceNumber: "15",
-    total: 200,
-    paidAmount: 0,
-    status: "unpaid",
+    accessorKey: "action",
+    header: ({ column }) => {
+      return (
+        <HeaderCell<UpcomingVisit> column={column} sortable={false}>
+          {" "}
+        </HeaderCell>
+      );
+    },
+    cell: ({ row }) => {
+      const estimateId = row.getValue("id");
+      return (
+        <Button
+          variant="fill"
+          intent="action"
+          size="sm"
+          onClick={() => router.push(`/estimates/${estimateId}`)}
+        >
+          View Estimate
+        </Button>
+      );
+    },
   },
 ];
+
+type UnpaidInvoice = Pick<
+  Invoice,
+  "id" | "total" | "paid" | "status" | "invoice_date"
+>;
 
 const unpaidInvoicesColumns: ColumnDef<UnpaidInvoice>[] = [
   {
-    accessorKey: "date",
-    header: "Date",
+    accessorKey: "invoice_date",
+    header: ({ column }) => (
+      <HeaderCell<UnpaidInvoice> column={column}>Date</HeaderCell>
+    ),
     cell: ({ row }) => {
-      const date = row.original.date;
+      const date = row.original.invoice_date;
       return <Text.Body size="md">{formatDate(new Date(date))}</Text.Body>;
     },
   },
   {
-    accessorKey: "invoiceNumber",
-    header: "Invoice Number",
+    accessorKey: "invoice_number",
+    header: ({ column }) => (
+      <HeaderCell<UnpaidInvoice> column={column}>Invoice Number</HeaderCell>
+    ),
   },
   {
     accessorKey: "total",
-    header: "Total",
+    header: ({ column }) => (
+      <HeaderCell<UnpaidInvoice> column={column}>Invoice Total</HeaderCell>
+    ),
   },
   {
-    accessorKey: "paidAmount",
-    header: "Paid Amount",
+    accessorKey: "paid",
+    header: ({ column }) => (
+      <HeaderCell<UnpaidInvoice> column={column}>Paid Amount</HeaderCell>
+    ),
   },
   {
     accessorKey: "status",
-    header: "Status",
+    header: ({ column }) => (
+      <HeaderCell<UnpaidInvoice> column={column}>Status</HeaderCell>
+    ),
     cell: ({ row }) => {
       const status = row.original.status;
       return (
-        <StatusChip intent={status === "unpaid" ? "danger" : "success"}>
+        <StatusChip intent={status === "Unpaid" ? "danger" : "success"}>
           {status}
         </StatusChip>
+      );
+    },
+  },
+  {
+    accessorKey: "action",
+    header: ({ column }) => {
+      return (
+        <HeaderCell<UnpaidInvoice> column={column} sortable={false}>
+          {" "}
+        </HeaderCell>
+      );
+    },
+    cell: ({ row }) => {
+      console.log("row", row);
+      const invoiceId = row.getValue("id");
+      return (
+        <div className="flex gap-2">
+          <Button
+            variant="fill"
+            intent="action"
+            size="sm"
+            onClick={() => router.push(`/invoices/${invoiceId}`)}
+          >
+            View Invoice
+          </Button>
+          <Button variant="outline" size="sm">
+            Print
+          </Button>
+        </div>
       );
     },
   },
@@ -149,13 +205,62 @@ export default function ClientPortalIndex() {
   const [unpaidInvoicesColumnFilters, setUnpaidInvoicesColumnFilters] =
     useState<ColumnFiltersState>([]);
 
+  const { data: estimates } = useQuery<Estimate[]>({
+    queryKey: ["estimates"],
+    queryFn: () =>
+      fetch("https://api.example.com/estimates").then((res) => res.json()),
+  });
+
+  const { data: properties } = useQuery<Property[]>({
+    queryKey: ["properties"],
+    queryFn: () =>
+      fetch("https://api.example.com/properties").then((res) => res.json()),
+  });
+
+  const { data: invoices } = useQuery<Invoice[]>({
+    queryKey: ["invoices"],
+    queryFn: () =>
+      fetch("https://api.example.com/invoices").then((res) => res.json()),
+  });
+
+  const upcomingVisits = useMemo(() => {
+    return estimates?.map((estimate) => {
+      const property = properties?.find((p) => p.id === estimate.propertyId);
+      return {
+        ...estimate,
+        property: {
+          name: property?.name ?? "",
+          address: property?.address ?? "",
+        },
+      };
+    });
+  }, [estimates, properties]);
+
   return (
     <Layout>
       <div className="flex flex-col gap-4">
         <Text.Heading size={"xl"}>Home</Text.Heading>
 
+        <Alert variant="warn">
+          <AlertTitle>Payment Information Not Added</AlertTitle>
+          <AlertDescription className="flex flex-col gap-2">
+            Want to save time and pay for visits with saved payment information?
+            Click below or go to My Profile to add this information. Note that
+            to save your payment information, you must secure your profile with
+            a username and password.
+            <div className="flex gap-2">
+              <Button variant="outline" size="sm">
+                Add Payment Information
+              </Button>
+              <Button variant="outline" size="sm">
+                Dismiss
+              </Button>
+            </div>
+          </AlertDescription>
+        </Alert>
+
         <div className="grid grid-cols-3 gap-4">
-          {metrics.map(metric => (
+          {metrics.map((metric) => (
             <MetricCard
               key={metric.title}
               title={metric.title}
@@ -167,24 +272,28 @@ export default function ClientPortalIndex() {
         <Card>
           <CardTitle>Upcoming Visits</CardTitle>
           <CardBody>
-            <DataTable
-              columns={upcomingVisitColumns}
-              data={upcomingVisits}
-              columnFilters={upcomingVisitColumnFilters}
-              setColumnFilters={setUpcomingVisitColumnFilters}
-            />
+            {upcomingVisits && (
+              <DataTable
+                columns={upcomingVisitColumns}
+                data={upcomingVisits}
+                columnFilters={upcomingVisitColumnFilters}
+                setColumnFilters={setUpcomingVisitColumnFilters}
+              />
+            )}
           </CardBody>
         </Card>
 
         <Card>
           <CardTitle>Unpaid Invoices</CardTitle>
           <CardBody>
-            <DataTable
-              columns={unpaidInvoicesColumns}
-              data={unpaidInvoices}
-              columnFilters={unpaidInvoicesColumnFilters}
-              setColumnFilters={setUnpaidInvoicesColumnFilters}
-            />
+            {invoices && (
+              <DataTable
+                columns={unpaidInvoicesColumns}
+                data={invoices}
+                columnFilters={unpaidInvoicesColumnFilters}
+                setColumnFilters={setUnpaidInvoicesColumnFilters}
+              />
+            )}
           </CardBody>
         </Card>
       </div>

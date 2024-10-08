@@ -20,6 +20,7 @@ export type Estimate = {
   requestedBy: string;
   notes?: string;
   lineItems?: LineItem[];
+  propertyId: string;
 };
 
 export type LineItem = {

@@ -30,45 +30,19 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 
 // constants
 import { STATUS_VS_CHIP_INTENT } from "@/constants";
-
-function HeaderCell({
-  children,
-  column,
-  sortable = true,
-}: PropsWithChildren<{
-  column: Column<Estimate, unknown>;
-  sortable?: boolean;
-}>) {
-  if (!sortable) {
-    return <Text.Heading size="sm">{children}</Text.Heading>;
-  }
-  return (
-    <Button
-      variant="ghost"
-      onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      className="text-sm font-bold p-0"
-    >
-      {children}
-      {column.getIsSorted() === "asc" ? (
-        <ChevronUp size={12} />
-      ) : (
-        <ChevronDown size={12} />
-      )}
-    </Button>
-  );
-}
+import { HeaderCell } from "@/components/header-cell";
 
 export const columns: ColumnDef<Estimate>[] = [
   {
     accessorKey: "id",
     header: ({ column }) => {
-      return <HeaderCell column={column}>Estimates</HeaderCell>;
+      return <HeaderCell<Estimate> column={column}>Estimates</HeaderCell>;
     },
   },
   {
     accessorKey: "requestDate",
     header: ({ column }) => {
-      return <HeaderCell column={column}>Request Date</HeaderCell>;
+      return <HeaderCell<Estimate> column={column}>Request Date</HeaderCell>;
     },
     cell: ({ row }) => {
       return (
@@ -83,7 +57,7 @@ export const columns: ColumnDef<Estimate>[] = [
   {
     accessorKey: "visitDate",
     header: ({ column }) => {
-      return <HeaderCell column={column}>Visit Date</HeaderCell>;
+      return <HeaderCell<Estimate> column={column}>Visit Date</HeaderCell>;
     },
     cell: ({ row }) => {
       return (
@@ -98,7 +72,7 @@ export const columns: ColumnDef<Estimate>[] = [
   {
     accessorKey: "total",
     header: ({ column }) => {
-      return <HeaderCell column={column}>Total</HeaderCell>;
+      return <HeaderCell<Estimate> column={column}>Total</HeaderCell>;
     },
     cell: ({ row }) => {
       const total = parseFloat(row.getValue("total"));
@@ -115,7 +89,7 @@ export const columns: ColumnDef<Estimate>[] = [
   {
     accessorKey: "status",
     header: ({ column }) => {
-      return <HeaderCell column={column}>Status</HeaderCell>;
+      return <HeaderCell<Estimate> column={column}>Status</HeaderCell>;
     },
     cell: ({ row }) => {
       const status: Estimate["status"] = row.getValue("status");
@@ -128,7 +102,7 @@ export const columns: ColumnDef<Estimate>[] = [
     accessorKey: "action",
     header: ({ column }) => {
       return (
-        <HeaderCell column={column} sortable={false}>
+        <HeaderCell<Estimate> column={column} sortable={false}>
           {" "}
         </HeaderCell>
       );
