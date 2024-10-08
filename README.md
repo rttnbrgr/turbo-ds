@@ -1,4 +1,4 @@
-# Development Guide
+# Beacon Rock Development Guide
 
 ## Install Dependencies
 
@@ -10,27 +10,25 @@ pnpm install
 
 ## Starting Development Servers
 
-### Start the Development Server for All Apps
-
-To start the development server for all apps:
+Start the dev server for all apps, run:
 
 ```bash
 pnpm dev
 ```
 
-### Start Development for Specific Apps
+To start a specific app use the alias helper
 
-- **Copilot-CRM app**:
+**Copilot-CRM** app:
 
-  ```bash
-  pnpm dev:crm
-  ```
+```bash
+pnpm dev:crm
+```
 
-- **Client-Portal app**:
+**Client-Portal** app:
 
-  ```bash
-  pnpm dev:portal
-  ```
+```bash
+pnpm dev:portal
+```
 
 ## Code Formatting with Prettier
 
@@ -56,6 +54,16 @@ To build all applications and packages:
 pnpm build
 ```
 
+## Testing
+
+Run tests for all packages and apps:
+
+```sh
+pnpm test
+```
+
+For additional details and testing guidelines, see the [Testing Documentation](./src/test/README.md)
+
 ## Filtering Commands in Turborepo
 
 Turborepo allows you to filter which apps and packages the command should apply to. For example, to run the `build` command only on the `client-portal` app:
@@ -64,9 +72,9 @@ Turborepo allows you to filter which apps and packages the command should apply 
 pnpm build --filter=@repo/client-portal
 ```
 
-## What's Inside?
+## Structure
 
-This Turborepo includes the following apps and packages:
+This Monorepo includes the following apps and packages:
 
 ### Apps
 
@@ -77,8 +85,14 @@ This Turborepo includes the following apps and packages:
 
 - `@repo/ui`: React component library powered by **shadcn/ui**
   [See Docs here on how to use and customize the ui package](./packages/ui/README.md).
+
 - `@repo/eslint-config`: ESLint configurations (includes `eslint-config-next` and `eslint-config-prettier`)
+
 - `@repo/typescript-config`: `tsconfig.json` files used throughout the monorepo
+
+- `@repo/types`: Shared types
+
+- `@repo/mocks`: Mock API requests for testing and development using [MSW](https://mswjs.io/)
 
 ## Remote Caching with Turborepo
 
@@ -137,7 +151,7 @@ Use descriptive commit messages, ideally following [Conventional Commits](https:
 #### Best Practices
 
 - **Be Concise**: Summarize the work in a few words.
-- **Use Imperative Mood**: Example: "add feature" instead of "added feature."
+- **Use Imperative Mood**: Example: "adds feature" instead of "added feature."
 - **Commit Regularly**: Make small, logical commits.
 
 ### 4. **Open a Pull Request (PR)**
@@ -148,13 +162,11 @@ _TODO: Add a PR template, possibly with screenshots or a breakdown of changes._
 
 ### 5. **Merge the PR**
 
-Once approved and all checks have passed, use "Squash and Merge" to combine your commits into one.  
-_TODO: Confirm if this can be the default._
+Once approved and all checks have passed, use "Merge Pull Request", all commits will be added to the base branch via a merge commit.
 
 ### 6. **Delete the Branch**
 
-Optionally delete the branch post-merge to keep the repository clean.  
-_TODO: Confirm the branch deletion policy with the team._
+Delete the branch post-merge to keep the repository clean.
 
 ## Data Loading
 
@@ -162,17 +174,11 @@ We use **TanStack Query** for fetching API data. The query client is configured 
 
 ## Mocking API Requests with MSW
 
-To add a new handler for mocking API requests, modify the `src/packages/mocks/handlers.ts` file. The mock server will automatically reload. It starts on `pnpm dev`.
-
-## Testing
-
-For testing guidelines, see the [Testing Documentation](./src/test/README.md).
+To add a new handler for mocking API requests, modify the `@repo/mocks/handlers.ts` file. The mock server will automatically reload. It starts on `pnpm dev`.
 
 ## Bundle Analysis
 
-### Run Bundle Analyzer
-
-To analyze all apps:
+Run The bundle analyzer To analyze all apps:
 
 ```sh
 pnpm analyze
