@@ -1,7 +1,6 @@
-import { ChangeEvent, PropsWithChildren, useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useState } from "react";
 import router from "next/router";
-
-import { Column, ColumnDef, ColumnFiltersState } from "@tanstack/react-table";
+import { ColumnDef, ColumnFiltersState } from "@tanstack/react-table";
 import { useQuery } from "@tanstack/react-query";
 
 // components
@@ -11,7 +10,6 @@ import { RequestEstimateDialog } from "../../components/request-estimate";
 // ui
 import * as Text from "@repo/ui/components/ui/text";
 import { Button } from "@repo/ui/components/ui/button";
-import { StatusChip } from "@repo/ui/components/ui/status-chip";
 import {
   Select,
   SelectContent,
@@ -25,57 +23,29 @@ import { Body } from "@repo/ui/components/ui/text";
 // types
 import { Estimate } from "@repo/types";
 
-// icons
-import { ChevronDown, ChevronUp } from "lucide-react";
-
 // constants
-import { STATUS_VS_CHIP_INTENT } from "@/constants";
-import { HeaderCell } from "@/components/header-cell";
+import { ESTIMATE_STATUSES, STATUS_VS_CHIP_INTENT } from "@/constants";
+
+// utils
+import {
+  generateColumn,
+  generateDateColumn,
+  generateStatusColumn,
+  generateActionColumn,
+} from "@/components/table-cell-renderers";
 
 export const columns: ColumnDef<Estimate>[] = [
-  {
-    accessorKey: "id",
-    header: ({ column }) => {
-      return <HeaderCell<Estimate> column={column}>Estimates</HeaderCell>;
-    },
-  },
-  {
-    accessorKey: "requestDate",
-    header: ({ column }) => {
-      return <HeaderCell<Estimate> column={column}>Request Date</HeaderCell>;
-    },
-    cell: ({ row }) => {
-      return (
-        <div>
-          {row.getValue("requestDate")
-            ? new Date(row.getValue("requestDate")).toLocaleDateString()
-            : "--"}
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "visitDate",
-    header: ({ column }) => {
-      return <HeaderCell<Estimate> column={column}>Visit Date</HeaderCell>;
-    },
-    cell: ({ row }) => {
-      return (
-        <div>
-          {row.getValue("visitDate")
-            ? new Date(row.getValue("visitDate")).toLocaleDateString()
-            : "--"}
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "total",
-    header: ({ column }) => {
-      return <HeaderCell<Estimate> column={column}>Total</HeaderCell>;
-    },
-    cell: ({ row }) => {
-      const total = parseFloat(row.getValue("total"));
+  generateColumn<Estimate>({
+    key: "id",
+    header: "Estimates",
+  }),
+  generateDateColumn<Estimate>("requestDate", "Request Date"),
+  generateDateColumn<Estimate>("visitDate", "Visit Date"),
+  generateColumn<Estimate>({
+    key: "total",
+    header: "Total",
+    cell: (value) => {
+      const total = parseFloat(value);
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
@@ -85,41 +55,11 @@ export const columns: ColumnDef<Estimate>[] = [
         <div className="text-right font-medium">{total ? formatted : "--"}</div>
       );
     },
-  },
-  {
-    accessorKey: "status",
-    header: ({ column }) => {
-      return <HeaderCell<Estimate> column={column}>Status</HeaderCell>;
-    },
-    cell: ({ row }) => {
-      const status: Estimate["status"] = row.getValue("status");
-      return (
-        <StatusChip intent={STATUS_VS_CHIP_INTENT[status]}>{status}</StatusChip>
-      );
-    },
-  },
-  {
-    accessorKey: "action",
-    header: ({ column }) => {
-      return (
-        <HeaderCell<Estimate> column={column} sortable={false}>
-          {" "}
-        </HeaderCell>
-      );
-    },
-    cell: ({ row }) => {
-      const estimateId = row.getValue("id");
-      return (
-        <Button
-          variant="fill"
-          intent="action"
-          onClick={() => router.push(`/estimates/${estimateId}`)}
-        >
-          View Estimate
-        </Button>
-      );
-    },
-  },
+  }),
+  generateStatusColumn<Estimate>("status", "Status", ESTIMATE_STATUSES),
+  generateActionColumn<Estimate>("", "View Estimate", (row) =>
+    router.push(`/estimates/${row.id}`),
+  ),
 ];
 
 export default function Estimates() {
