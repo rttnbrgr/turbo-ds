@@ -1,14 +1,23 @@
 import * as Text from "@repo/ui/components/ui/text";
 import { Card, CardBody } from "@repo/ui/components/ui/card";
 
-const TITLE_VS_COLORS: Record<string, string> = {
-  "Outstanding Balance": "bg-blue-200",
-  Credit: "bg-yellow-200",
-  "Past Due": "bg-red-200",
+const INTENT_VS_COLORS: Record<string, string> = {
+  neutral: "bg-blue-200",
+  warn: "bg-yellow-200",
+  danger: "bg-red-200",
+  success: "bg-green-200",
 };
 
-export function MetricCard({ title, value }: { title: string; value: number }) {
-  const color = TITLE_VS_COLORS[title];
+export function MetricCard({
+  title,
+  value,
+  intent,
+}: {
+  title: string;
+  value: number;
+  intent: "neutral" | "warn" | "danger" | "success";
+}) {
+  const color = INTENT_VS_COLORS[intent];
 
   return (
     <Card>

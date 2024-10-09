@@ -11,26 +11,32 @@ import { Button } from "@repo/ui/components/ui/button";
 import router from "next/router";
 import { HeaderCell } from "@/components/header-cell";
 import { useQuery } from "@tanstack/react-query";
-import { Estimate, Invoice, PaymentInfo } from "@repo/types/index";
-import { Property } from "../../../packages/types/property";
+import { Estimate, Invoice, PaymentInfo, Property } from "@repo/types";
 import {
   Alert,
   AlertDescription,
   AlertTitle,
 } from "@repo/ui/components/ui/alert";
 
-const metrics = [
+const metrics: {
+  title: string;
+  value: number;
+  intent: "neutral" | "warn" | "danger" | "success";
+}[] = [
   {
     title: "Outstanding Balance",
     value: 110.5,
+    intent: "neutral",
   },
   {
     title: "Credit",
     value: 15.0,
+    intent: "warn",
   },
   {
     title: "Past Due",
     value: 0.0,
+    intent: "danger",
   },
 ];
 
@@ -271,6 +277,7 @@ export default function ClientPortalIndex() {
               key={metric.title}
               title={metric.title}
               value={metric.value}
+              intent={metric.intent}
             />
           ))}
         </div>
