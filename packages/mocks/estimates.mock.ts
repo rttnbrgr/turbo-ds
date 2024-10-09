@@ -1,4 +1,4 @@
-import { Estimate } from "./estimates";
+import { Estimate } from "@repo/types";
 
 export const ESTIMATES_FIXTURE: Estimate[] = [
   {
@@ -23,6 +23,7 @@ export const ESTIMATES_FIXTURE: Estimate[] = [
         price: 130,
       },
     ],
+    propertyId: "1",
   },
   {
     id: "0000033",
@@ -61,6 +62,7 @@ export const ESTIMATES_FIXTURE: Estimate[] = [
         price: 65,
       },
     ],
+    propertyId: "1",
   },
   {
     id: "0000034",
@@ -99,6 +101,7 @@ export const ESTIMATES_FIXTURE: Estimate[] = [
         price: 65,
       },
     ],
+    propertyId: "1",
   },
   {
     id: "0000035",
@@ -122,6 +125,7 @@ export const ESTIMATES_FIXTURE: Estimate[] = [
         price: 130,
       },
     ],
+    propertyId: "1",
   },
   {
     id: "0000036",
@@ -160,6 +164,7 @@ export const ESTIMATES_FIXTURE: Estimate[] = [
         price: 65,
       },
     ],
+    propertyId: "1",
   },
   {
     id: "0000037",
@@ -172,5 +177,6 @@ export const ESTIMATES_FIXTURE: Estimate[] = [
     preferredArrivalTimes: ["Anytime", "Morning", "Afternoon", "Evening"],
     frequency: "One Time",
     requestedBy: "00123",
+    propertyId: "1",
   },
 ];

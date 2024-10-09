@@ -1,4 +1,4 @@
-import { Estimate } from "@repo/mocks/estimates";
+import { Estimate } from "@repo/types";
 import { Body, Heading } from "@repo/ui/components/ui/text";
 import {
   Table,

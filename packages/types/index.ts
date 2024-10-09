@@ -4,3 +4,4 @@ export * from "./invoiceItem";
 export * from "./estimate";
 export * from "./payment-info";
 export * from "./user";
+export * from "./property";

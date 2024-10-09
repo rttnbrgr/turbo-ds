@@ -2,6 +2,8 @@ import { http, HttpResponse } from "msw";
 import { USERS } from "./user";
 import { ESTIMATES_FIXTURE } from "./estimates.mock";
 import { INVOICES_MOCKED_DATA } from "./invoices.mock";
+import { PROPERTIES } from './property';
+import { PAYMENT_INFO } from "./payment-info";
 
 export const handlers = [
   // get all users
@@ -64,6 +66,11 @@ export const handlers = [
       );
     },
   ),
+  // get payment by id
+  http.get("https://api.example.com/payment/:id", ({ params }) => {
+    const { id } = params;
+    return HttpResponse.json(PAYMENT_INFO.find((p) => p.id === id));
+  }),
   // add payment to invoice
   http.post(
     "https://api.example.com/invoice/:id/payment",
@@ -78,4 +85,13 @@ export const handlers = [
       );
     },
   ),
+  // get all properties
+  http.get("https://api.example.com/properties", () => {
+    return HttpResponse.json(PROPERTIES);
+  }),
+  // get property by id
+  http.get("https://api.example.com/property/:id", ({ params }) => {
+    const { id } = params;
+    return HttpResponse.json(PROPERTIES.find((p) => p.id === id));
+  }),
 ];
