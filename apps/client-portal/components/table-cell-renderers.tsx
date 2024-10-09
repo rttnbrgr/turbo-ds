@@ -33,9 +33,7 @@ export function generateColumn<T>(options: ColumnOptions<T>): ColumnDef<T> {
       ? ({ row }) =>
           options.cell!(row.getValue(options.key as string), row.original)
       : ({ row }) => {
-          const value =
-            row.getValue(options.key as string) ||
-            _get(row.original, options.key as string);
+          const value = _get(row.original, options.key as string);
           return <Text.Body size="md">{value}</Text.Body>;
         },
   };

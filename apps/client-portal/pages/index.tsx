@@ -21,6 +21,9 @@ import {
 // hooks
 import { useQuery } from "@tanstack/react-query";
 
+// constants
+import { ESTIMATE_STATUSES } from "@/constants";
+
 // utils
 import {
   generateColumn,
@@ -28,7 +31,6 @@ import {
   generateStatusColumn,
   generateActionColumn,
 } from "../components/table-cell-renderers";
-import { ESTIMATE_STATUSES } from "@/constants";
 
 const metrics: {
   title: string;
