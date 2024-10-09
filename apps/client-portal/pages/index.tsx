@@ -3,8 +3,7 @@ import router from "next/router";
 
 // types
 import { ColumnDef, ColumnFiltersState } from "@tanstack/react-table";
-import { Estimate, Invoice, PaymentInfo } from "@repo/types";
-import { Property } from "@repo/types/property";
+import { Estimate, Invoice, PaymentInfo, Property } from "@repo/types";
 
 // ui
 import { MetricCard } from "../components/metric-card";
