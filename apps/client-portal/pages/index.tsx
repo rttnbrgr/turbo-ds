@@ -1,22 +1,35 @@
+import { useMemo, useState } from "react";
+import router from "next/router";
+
+// types
+import { ColumnDef, ColumnFiltersState } from "@tanstack/react-table";
+import { Estimate, Invoice, PaymentInfo } from "@repo/types";
+import { Property } from "@repo/types/property";
+
+// ui
 import { MetricCard } from "../components/metric-card";
 import { Card, CardBody, CardTitle } from "@repo/ui/components/ui/card";
 import { DataTable } from "@repo/ui/components/ui/data-table";
-import { StatusChip } from "@repo/ui/components/ui/status-chip";
 import * as Text from "@repo/ui/components/ui/text";
-import { formatDate } from "../utils/formatDate";
 import { Layout } from "../components/layout";
-import { ColumnDef, ColumnFiltersState } from "@tanstack/react-table";
-import { useMemo, useState } from "react";
 import { Button } from "@repo/ui/components/ui/button";
-import router from "next/router";
-import { HeaderCell } from "@/components/header-cell";
-import { useQuery } from "@tanstack/react-query";
-import { Estimate, Invoice, PaymentInfo, Property } from "@repo/types";
 import {
   Alert,
   AlertDescription,
   AlertTitle,
 } from "@repo/ui/components/ui/alert";
+
+// hooks
+import { useQuery } from "@tanstack/react-query";
+
+// utils
+import {
+  generateColumn,
+  generateDateColumn,
+  generateStatusColumn,
+  generateActionColumn,
+} from "../components/table-cell-renderers";
+import { ESTIMATE_STATUSES } from "@/constants";
 
 const metrics: {
   title: string;
@@ -48,81 +61,24 @@ type UpcomingVisit = Pick<
 };
 
 const upcomingVisitColumns: ColumnDef<UpcomingVisit>[] = [
-  {
-    accessorKey: "visitDate",
-    header: ({ column }) => (
-      <HeaderCell<UpcomingVisit> column={column}>Date</HeaderCell>
-    ),
-    cell: ({ row }) => {
-      const date = row.original.visitDate;
-      return (
-        <Text.Body size="md">
-          {date ? formatDate(new Date(date)) : "-"}
-        </Text.Body>
-      );
-    },
-  },
-  {
-    accessorKey: "title",
-    header: ({ column }) => (
-      <HeaderCell<UpcomingVisit> column={column}>Title</HeaderCell>
-    ),
-    cell: ({ row }) => {
-      const lineItems = row.original.lineItems;
-      const title = lineItems?.[0]?.name;
-      return title;
-    },
-  },
-  {
-    accessorKey: "property.name",
-    header: ({ column }) => (
-      <HeaderCell<UpcomingVisit> column={column}>Property Name</HeaderCell>
-    ),
-  },
-  {
-    accessorKey: "property.address",
-    header: ({ column }) => (
-      <HeaderCell<UpcomingVisit> column={column}>Property Address</HeaderCell>
-    ),
-  },
-  {
-    accessorKey: "type",
-    header: ({ column }) => (
-      <HeaderCell<UpcomingVisit> column={column}>Type</HeaderCell>
-    ),
-    cell: ({ row }) => {
-      // TODO JT - what is type in terms of estimates?
-      const type = (row.original as any).type;
-      return (
-        <StatusChip intent={type === "visit" ? "neutral" : "action"}>
-          {type === "visit" ? "Visit" : "Invoice"}
-        </StatusChip>
-      );
-    },
-  },
-  {
-    accessorKey: "action",
-    header: ({ column }) => {
-      return (
-        <HeaderCell<UpcomingVisit> column={column} sortable={false}>
-          {" "}
-        </HeaderCell>
-      );
-    },
-    cell: ({ row }) => {
-      const estimateId = row.getValue("id");
-      return (
-        <Button
-          variant="fill"
-          intent="action"
-          size="sm"
-          onClick={() => router.push(`/estimates/${estimateId}`)}
-        >
-          View Estimate
-        </Button>
-      );
-    },
-  },
+  generateDateColumn("visitDate", "Date"),
+  generateColumn<UpcomingVisit>({
+    key: "title",
+    header: "Title",
+    accessorFn: (row) => row.lineItems?.[0]?.name,
+  }),
+  generateColumn<UpcomingVisit>({
+    key: "property.name",
+    header: "Property Name",
+  }),
+  generateColumn<UpcomingVisit>({
+    key: "property.address",
+    header: "Property Address",
+  }),
+  generateStatusColumn<UpcomingVisit>("status", "Type", ESTIMATE_STATUSES),
+  generateActionColumn<UpcomingVisit>("", "View Estimate", (row) =>
+    router.push(`/estimates/${row.id}`),
+  ),
 ];
 
 type UnpaidInvoice = Pick<
@@ -131,76 +87,44 @@ type UnpaidInvoice = Pick<
 >;
 
 const unpaidInvoicesColumns: ColumnDef<UnpaidInvoice>[] = [
-  {
-    accessorKey: "invoice_date",
-    header: ({ column }) => (
-      <HeaderCell<UnpaidInvoice> column={column}>Date</HeaderCell>
+  generateDateColumn("invoice_date", "Date"),
+  generateColumn<UnpaidInvoice>({
+    key: "invoice_number",
+    header: "Invoice Number",
+  }),
+  generateColumn<UnpaidInvoice>({
+    key: "total",
+    header: "Invoice Total",
+  }),
+  generateColumn<UnpaidInvoice>({
+    key: "paid",
+    header: "Paid Amount",
+  }),
+  generateStatusColumn<UnpaidInvoice>("status", "Status", {
+    Unpaid: { text: "Unpaid", intent: "danger" },
+    Paid: { text: "Paid", intent: "success" },
+    Partial: { text: "Partial", intent: "warn" },
+  }),
+  generateColumn<UnpaidInvoice>({
+    key: "action",
+    header: "",
+    sortable: false,
+    cell: (_, row) => (
+      <div className="flex gap-2">
+        <Button
+          variant="fill"
+          intent="action"
+          size="sm"
+          onClick={() => router.push(`/invoices/${row.id}`)}
+        >
+          View Invoice
+        </Button>
+        <Button variant="outline" size="sm">
+          Print
+        </Button>
+      </div>
     ),
-    cell: ({ row }) => {
-      const date = row.original.invoice_date;
-      return <Text.Body size="md">{formatDate(new Date(date))}</Text.Body>;
-    },
-  },
-  {
-    accessorKey: "invoice_number",
-    header: ({ column }) => (
-      <HeaderCell<UnpaidInvoice> column={column}>Invoice Number</HeaderCell>
-    ),
-  },
-  {
-    accessorKey: "total",
-    header: ({ column }) => (
-      <HeaderCell<UnpaidInvoice> column={column}>Invoice Total</HeaderCell>
-    ),
-  },
-  {
-    accessorKey: "paid",
-    header: ({ column }) => (
-      <HeaderCell<UnpaidInvoice> column={column}>Paid Amount</HeaderCell>
-    ),
-  },
-  {
-    accessorKey: "status",
-    header: ({ column }) => (
-      <HeaderCell<UnpaidInvoice> column={column}>Status</HeaderCell>
-    ),
-    cell: ({ row }) => {
-      const status = row.original.status;
-      return (
-        <StatusChip intent={status === "Unpaid" ? "danger" : "success"}>
-          {status}
-        </StatusChip>
-      );
-    },
-  },
-  {
-    accessorKey: "action",
-    header: ({ column }) => {
-      return (
-        <HeaderCell<UnpaidInvoice> column={column} sortable={false}>
-          {" "}
-        </HeaderCell>
-      );
-    },
-    cell: ({ row }) => {
-      const invoiceId = row.getValue("id");
-      return (
-        <div className="flex gap-2">
-          <Button
-            variant="fill"
-            intent="action"
-            size="sm"
-            onClick={() => router.push(`/invoices/${invoiceId}`)}
-          >
-            View Invoice
-          </Button>
-          <Button variant="outline" size="sm">
-            Print
-          </Button>
-        </div>
-      );
-    },
-  },
+  }),
 ];
 
 export default function ClientPortalIndex() {

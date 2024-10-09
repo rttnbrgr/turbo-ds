@@ -1,7 +1,5 @@
 // LEGZ TOTO - fix type import
-import { Estimate } from "../../packages/types";
-
-type Intents = "success" | "warn" | "danger" | "neutral";
+import { Estimate, Intents } from "@repo/types";
 
 export const STATUS_VS_CHIP_INTENT: { [key in Estimate["status"]]: Intents } = {
   Approved: "success",
@@ -9,6 +7,14 @@ export const STATUS_VS_CHIP_INTENT: { [key in Estimate["status"]]: Intents } = {
   "Changes Requested": "warn",
   Declined: "danger",
   "Request Submitted": "neutral",
+};
+
+export const ESTIMATE_STATUSES: Record<Estimate['status'], { text: string; intent: Intents }> = {
+  "Request Submitted": { text: "Request Submitted", intent: "neutral" },
+  Declined: { text: "Declined", intent: "danger" },
+  Approved: { text: "Approved", intent: "success" },
+  "Changes Requested": { text: "Changes Requested", intent: "warn" },
+  "Ready for Review": { text: "Ready for Review", intent: "warn" },
 };
 
 export const ARRIVAL_TIMES = [
