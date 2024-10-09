@@ -4,12 +4,16 @@ import Image from "next/image";
 
 // utils
 import { useQuery } from "@tanstack/react-query";
-import { Column, ColumnDef, ColumnFiltersState } from "@tanstack/react-table";
+import { ColumnFiltersState } from "@tanstack/react-table";
+import {
+  generateColumn,
+  generateDateColumn,
+  generateStatusColumn,
+  generateActionColumn,
+} from "@/components/table-cell-renderers";
 
 // ui
 import * as Text from "@repo/ui/components/ui/text";
-import { Button } from "@repo/ui/components/ui/button";
-import { StatusChip } from "@repo/ui/components/ui/status-chip";
 import {
   Select,
   SelectContent,
@@ -21,59 +25,21 @@ import { DataTable } from "@repo/ui/components/ui/data-table";
 
 // components
 import { Layout } from "@/components/layout";
-
-// icons
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ESTIMATE_STATUSES, STATUS_VS_CHIP_INTENT } from "@/constants";
 
 // types
 import { Invoice } from "@repo/types";
-import { STATUS_VS_CHIP_INTENT } from "@/constants";
 
-function HeaderCell({
-  children,
-  column,
-  sortable = true,
-}: React.PropsWithChildren<{
-  column: Column<Invoice, unknown>;
-  sortable?: boolean;
-}>) {
-  if (!sortable) {
-    return <Text.Heading size="sm">{children}</Text.Heading>;
-  }
-  return (
-    <Button
-      variant="ghost"
-      onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      className="text-sm font-bold p-0"
-    >
-      {children}
-      {column.getIsSorted() === "asc" ? (
-        <ChevronUp size={12} />
-      ) : (
-        <ChevronDown size={12} />
-      )}
-    </Button>
-  );
-}
-
-const columns: ColumnDef<Invoice>[] = [
-  {
-    accessorKey: "invoice_date",
-    header: ({ column }) => (
-      <HeaderCell column={column}>Invoice Date</HeaderCell>
-    ),
-    cell: ({ row }) =>
-      new Date(row.getValue("invoice_date")).toLocaleDateString(),
-  },
-  {
-    accessorKey: "due_date",
-    header: ({ column }) => <HeaderCell column={column}>Due Date</HeaderCell>,
-    cell: ({ row }) => {
-      const dueDate = new Date(row.getValue("due_date"));
-      const isPastDue: boolean = row.original.over_due;
+const columns = [
+  generateDateColumn<Invoice>("invoice_date", "Invoice Date"),
+  generateColumn<Invoice>({
+    key: "due_date",
+    header: "Due Date",
+    cell: (value, row) => {
+      const dueDate = new Date(value);
+      const isPastDue: boolean = row.over_due;
 
       return (
-        // replace with the status badge when i merge in the components branch
         <span className={isPastDue ? "flex gap-2 items-center" : ""}>
           <span className={`${isPastDue ? "text-red-500" : ""}`}>
             {dueDate.toLocaleDateString()}
@@ -84,72 +50,39 @@ const columns: ColumnDef<Invoice>[] = [
         </span>
       );
     },
-  },
-  {
-    accessorKey: "invoice_number",
-    header: ({ column }) => (
-      <HeaderCell column={column}>Invoice Number</HeaderCell>
-    ),
-  },
-  {
-    accessorKey: "total",
-    header: ({ column }) => (
-      <HeaderCell column={column}>Invoice Total</HeaderCell>
-    ),
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("total"));
+  }),
+  generateColumn<Invoice>({
+    key: "invoice_number",
+    header: "Invoice Number",
+  }),
+  generateColumn<Invoice>({
+    key: "total",
+    header: "Invoice Total",
+    cell: (value) => {
+      const amount = parseFloat(value);
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
       }).format(amount);
       return <div className="font-medium">{formatted}</div>;
     },
-  },
-  {
-    accessorKey: "paid",
-    header: ({ column }) => (
-      <HeaderCell column={column}>Paid Amount</HeaderCell>
-    ),
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("paid"));
+  }),
+  generateColumn<Invoice>({
+    key: "paid",
+    header: "Paid Amount",
+    cell: (value) => {
+      const amount = parseFloat(value);
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
       }).format(amount);
       return <div className="font-medium">{formatted}</div>;
     },
-  },
-  {
-    accessorKey: "status",
-    header: ({ column }) => <HeaderCell column={column}>Status</HeaderCell>,
-    cell: ({ row }) => {
-      const status: Invoice["status"] = row.getValue("status");
-      return (
-        <StatusChip intent={STATUS_VS_CHIP_INTENT[status]}>{status}</StatusChip>
-      );
-    },
-  },
-  {
-    accessorKey: "id",
-    header: () => {
-      return null;
-    },
-    cell: ({ row }) => {
-      const invoiceId = row.getValue("id");
-      return (
-        <div className="flex gap-2">
-          <Button
-            variant="fill"
-            intent="action"
-            onClick={() => router.push(`/invoices/${invoiceId}`)}
-          >
-            View Invoice
-          </Button>
-          <Button variant="outline">Print</Button>
-        </div>
-      );
-    },
-  },
+  }),
+  generateStatusColumn<Invoice>("status", "Status", ESTIMATE_STATUSES),
+  generateActionColumn<Invoice>("", "View Invoice", (row) =>
+    router.push(`/invoices/${row.id}`),
+  ),
 ];
 
 export default function Invoices() {
