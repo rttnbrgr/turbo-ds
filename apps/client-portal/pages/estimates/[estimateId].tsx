@@ -280,7 +280,7 @@ export default function Estimate() {
                   </div>
                 ) : null}
 
-                <div className="grid-cols-2 md:col-start-4 items-center self-end">
+                <div className="grid-cols-2 md:col-start-3 lg:col-start-4 col-span-1 md:col-span-2 lg:col-span-1 ">
                   <Table>
                     <TableBody>
                       <TableRow>

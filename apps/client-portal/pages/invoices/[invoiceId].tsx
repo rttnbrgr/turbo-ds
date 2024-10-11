@@ -217,7 +217,7 @@ export default function InvoicePage() {
                 </DialogTrigger>
               ) : null}
 
-              <DialogContent className="font-sans">
+              <DialogContent className="font-sans max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
                   <DialogTitle>Pay Invoice</DialogTitle>
                 </DialogHeader>
