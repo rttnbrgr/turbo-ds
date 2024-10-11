@@ -33,11 +33,17 @@ export default function Uploads() {
       key: "name",
       header: "Name",
     }),
-    generateDateColumn<Document>("uploadDate", "Upload Date"),
+    generateDateColumn<Document>("uploadDate", "Date Added"),
     generateColumn({
       key: "size",
       header: "File Size",
       cell: (value) => formatFileSize(value),
+    }),
+    // add a type column
+    generateColumn({
+      key: "type",
+      header: "Type",
+      cell: (value) => value.toUpperCase(),
     }),
     generateColumn<Document>({
       key: "action",
