@@ -64,7 +64,7 @@ const textHeadingVariants = cva(_HEADER_BASE, {
       sm: "text-base",
       md: "text-xl",
       lg: "text-2xl",
-      xl: "text-4xl", // not exact to henry
+      xl: "text-xl md:text-4xl", // not exact to henry
     },
   },
   defaultVariants: {

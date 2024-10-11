@@ -196,7 +196,7 @@ export default function ClientPortalIndex() {
           </Alert>
         )}
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {metrics.map((metric) => (
             <MetricCard
               key={metric.title}
