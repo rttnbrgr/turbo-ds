@@ -109,14 +109,14 @@ export default function Invoices() {
 
   return (
     <Layout>
-      <div className="flex flex-col gap-9">
-        <div className="flex justify-between">
+      <div className="flex flex-col gap-4 md:gap-9">
+        <div className="flex flex-col md:flex-row gap-4 justify-between md:items-center">
           <Text.Heading size="xl">Invoices</Text.Heading>
-          <div className="flex gap-3 items-center">
+          <div className="flex gap-3 items-center justify-start md:justify-end w-full">
             <Text.Body>Status</Text.Body>
-            <form onChange={handleFilterChange}>
+            <form onChange={handleFilterChange} className="w-full">
               <Select defaultValue="default">
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-full md:w-[180px]">
                   <SelectValue placeholder="All Statuses" />
                 </SelectTrigger>
                 <SelectContent>

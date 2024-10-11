@@ -117,7 +117,7 @@ export default function Estimates() {
   return (
     <Layout>
       <div className="flex flex-col gap-4 md:gap-9">
-        <div className="flex gap-4 justify-between items-center">
+        <div className="flex gap-4 justify-between md:items-center">
           <Text.Heading size={"xl"} className="col-span-2">
             Estimates
           </Text.Heading>

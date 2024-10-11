@@ -48,7 +48,7 @@ export function LineItems({ estimate }: { estimate: Estimate }) {
             >
               <Heading size="sm">{lineItem.name}</Heading>
               <Body size="sm">{lineItem.description}</Body>
-              <div className="grid grid-cols-4 w-full md:hidden">
+              <div className="grid grid-cols-4 w-full mt-2 md:hidden">
                 <Body className="col-start-3">Quantity</Body>
                 <Body className="col-start-4 text-right">
                   {lineItem.quantity}

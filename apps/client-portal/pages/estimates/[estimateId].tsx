@@ -50,6 +50,12 @@ import { ChevronsLeft } from "lucide-react";
 // types
 import { Estimate as EstimateType } from "@repo/types";
 import { Card } from "@repo/ui/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+} from "@repo/ui/components/ui/table";
 
 const STATUS_VARIANT_MAP: { [key in EstimateType["status"]]: any } = {
   "Ready for Review": LineItems,
@@ -260,9 +266,7 @@ export default function Estimate() {
                 </div>
               </div>
 
-              <div
-                className={`grid grid-cols-1 md:grid-cols-4 gap-3 w-full items-start`}
-              >
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-3 w-full items-start">
                 <div className="flex flex-col">
                   <Heading size="sm">Requested By</Heading>
                   <Body size="sm">Jane Doe</Body>
@@ -275,27 +279,49 @@ export default function Estimate() {
                     <Body size="sm">{estimate.notes}</Body>
                   </div>
                 ) : null}
-                <div className="grid grid-cols-2 items-center gap-x-3 self-end md:col-start-4">
-                  <Body size="sm" weight="bold">
-                    Estimate Number
-                  </Body>
-                  <Body size="sm">{estimate.id}</Body>
-                  <Body size="sm" weight="bold">
-                    Date Requested
-                  </Body>
-                  <Body size="sm">
-                    {estimate.requestDate
-                      ? new Date(estimate.requestDate).toLocaleDateString()
-                      : "--"}
-                  </Body>
-                  <Body size="sm" weight="bold">
-                    Visit Date
-                  </Body>
-                  <Body size="sm">
-                    {estimate.visitDate
-                      ? new Date(estimate.visitDate).toLocaleDateString()
-                      : "--"}
-                  </Body>
+
+                <div className="grid-cols-2 md:col-start-4 items-center self-end">
+                  <Table>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell className="font-bold p-2">
+                          Estimate Number
+                        </TableCell>
+                        <TableCell className="p-2 text-right">
+                          {estimate.id}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="p-2 font-bold">
+                          Date Requested
+                        </TableCell>
+                        <TableCell className="p-2 text-right">
+                          {estimate.requestDate
+                            ? new Date(
+                                estimate.requestDate,
+                              ).toLocaleDateString()
+                            : "--"}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow
+                        className={
+                          estimate.visitDate &&
+                          new Date(estimate.visitDate) > new Date()
+                            ? `text-destructive`
+                            : ""
+                        }
+                      >
+                        <TableCell className="p-2 font-bold">
+                          Date Due
+                        </TableCell>
+                        <TableCell className="p-2 text-right">
+                          {estimate.visitDate
+                            ? new Date(estimate.visitDate).toLocaleDateString()
+                            : "--"}
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
                 </div>
               </div>
 
