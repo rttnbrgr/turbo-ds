@@ -5,6 +5,7 @@ import { INVOICES_MOCKED_DATA } from "./invoices.mock";
 import { PROPERTIES } from "./property";
 import { PAYMENT_INFO } from "./payment-info";
 import { MOCK_DOCUMENTS } from "./documents";
+import { MOCK_ASSETS } from "./assets.mock";
 
 export const handlers = [
   // get all users
@@ -99,5 +100,9 @@ export const handlers = [
   // get all documents
   http.get("https://api.example.com/documents", () => {
     return HttpResponse.json(MOCK_DOCUMENTS);
+  }),
+  // get all assets
+  http.get("https://api.example.com/assets", () => {
+    return HttpResponse.json(MOCK_ASSETS);
   }),
 ];

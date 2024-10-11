@@ -4,9 +4,10 @@ import { DataTable } from "@repo/ui/components/ui/data-table";
 import { ColumnDef, ColumnFiltersState } from "@tanstack/react-table";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Document } from "@repo/types";
+import { Document, Asset } from "@repo/types";
 import { Button } from "@repo/ui/components/ui/button";
 
+import { AttachedImages } from "@/components/attached-images";
 // utils
 import {
   generateColumn,
@@ -24,6 +25,12 @@ export default function Uploads() {
     queryKey: ["documents"],
     queryFn: () =>
       fetch("https://api.example.com/documents").then((res) => res.json()),
+  });
+
+  const { data: assets, isLoading: assetsLoading } = useQuery<Asset[]>({
+    queryKey: ["assets"],
+    queryFn: () =>
+      fetch("https://api.example.com/assets").then((res) => res.json()),
   });
 
   if (isLoading) return <div>Loading...</div>;
@@ -77,6 +84,12 @@ export default function Uploads() {
           columns={columns}
           data={documents || []}
         />
+
+        {assets ? (
+          <div className="rounded-md border bg-white p-6">
+            <AttachedImages assets={assets} />
+          </div>
+        ) : null}
       </div>
     </Layout>
   );
