@@ -5,6 +5,7 @@ export const MOCK_ASSETS = [
     alt: "Asset 1",
     width: 1312,
     height: 848,
+    uploadDate: "2024-07-31",
   },
   {
     id: 2,
@@ -12,5 +13,6 @@ export const MOCK_ASSETS = [
     alt: "Asset 2",
     height: 277,
     width: 422,
+    uploadDate: "2024-07-31",
   },
 ];
