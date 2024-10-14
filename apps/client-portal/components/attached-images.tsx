@@ -33,11 +33,8 @@ export function AttachedImages({ assets }: AttachedImagesProps) {
         open={!!currentAsset}
         onOpenChange={() => handleSelectAsset(undefined)}
       >
-        <Heading size="lg">Attached Images</Heading>
-
         {assets?.length ? (
           <>
-            <Body>Click to enlarge</Body>
             <div className="flex gap-3">
               {assets?.map((asset) => (
                 <Image

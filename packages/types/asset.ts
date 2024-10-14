@@ -4,4 +4,5 @@ export type Asset = {
   alt: string;
   width: number;
   height: number;
+  uploadDate: string;
 };

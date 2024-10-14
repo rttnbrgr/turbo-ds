@@ -1,4 +1,5 @@
 import { Invoice } from "@repo/types";
+import { MOCK_ASSETS } from "./assets.mock";
 
 export const INVOICES_MOCKED_DATA: Invoice[] = [
   {
@@ -55,22 +56,7 @@ export const INVOICES_MOCKED_DATA: Invoice[] = [
       },
     ],
 
-    assets: [
-      {
-        id: 1,
-        src: "/asset1.png",
-        alt: "Asset 1",
-        width: 1312,
-        height: 848,
-      },
-      {
-        id: 2,
-        src: "/asset2.png",
-        alt: "Asset 2",
-        height: 277,
-        width: 422,
-      },
-    ],
+    assets: MOCK_ASSETS,
   },
   {
     id: "0000000002",
@@ -109,22 +95,7 @@ export const INVOICES_MOCKED_DATA: Invoice[] = [
     total: 312.0,
     paid: 312.0,
     paid_date: "2024-08-09",
-    assets: [
-      {
-        id: 1,
-        src: "/asset1.png",
-        alt: "Asset 1",
-        width: 1312,
-        height: 848,
-      },
-      {
-        id: 2,
-        src: "/asset2.png",
-        alt: "Asset 2",
-        height: 277,
-        width: 422,
-      },
-    ],
+    assets: MOCK_ASSETS,
   },
   {
     id: "0000000003",
@@ -172,22 +143,7 @@ export const INVOICES_MOCKED_DATA: Invoice[] = [
     total: 110.5,
     paid: 0,
     paid_date: "",
-    assets: [
-      {
-        id: 1,
-        src: "/asset1.png",
-        alt: "Asset 1",
-        width: 1312,
-        height: 848,
-      },
-      {
-        id: 2,
-        src: "/asset2.png",
-        alt: "Asset 2",
-        height: 277,
-        width: 422,
-      },
-    ],
+    assets: MOCK_ASSETS,
   },
   {
     id: "0000000004",
