@@ -99,7 +99,7 @@ export function DataTable<TData, TValue>({
   }, []);
 
   return (
-    <div className="relative rounded-md border">
+    <div className="relative rounded-md border data-table">
       <div
         ref={tableRef}
         className="overflow-auto"

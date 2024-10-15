@@ -2,8 +2,10 @@ import { http, HttpResponse } from "msw";
 import { USERS } from "./user";
 import { ESTIMATES_FIXTURE } from "./estimates.mock";
 import { INVOICES_MOCKED_DATA } from "./invoices.mock";
-import { PROPERTIES } from './property';
+import { PROPERTIES } from "./property";
 import { PAYMENT_INFO } from "./payment-info";
+import { MOCK_DOCUMENTS } from "./documents";
+import { MOCK_ASSETS } from "./assets.mock";
 
 export const handlers = [
   // get all users
@@ -93,5 +95,14 @@ export const handlers = [
   http.get("https://api.example.com/property/:id", ({ params }) => {
     const { id } = params;
     return HttpResponse.json(PROPERTIES.find((p) => p.id === id));
+  }),
+
+  // get all documents
+  http.get("https://api.example.com/documents", () => {
+    return HttpResponse.json(MOCK_DOCUMENTS);
+  }),
+  // get all assets
+  http.get("https://api.example.com/assets", () => {
+    return HttpResponse.json(MOCK_ASSETS);
   }),
 ];

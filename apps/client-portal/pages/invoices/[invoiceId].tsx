@@ -447,7 +447,12 @@ export default function InvoicePage() {
         </Card>
 
         {assets ? (
-          <div className="rounded-md border bg-white p-6">
+          <div className="rounded-md border bg-white p-6 gap-3 flex flex-col">
+            <div className="flex flex-col">
+              <Heading size="lg">Attached Images</Heading>
+              <Body>Click to enlarge</Body>
+            </div>
+
             <AttachedImages assets={assets} />
           </div>
         ) : null}
