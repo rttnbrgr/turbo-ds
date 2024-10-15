@@ -3,26 +3,37 @@ import { Body, Heading } from "@repo/ui/components/ui/text";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@repo/ui/components/ui/table";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { formatUSD } from "@/utils/formatCurrency";
 
 export function LineItems({ estimate }: { estimate: Estimate }) {
   const strikeThrough =
     estimate.status === "Changes Requested" ? "line-through" : "";
 
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
   return (
-    <Table>
+    <Table className="w-full">
       <TableHeader>
         <TableRow className="border-t border-black">
-          <TableHead className="w-2/3">Description</TableHead>
-          <TableHead className="text-right">Qty./Hrs.</TableHead>
-          <TableHead className="text-right">Cost/Rate</TableHead>
-          <TableHead className="text-right">Total</TableHead>
+          <TableHead colSpan={isMobile ? 4 : 1} className="w-full md:w-2/3">
+            Description
+          </TableHead>
+          <TableHead className="hidden md:table-cell text-right">
+            Qty./Hrs.
+          </TableHead>
+          <TableHead className="hidden md:table-cell text-right">
+            Cost/Rate
+          </TableHead>
+          <TableHead className="hidden md:table-cell text-right">
+            Total
+          </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -31,14 +42,31 @@ export function LineItems({ estimate }: { estimate: Estimate }) {
             key={lineItem.name}
             className={`border-t border-solid ${strikeThrough}`}
           >
-            <TableCell className="font-bold w-1/5">
+            <TableCell
+              colSpan={isMobile ? 4 : 1}
+              className="font-bold w-full md:w-1/5"
+            >
               <Heading size="sm">{lineItem.name}</Heading>
               <Body size="sm">{lineItem.description}</Body>
+              <div className="grid grid-cols-4 w-full mt-2 md:hidden">
+                <Body className="col-start-3">Quantity</Body>
+                <Body className="col-start-4 text-right">
+                  {lineItem.quantity}
+                </Body>
+                <Body className="col-start-3">Rate</Body>
+                <Body className="col-start-4 text-right">
+                  {formatUSD(lineItem.price)}
+                </Body>
+              </div>
             </TableCell>
-            <TableCell className="text-right">{lineItem.quantity}</TableCell>
-            <TableCell className="text-right">{lineItem.price}</TableCell>
-            <TableCell className="text-right">
-              {lineItem.price * lineItem.quantity}
+            <TableCell className="hidden md:table-cell text-right">
+              {lineItem.quantity}
+            </TableCell>
+            <TableCell className="hidden md:table-cell text-right">
+              {formatUSD(lineItem.price)}
+            </TableCell>
+            <TableCell className="hidden md:table-cell text-right">
+              {formatUSD(lineItem.price * lineItem.quantity)}
             </TableCell>
           </TableRow>
         ))}

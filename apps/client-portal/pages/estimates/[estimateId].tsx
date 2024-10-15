@@ -49,6 +49,13 @@ import { ChevronsLeft } from "lucide-react";
 
 // types
 import { Estimate as EstimateType } from "@repo/types";
+import { Card } from "@repo/ui/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+} from "@repo/ui/components/ui/table";
 
 const STATUS_VARIANT_MAP: { [key in EstimateType["status"]]: any } = {
   "Ready for Review": LineItems,
@@ -120,14 +127,14 @@ export default function Estimate() {
   return (
     <Layout>
       <div className="flex flex-col gap-9">
-        <div className="flex justify-between">
+        <div className="flex flex-col md:flex-row gap-3 md:justify-between">
           <Link href="/estimates" className="flex gap-2 items-center">
             <ChevronsLeft className="text-blue-600" size={12} />
             <Body size="sm" className="text-blue-600">
               Back to all estimates
             </Body>
           </Link>
-          <div className="flex gap-3">
+          <div className="flex flex-col md:flex-row gap-3">
             <Dialog>
               <DialogTrigger asChild>
                 <Button variant="outline">Edit Request</Button>
@@ -161,7 +168,9 @@ export default function Estimate() {
                     </div>
                     <DialogFooter>
                       <div className="flex gap-2 justify-end">
-                        <Button variant="outline">Cancel</Button>
+                        <DialogClose asChild>
+                          <Button variant="outline">Cancel</Button>
+                        </DialogClose>
                         <DialogClose asChild>
                           <Button variant="fill" intent="action" type="submit">
                             Submit Changes
@@ -214,7 +223,9 @@ export default function Estimate() {
 
         {estimate?.status === "Changes Requested" && (
           <Alert variant="warn">
-            <AlertTitle>Changes were requested on 08/10/24</AlertTitle>
+            <AlertTitle className="leading-normal md:leading-none">
+              Changes were requested on 08/10/24
+            </AlertTitle>
             <AlertDescription>
               Could we please update so that this estimate includes resodding
               the full yard, not just the front? Thank you!
@@ -222,7 +233,7 @@ export default function Estimate() {
           </Alert>
         )}
 
-        <div className="border border-solid rounded-md bg-white p-8">
+        <Card>
           {isLoading ? (
             <div>Loading...</div>
           ) : (
@@ -255,7 +266,7 @@ export default function Estimate() {
                 </div>
               </div>
 
-              <div className={`grid grid-cols-4 w-full items-start`}>
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-3 w-full items-start">
                 <div className="flex flex-col">
                   <Heading size="sm">Requested By</Heading>
                   <Body size="sm">Jane Doe</Body>
@@ -263,39 +274,61 @@ export default function Estimate() {
                   <Body size="sm">Madison, WI 53703</Body>
                 </div>
                 {estimate.notes ? (
-                  <div className="col-start-2">
+                  <div className="md:col-start-2">
                     <Heading size="sm">Notes</Heading>
                     <Body size="sm">{estimate.notes}</Body>
                   </div>
                 ) : null}
-                <div className="grid grid-cols-2 items-center gap-x-3 self-end col-start-4">
-                  <Body size="sm" weight="bold">
-                    Estimate Number
-                  </Body>
-                  <Body size="sm">{estimate.id}</Body>
-                  <Body size="sm" weight="bold">
-                    Date Requested
-                  </Body>
-                  <Body size="sm">
-                    {estimate.requestDate
-                      ? new Date(estimate.requestDate).toLocaleDateString()
-                      : "--"}
-                  </Body>
-                  <Body size="sm" weight="bold">
-                    Visit Date
-                  </Body>
-                  <Body size="sm">
-                    {estimate.visitDate
-                      ? new Date(estimate.visitDate).toLocaleDateString()
-                      : "--"}
-                  </Body>
+
+                <div className="grid-cols-2 md:col-start-3 lg:col-start-4 col-span-1 md:col-span-2 lg:col-span-1 ">
+                  <Table>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell className="font-bold p-2">
+                          Estimate Number
+                        </TableCell>
+                        <TableCell className="p-2 text-right">
+                          {estimate.id}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="p-2 font-bold">
+                          Date Requested
+                        </TableCell>
+                        <TableCell className="p-2 text-right">
+                          {estimate.requestDate
+                            ? new Date(
+                                estimate.requestDate,
+                              ).toLocaleDateString()
+                            : "--"}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow
+                        className={
+                          estimate.visitDate &&
+                          new Date(estimate.visitDate) > new Date()
+                            ? `text-destructive`
+                            : ""
+                        }
+                      >
+                        <TableCell className="p-2 font-bold">
+                          Date Due
+                        </TableCell>
+                        <TableCell className="p-2 text-right">
+                          {estimate.visitDate
+                            ? new Date(estimate.visitDate).toLocaleDateString()
+                            : "--"}
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
                 </div>
               </div>
 
               <StatusVariant estimate={estimate} />
             </div>
           )}
-        </div>
+        </Card>
       </div>
     </Layout>
   );

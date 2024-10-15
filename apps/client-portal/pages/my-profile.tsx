@@ -30,8 +30,8 @@ export default function MyProfile() {
     <Layout>
       <div className="flex flex-col gap-4">
         <Text.Heading size={"xl"}>My Profile</Text.Heading>
-        <div className="grid grid-cols-2 gap-6">
-          <Card>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Card className="order-0">
             <CardHeader>
               <CardTitle>Profile Information</CardTitle>
             </CardHeader>
@@ -40,7 +40,7 @@ export default function MyProfile() {
             </CardBody>
           </Card>
 
-          <Card>
+          <Card className="order-2 md:order-1">
             <CardHeader>
               <CardTitle>Payment Information</CardTitle>
             </CardHeader>
@@ -52,9 +52,9 @@ export default function MyProfile() {
             </CardBody>
           </Card>
 
-          <Card>
+          <Card className="order-1 md:order-2">
             <CardHeader>
-              <CardTitle>Payment Information</CardTitle>
+              <CardTitle>Login Information</CardTitle>
             </CardHeader>
             <CardBody className="flex flex-col gap-5">
               <LoginInfoForm
