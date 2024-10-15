@@ -9,7 +9,10 @@ export const STATUS_VS_CHIP_INTENT: { [key in Estimate["status"]]: Intents } = {
   "Request Submitted": "neutral",
 };
 
-export const ESTIMATE_STATUSES: Record<Estimate['status'], { text: string; intent: Intents }> = {
+export const ESTIMATE_STATUSES: Record<
+  Estimate["status"],
+  { text: string; intent: Intents }
+> = {
   "Request Submitted": { text: "Request Submitted", intent: "neutral" },
   Declined: { text: "Declined", intent: "danger" },
   Approved: { text: "Approved", intent: "success" },
