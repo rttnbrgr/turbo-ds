@@ -121,9 +121,9 @@ export function RequestEstimateDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent className="max-w-3xl">
+      <DialogContent className="max-w-[100vw] md:max-w-3xl">
         <DialogHeader>
-          <DialogTitle>Request An Estimate</DialogTitle>
+          <DialogTitle className="text-left">Request An Estimate</DialogTitle>
           <DialogDescription>
             {isLoading && <div>Loading...</div>}
             {error && <div>Error</div>}
@@ -131,9 +131,9 @@ export function RequestEstimateDialog({
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
-                  className="space-y-8 overflow-y-auto max-h-[80vh] pr-3 "
+                  className="space-y-8 overflow-y-auto max-h-[80vh] max-w-[100vw] pr-3"
                 >
-                  <div className="flex justify-between w-full">
+                  <div className="flex flex-col md:flex-row md:justify-between w-full text-left">
                     <div className="flex flex-col gap-3 w-full">
                       <div className="flex flex-col">
                         <Heading size="sm">Contact Details</Heading>
@@ -148,12 +148,12 @@ export function RequestEstimateDialog({
                         )}
                       </div>
 
-                      <div className="flex gap-3 justify-between">
+                      <div className="flex flex-col md:flex-row gap-3 md:justify-between">
                         <FormField
                           control={form.control}
                           name="property.address"
                           render={({ field }) => (
-                            <FormItem className="w-full">
+                            <FormItem className="w-full text-left">
                               <FormLabel>Address</FormLabel>
                               <FormControl>
                                 <Input
@@ -169,7 +169,7 @@ export function RequestEstimateDialog({
                           control={form.control}
                           name="property.address2"
                           render={({ field }) => (
-                            <FormItem className="w-full">
+                            <FormItem className="w-full text-left">
                               <FormLabel>Address 2</FormLabel>
                               <FormControl>
                                 <Input
@@ -182,7 +182,8 @@ export function RequestEstimateDialog({
                           )}
                         />
                       </div>
-                      <div className="flex gap-3">
+
+                      <div className="flex flex-col md:flex-row gap-3">
                         <FormField
                           control={form.control}
                           name="property.city"
@@ -210,7 +211,7 @@ export function RequestEstimateDialog({
                                       variant="outline"
                                       role="combobox"
                                       className={cn(
-                                        "w-[75px] justify-between bg-input-background text-input-text",
+                                        "md:w-[75px] justify-between bg-input-background text-input-text",
                                         !field.value && "text-muted-foreground",
                                       )}
                                     >
@@ -219,12 +220,12 @@ export function RequestEstimateDialog({
                                             (usState) =>
                                               usState.value === field.value,
                                           )?.label
-                                        : "Select State"}
+                                        : "state"}
                                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                     </Button>
                                   </FormControl>
                                 </PopoverTrigger>
-                                <PopoverContent className="w-[200px] p-0">
+                                <PopoverContent className="md:w-[200px] p-0">
                                   <Command>
                                     <CommandInput placeholder="Search state..." />
                                     <CommandList>
@@ -283,10 +284,7 @@ export function RequestEstimateDialog({
                             <FormItem>
                               <FormLabel>Country</FormLabel>
                               <FormControl>
-                                <Input
-                                  placeholder="select country"
-                                  {...field}
-                                />
+                                <Input placeholder="country" {...field} />
                               </FormControl>
 
                               <FormMessage />
@@ -303,7 +301,7 @@ export function RequestEstimateDialog({
                     control={form.control}
                     name="serviceType"
                     render={({ field }) => (
-                      <FormItem>
+                      <FormItem className="text-left">
                         <FormLabel>Service Type</FormLabel>
                         <FormControl>
                           <Select
@@ -334,7 +332,7 @@ export function RequestEstimateDialog({
                     control={form.control}
                     name="details"
                     render={({ field }) => (
-                      <FormItem>
+                      <FormItem className="text-left">
                         <FormLabel>Additional Details</FormLabel>
                         <FormControl>
                           <Textarea {...field} />
@@ -347,12 +345,13 @@ export function RequestEstimateDialog({
                       </FormItem>
                     )}
                   />
-                  <div className="flex gap-6">
+
+                  <div className="flex flex-col md:flex-row gap-6 text-left">
                     <FormField
                       control={form.control}
                       name="visitDate"
                       render={({ field }) => (
-                        <FormItem className="flex flex-col">
+                        <FormItem className="flex flex-col w-full">
                           <FormLabel>Requested Visit Date</FormLabel>
                           <Popover>
                             <PopoverTrigger asChild>
@@ -360,7 +359,7 @@ export function RequestEstimateDialog({
                                 <Button
                                   variant={"outline"}
                                   className={cn(
-                                    "w-[240px] pl-3 text-left font-normal bg-input-background text-input-text",
+                                    "w-full pl-3 text-left font-normal bg-input-background text-input-text",
                                     !field.value && "text-muted-foreground",
                                   )}
                                 >
@@ -401,7 +400,7 @@ export function RequestEstimateDialog({
                       control={form.control}
                       name="visitDateAlternate"
                       render={({ field }) => (
-                        <FormItem className="flex flex-col">
+                        <FormItem className="flex flex-col w-full">
                           <FormLabel>Alternate Visit Date</FormLabel>
                           <Popover>
                             <PopoverTrigger asChild>
@@ -409,7 +408,7 @@ export function RequestEstimateDialog({
                                 <Button
                                   variant={"outline"}
                                   className={cn(
-                                    "w-[240px] pl-3 text-left font-normal bg-input-background text-input-text",
+                                    "w-full pl-3 text-left font-normal bg-input-background text-input-text",
                                     !field.value && "text-muted-foreground",
                                   )}
                                 >
@@ -444,7 +443,7 @@ export function RequestEstimateDialog({
                     />
                   </div>
 
-                  <div className="flex gap-6">
+                  <div className="flex flex-col md:flex-row gap-6 text-left">
                     <FormField
                       control={form.control}
                       name="preferredArrivalTimes"
@@ -549,7 +548,7 @@ export function RequestEstimateDialog({
                       )}
                     />
                   </div>
-                  <div className="flex gap-3 justify-end">
+                  <div className="flex flex-col md:flex-row gap-3 justify-end">
                     <DialogClose asChild>
                       <Button type="button" variant="outline">
                         Cancel

@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Button } from "@repo/ui/components/ui/button";
 import * as Text from "@repo/ui/components/ui/text";
 import { cn } from "@repo/ui/lib/utils";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FileUp,
   HandCoins,
@@ -22,7 +22,7 @@ import { Url } from "next/dist/shared/lib/router/router";
 import { IconButton } from "@repo/ui/components/ui/icon-button";
 import { navIconSize, SideNavItemSimple } from "@repo/ui/components/ui/sidenav";
 import { RequestEstimateDialog } from "./request-estimate";
-
+import { useMediaQuery } from "../hooks/useMediaQuery";
 /**
  *
  * Nav data
@@ -104,7 +104,7 @@ const _brandBase = `pt-6 px-4 pb-4 flex flex-row justify-between h-[68px] z-10`;
 const _brandTablet = `md:flex-col md:text-center md:gap-6 md:h-auto`;
 // Body
 const _bodyCurrent = `p-4 flex flex-col gap-8 flex-1`;
-const _bodyMobile = `pt-[calc(68px+16px)] absolute top-0 w-full h-full justify-between sm:h-auto`;
+const _bodyMobile = `pt-[calc(68px+16px)] absolute top-0 w-full h-full justify-between sm:h-auto z-[2]`;
 const _bodyTablet = `md:relative md:translate-y-0 md:p-4`;
 // const _bodyTransform = `${open ? "translate-y-0" : "translate-y-[-100%]"} transition-all ease-in-out duration-500`;
 // Footer
@@ -130,6 +130,15 @@ export const Nav = ({ ...props }) => {
   function handleSubmit(args: any) {
     console.log("submit", args);
   }
+
+  // check if mobile, if so open needs to be false initially
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
+  useEffect(() => {
+    if (isMobile) {
+      setOpen(false);
+    }
+  }, [isMobile]);
 
   // Styles that require state
   const _bodyTransform = `${

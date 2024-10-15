@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useMemo, useState } from "react";
 import router from "next/router";
 import { ColumnDef, ColumnFiltersState } from "@tanstack/react-table";
 import { useQuery } from "@tanstack/react-query";
@@ -89,30 +89,41 @@ export default function Estimates() {
     ]);
   }, []);
 
+  const filterSelect = useMemo(() => {
+    return (
+      <div className="flex gap-3 items-center justify-start md:justify-end w-full">
+        <Body>Status</Body>
+        <form onChange={handleFilterChange} className="w-full">
+          <Select defaultValue="default">
+            <SelectTrigger className="w-full md:w-[180px]">
+              <SelectValue placeholder="All Statuses" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem key={"all"} value={"default"}>
+                All Statuses
+              </SelectItem>
+              {Object.keys(STATUS_VS_CHIP_INTENT).map((status) => (
+                <SelectItem key={status} value={status}>
+                  {status}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </form>
+      </div>
+    );
+  }, [handleFilterChange]);
+
   return (
     <Layout>
-      <div className="flex flex-col gap-9">
-        <div className="flex justify-between">
-          <Text.Heading size={"xl"}>Estimates</Text.Heading>
-          <div className="flex gap-3 items-center">
-            <Body>Status</Body>
-            <form onChange={handleFilterChange}>
-              <Select defaultValue="default">
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="All Statuses" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem key={"all"} value={"default"}>
-                    All Statuses
-                  </SelectItem>
-                  {Object.keys(STATUS_VS_CHIP_INTENT).map((status) => (
-                    <SelectItem key={status} value={status}>
-                      {status}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </form>
+      <div className="flex flex-col gap-4 md:gap-9">
+        <div className="flex gap-4 justify-between md:items-center">
+          <Text.Heading size={"xl"} className="col-span-2">
+            Estimates
+          </Text.Heading>
+
+          <div className="flex gap-3 items-center justify-end">
+            <div className="hidden md:block">{filterSelect}</div>
 
             <RequestEstimateDialog
               userId="00124"
@@ -121,6 +132,7 @@ export default function Estimates() {
             />
           </div>
         </div>
+        <div className="flex justify-start md:hidden">{filterSelect}</div>
         {isLoading ? (
           <div>Loading...</div>
         ) : estimates?.length ? (

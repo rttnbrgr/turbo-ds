@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
@@ -49,6 +49,9 @@ import { STATUS_VS_CHIP_INTENT } from "@/constants";
 
 // types
 import { Invoice } from "@repo/types";
+import { Card } from "@repo/ui/components/ui/card";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { formatUSD } from "@/utils/formatCurrency";
 
 export default function InvoicePage() {
   const router = useRouter();
@@ -126,6 +129,8 @@ export default function InvoicePage() {
     });
   }, []);
 
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
   if (isLoading) {
     return (
       <Layout>
@@ -186,7 +191,7 @@ export default function InvoicePage() {
   return (
     <Layout>
       <div className="flex flex-col gap-4">
-        <div className="flex justify-between items-center">
+        <div className="flex flex-col md:flex-row gap-3 md:justify-between">
           <Link href="/invoices" className="flex gap-2 items-center">
             <ChevronsLeft className="text-blue-600" size={12} />
             <Body size="sm" className="text-blue-600">
@@ -197,7 +202,7 @@ export default function InvoicePage() {
             open={isPaymentDialogOpen}
             onOpenChange={setIsPaymentDialogOpen}
           >
-            <div className="flex gap-3">
+            <div className="flex flex-col md:flex-row gap-3">
               <Button variant="outline">Print</Button>
 
               {status !== "Paid" ? (
@@ -212,7 +217,7 @@ export default function InvoicePage() {
                 </DialogTrigger>
               ) : null}
 
-              <DialogContent className="font-sans">
+              <DialogContent className="font-sans max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
                   <DialogTitle>Pay Invoice</DialogTitle>
                 </DialogHeader>
@@ -229,20 +234,22 @@ export default function InvoicePage() {
             </div>
           </Dialog>
         </div>
-        <div className="rounded-md border bg-white p-6">
+
+        {status === "Unpaid" ? (
+          <Alert variant="destructive">
+            <AlertTitle>This invoice is past Due</AlertTitle>
+            <AlertDescription>{`The $${dueAmount} balance on this invoice has not been paid and is now late. Please pay as soon as possible to avoid late charges.`}</AlertDescription>
+          </Alert>
+        ) : null}
+        {status === "Partial" ? (
+          <Alert variant="warn">
+            <AlertTitle>This invoice is only partially paid</AlertTitle>
+            <AlertDescription>{`A partial amount of $${paid} has been paid towards this invoice, while $${dueAmount} is still due. Please submit this payment before it's due date of ${formattedDueDate}.`}</AlertDescription>
+          </Alert>
+        ) : null}
+
+        <Card>
           <div className="flex flex-col gap-6">
-            {status === "Unpaid" ? (
-              <Alert variant="destructive">
-                <AlertTitle>This invoice is past Due</AlertTitle>
-                <AlertDescription>{`The $${dueAmount} balance on this invoice has not been paid and is now late. Please pay as soon as possible to avoid late charges.`}</AlertDescription>
-              </Alert>
-            ) : null}
-            {status === "Partial" ? (
-              <Alert variant="warn">
-                <AlertTitle>This invoice is only partially paid</AlertTitle>
-                <AlertDescription>{`A partial amount of $${paid} has been paid towards this invoice, while $${dueAmount} is still due. Please submit this payment before it's due date of ${formattedDueDate}.`}</AlertDescription>
-              </Alert>
-            ) : null}
             <div className="flex justify-between">
               <div className="flex flex-col gap-3">
                 <div className="flex gap-3 items-center">
@@ -270,18 +277,20 @@ export default function InvoicePage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-6 w-full items-start">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-3 w-full items-start">
               <div className="flex flex-col">
                 <Heading size="sm">Bill To</Heading>
                 <Body size="sm">{clientName}</Body>
                 <Body size="sm">{clientAddress}</Body>
               </div>
-              <div className="col-start-3">
-                <Heading size="sm">Notes</Heading>
-                <Body size="sm">{notes}</Body>
-              </div>
+              {notes ? (
+                <div className="md:col-start-2">
+                  <Heading size="sm">Notes</Heading>
+                  <Body size="sm">{notes}</Body>
+                </div>
+              ) : null}
 
-              <div className="grid-cols-2 col-start-6 items-center self-end ">
+              <div className="grid-cols-2 md:col-start-4 items-center self-end ">
                 <Table>
                   <TableBody>
                     <TableRow>
@@ -317,28 +326,54 @@ export default function InvoicePage() {
               </div>
             </div>
 
-            <Table>
+            <Table className="w-full">
               <TableHeader>
                 <TableRow className="border-t border-black/20">
-                  <TableHead className="w-2/3">Description</TableHead>
-                  <TableHead>Qty./Hrs.</TableHead>
-                  <TableHead className="text-right">Cost/Rate</TableHead>
-                  <TableHead className="text-right">Total</TableHead>
+                  <TableHead
+                    colSpan={isMobile ? 4 : 1}
+                    className="w-full md:w-2/3"
+                  >
+                    Description
+                  </TableHead>
+                  <TableHead className="hidden md:table-cell">
+                    Qty./Hrs.
+                  </TableHead>
+                  <TableHead className="hidden md:table-cell text-right">
+                    Cost/Rate
+                  </TableHead>
+                  <TableHead className="hidden md:table-cell text-right">
+                    Total
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {items?.map((item, index) => (
                   <TableRow key={index} className={`border-t border-solid`}>
-                    <TableCell>
+                    <TableCell
+                      colSpan={isMobile ? 4 : 1}
+                      className="font-bold w-full md:w-1/5"
+                    >
                       <Heading size="sm">{item.description}</Heading>
                       <Body size="sm">{item.details}</Body>
+                      <div className="grid grid-cols-4 w-full mt-2 md:hidden">
+                        <Body className="col-start-3">Quantity</Body>
+                        <Body className="col-start-4 text-right">
+                          {item.rate}
+                        </Body>
+                        <Body className="col-start-3">Rate</Body>
+                        <Body className="col-start-4 text-right">
+                          {formatUSD(item.total)}
+                        </Body>
+                      </div>
                     </TableCell>
-                    <TableCell>{item.quantity.toFixed(2)}</TableCell>
-                    <TableCell className="text-right">
-                      ${item.rate.toFixed(2)}
+                    <TableCell className="hidden md:table-cell">
+                      {item.quantity.toFixed(2)}
                     </TableCell>
-                    <TableCell className="text-right">
-                      ${item.total.toFixed(2)}
+                    <TableCell className="hidden md:table-cell text-right">
+                      {formatUSD(item.rate)}
+                    </TableCell>
+                    <TableCell className="hidden md:table-cell text-right">
+                      {formatUSD(item.total)}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -409,7 +444,7 @@ export default function InvoicePage() {
               </Body>
             </div>
           </div>
-        </div>
+        </Card>
 
         {assets ? (
           <div className="rounded-md border bg-white p-6 gap-3 flex flex-col">

@@ -35,7 +35,7 @@ export function AttachedImages({ assets }: AttachedImagesProps) {
       >
         {assets?.length ? (
           <>
-            <div className="flex gap-3">
+            <div className="flex flex-col md:flex-row gap-3">
               {assets?.map((asset) => (
                 <Image
                   key={asset.id}
@@ -49,9 +49,9 @@ export function AttachedImages({ assets }: AttachedImagesProps) {
               ))}
             </div>
             {currentAsset ? (
-              <DialogContent className="w-[90vw] h-[90vh] max-w-none p-0 border-none rounded-sm">
+              <DialogContent className="w-[90vw] max-w-none p-0 border-none rounded-sm bg-transparent">
                 <Carousel
-                  className="max-h-full  relative"
+                  className="max-h-full relative"
                   opts={{ startIndex: currentAsset - 1 }}
                 >
                   <CarouselContent className="h-full">
@@ -71,8 +71,8 @@ export function AttachedImages({ assets }: AttachedImagesProps) {
                       </CarouselItem>
                     ))}
                   </CarouselContent>
-                  <CarouselPrevious />
-                  <CarouselNext />
+                  <CarouselPrevious className="left-2 md:-left-12" />
+                  <CarouselNext className="right-2 md:-right-12" />
                 </Carousel>
               </DialogContent>
             ) : null}
