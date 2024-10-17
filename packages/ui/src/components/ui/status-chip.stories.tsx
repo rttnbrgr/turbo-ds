@@ -14,7 +14,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const ComponentShowcase: Story = {
+export const Showcase: Story = {
   render: () => {
     const intents = ["neutral", "success", "warn", "danger", "action"] as const;
 

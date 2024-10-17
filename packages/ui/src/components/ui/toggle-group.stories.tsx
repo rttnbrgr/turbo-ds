@@ -18,7 +18,7 @@ const meta: Meta<typeof ToggleGroup> = {
 export default meta;
 type Story = StoryObj<typeof ToggleGroup>;
 
-export const ComponentShowcase: Story = {
+export const Showcase: Story = {
   render: () => {
     const renderToggleGroup = (size: "sm" | "md" | "lg") => {
       const iconSizes = {

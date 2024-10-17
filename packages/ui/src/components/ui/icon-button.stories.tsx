@@ -13,7 +13,7 @@ const meta: Meta<typeof IconButton> = {
 export default meta;
 type Story = StoryObj<typeof IconButton>;
 
-export const ComponentShowcase: Story = {
+export const Showcase: Story = {
   render: () => (
     <div className="flex gap-4">
       <IconButton variant="fill" size="md">
