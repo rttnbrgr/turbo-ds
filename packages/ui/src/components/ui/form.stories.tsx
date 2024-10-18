@@ -1,4 +1,3 @@
-import React from "react";
 import { Meta, StoryObj } from "@storybook/react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";

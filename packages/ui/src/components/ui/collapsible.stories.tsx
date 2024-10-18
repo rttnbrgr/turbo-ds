@@ -12,11 +12,18 @@ const meta: Meta<typeof Collapsible> = {
   title: "UI/Collapsible",
   component: Collapsible,
   tags: ["autodocs"],
+  // TODO - autodocs is failing to parse the types for this component.
+  // TYPES:
+  //   interface CollapsibleProps extends PrimitiveDivProps {
+  //     defaultOpen?: boolean;
+  //     open?: boolean;
+  //     disabled?: boolean;
+  //     onOpenChange?(open: boolean): void;
+  // }
   parameters: {
     layout: "centered",
     controls: { hideNoControlsWarning: true, disable: true },
   },
-  // TODO: missing types in argsTable
 };
 
 export default meta;

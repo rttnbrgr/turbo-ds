@@ -7,7 +7,9 @@ const meta: Meta<typeof Textarea> = {
   parameters: {
     controls: { hideNoControlsWarning: true, disable: true },
   },
-  // TODO: Missing it's types
+  tags: ["autodocs"],
+  // All the types are filtered out by the autodocs parser. example: React.TextareaHTMLAttributes
+  // This is expected behavior. We only render the components props, in the case it's just weird that the component has no props of it's own outside of the HTML element props.
 };
 
 export default meta;

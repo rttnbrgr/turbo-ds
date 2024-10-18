@@ -10,11 +10,19 @@ const meta: Meta<typeof Popover> = {
   title: "UI/Popover",
   component: Popover,
   tags: ["autodocs"],
+  // TODO - autodocs is failing to parse the types for this component.
+  // TYPES
+  //   interface PopoverProps {
+  //     children?: React.ReactNode;
+  //     open?: boolean;
+  //     defaultOpen?: boolean;
+  //     onOpenChange?: (open: boolean) => void;
+  //     modal?: boolean;
+  // }
   parameters: {
     layout: "centered",
     controls: { hideNoControlsWarning: true, disable: true },
   },
-  // TODO: missing types in argsTable
 };
 
 export default meta;

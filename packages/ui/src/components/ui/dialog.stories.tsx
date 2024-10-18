@@ -1,4 +1,3 @@
-import React from "react";
 import { Meta, StoryObj } from "@storybook/react";
 import {
   Dialog,
@@ -15,10 +14,18 @@ const meta: Meta<typeof Dialog> = {
   title: "UI/Dialog",
   component: Dialog,
   tags: ["autodocs"],
+  // TODO - autodocs is failing to parse the types for this component.
+  // TYPES:
+  //   interface DialogProps {
+  //     children?: React.ReactNode;
+  //     open?: boolean;
+  //     defaultOpen?: boolean;
+  //     onOpenChange?(open: boolean): void;
+  //     modal?: boolean;
+  // }
   parameters: {
     controls: { hideNoControlsWarning: true, disable: true },
   },
-  // TODO: missing types in argsTable
 };
 
 export default meta;

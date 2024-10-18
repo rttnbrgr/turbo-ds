@@ -10,8 +10,50 @@ const meta: Meta<typeof Accordion> = {
   title: "UI/Accordion",
   component: Accordion,
   tags: ["autodocs"],
-  // TODO - props aren't showing up in the docs for this component.
-  // Either try and solve or just manually add props to the ArgTypes.
+  // TODO - autodocs is failing to parse the types for this component.
+  // TYPES:
+  // interface AccordionSingleProps extends AccordionImplSingleProps {
+  //     type: 'single';
+  // }
+  // interface AccordionMultipleProps extends AccordionImplMultipleProps {
+  //     type: 'multiple';
+  // }
+  // declare const Accordion: React__default.ForwardRefExoticComponent<(AccordionSingleProps | AccordionMultipleProps) & React__default.RefAttributes<HTMLDivElement>>;
+  // interface AccordionImplSingleProps extends AccordionImplProps {
+  //     /**
+  //      * The controlled stateful value of the accordion item whose content is expanded.
+  //      */
+  //     value?: string;
+  //     /**
+  //      * The value of the item whose content is expanded when the accordion is initially rendered. Use
+  //      * `defaultValue` if you do not need to control the state of an accordion.
+  //      */
+  //     defaultValue?: string;
+  //     /**
+  //      * The callback that fires when the state of the accordion changes.
+  //      */
+  //     onValueChange?(value: string): void;
+  //     /**
+  //      * Whether an accordion item can be collapsed after it has been opened.
+  //      * @default false
+  //      */
+  //     collapsible?: boolean;
+  // }
+  // interface AccordionImplMultipleProps extends AccordionImplProps {
+  //     /**
+  //      * The controlled stateful value of the accordion items whose contents are expanded.
+  //      */
+  //     value?: string[];
+  //     /**
+  //      * The value of the items whose contents are expanded when the accordion is initially rendered. Use
+  //      * `defaultValue` if you do not need to control the state of an accordion.
+  //      */
+  //     defaultValue?: string[];
+  //     /**
+  //      * The callback that fires when the state of the accordion changes.
+  //      */
+  //     onValueChange?(value: string[]): void;
+  // }
 };
 
 export default meta;

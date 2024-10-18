@@ -1,4 +1,3 @@
-import React from "react";
 import { Meta, StoryObj } from "@storybook/react";
 import {
   Tabs,
@@ -11,10 +10,8 @@ const meta: Meta<typeof Tabs> = {
   title: "UI/Tabs",
   component: Tabs,
   tags: ["autodocs"],
-  parameters: {
-    controls: { hideNoControlsWarning: true, disable: true },
-  },
-  // TODO: missing types
+  // TODO - autodocs is failing to parse the types for this component.
+  // TYPES:
   // interface TabsProps extends PrimitiveDivProps {
   //   /** The value for the selected tab, if controlled */
   //   value?: string;
@@ -38,6 +35,9 @@ const meta: Meta<typeof Tabs> = {
   //    * */
   //   activationMode?: 'automatic' | 'manual';
   //}
+  parameters: {
+    controls: { hideNoControlsWarning: true, disable: true },
+  },
 };
 
 export default meta;

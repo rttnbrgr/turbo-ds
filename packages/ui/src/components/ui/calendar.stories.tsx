@@ -1,4 +1,3 @@
-import React from "react";
 import { Meta, StoryObj } from "@storybook/react";
 import { Calendar } from "@repo/ui/components/ui/calendar";
 
@@ -6,7 +5,7 @@ const meta: Meta<typeof Calendar> = {
   title: "UI/Calendar",
   component: Calendar,
   tags: ["autodocs"],
-  // TODO: types are missing
+  // TODO - autodocs is failing to parse the types for this component.
   // uses daypicker -> https://daypicker.dev/
   // https://daypicker.dev/docs/customization
 };
